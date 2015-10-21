@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
         android.support.v7.widget.Toolbar toolbar = ( android.support.v7.widget.Toolbar)findViewById(R.id.toolbar);
+        toolbar.setContentInsetsAbsolute(0,0);
         toolbar.setTitle("");
     //    toolbar.setContentInsetsAbsolute(0,0);
         setSupportActionBar(toolbar);

@@ -1,19 +1,23 @@
 package com.android.meddata.Fragments;
 //https://github.com/danramirez/wearable-listview-example/blob/master/app/src/main/res/layout/wearablelistview_image_text_item.xml
+
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import android.support.v7.widget.Toolbar;
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.meddata.Adapters.DashBoardAdapter;
+import com.android.meddata.Adapters.WorkListAdapter;
+import com.android.meddata.MedDataDTO.WorkListDTO;
 import com.android.meddata.R;
 
 import java.util.ArrayList;
@@ -22,10 +26,12 @@ import java.util.List;
 /**
  * Created by CHANDRASAIMOHAN on 10/19/2015.
  */
-public class DashBoardWearableListFragment extends Fragment {
+public class WorkListWearableListFragment extends Fragment {
     private static List<Integer> mIcons;
     private static List<String>dashBoardTitles;
-    TextView mHeader;
+    private static List<WorkListDTO> workList;
+    RelativeLayout listHeader;
+    int mContainerId = -1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,29 +40,32 @@ public class DashBoardWearableListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view  =  inflater.inflate(R.layout.dashboard_wearable_list_layout, container, false);
-        // Sample icons for the list
-        mIcons = new ArrayList<Integer>();
-        mIcons.add(R.drawable.ic_action_attach);
-        mIcons.add(R.drawable.ic_action_call);
-        mIcons.add(R.drawable.ic_action_star);
-        mIcons.add(R.drawable.ic_action_user);
+        View view  =  inflater.inflate(R.layout.worklist_wearable_list_layout, container, false);
 
-        dashBoardTitles = new ArrayList<String>();
-        dashBoardTitles.add("Work List");
-        dashBoardTitles.add("Reminders");
-        dashBoardTitles.add("Hands Off");
-        dashBoardTitles.add("My Account");
+
+        populateWorkList();
 
         // This is our list header
-        mHeader = (TextView)view. findViewById(R.id.header);
 
+         listHeader = (RelativeLayout)view.findViewById(R.id.work_list_header);
+        mContainerId = container.getId();
         WearableListView wearableListView =
-                (WearableListView)view. findViewById(R.id.wearable_List);
+                (WearableListView)view. findViewById(R.id.work_List);
         Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
         ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
-        back_img.setVisibility(View.INVISIBLE);
-        wearableListView.setAdapter(new DashBoardAdapter(getActivity(), mIcons, dashBoardTitles));
+        back_img.setVisibility(View.VISIBLE);
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(mContainerId, new DashBoardWearableListFragment()).addToBackStack(null).commit();
+            }
+        });
+        wearableListView.setAdapter(new WorkListAdapter(getActivity(), workList));
+        WearableListView.ItemDecoration itemDecoration =
+                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+        wearableListView.addItemDecoration(itemDecoration);
         wearableListView.setClickListener(mClickListener);
         wearableListView.addOnScrollListener(mOnScrollListener);
 
@@ -64,6 +73,53 @@ public class DashBoardWearableListFragment extends Fragment {
         return view;
     }
 
+    private void populateWorkList(){
+        workList = new ArrayList<WorkListDTO>();
+        WorkListDTO temp;
+        temp = new WorkListDTO();
+        temp.setDay("SUN");
+        temp.setDate("Oct 20,2015");
+        temp.setPhysicianName("Ph. Dr.Physian1");
+        temp.setRoomNum("c6");
+        temp.setPatientName("Kumar K");
+        temp.setBillingStatus("Billable Rounding");
+        temp.setHospitalName("BPH-Hospital1");
+
+        workList.add(temp);
+
+         temp = new WorkListDTO();
+        temp.setDay("MON");
+        temp.setDate("Oct 21,2015");
+        temp.setPhysicianName("Ph. Dr.Physian2");
+        temp.setRoomNum("c7");
+        temp.setPatientName("Kumar K1");
+        temp.setBillingStatus("Billable Rounding");
+        temp.setHospitalName("BPH-Hospital2");
+
+        workList.add(temp);
+
+       temp = new WorkListDTO();
+        temp.setDay("TUE");
+        temp.setDate("Oct 22,2015");
+        temp.setPhysicianName("Ph. Dr.Physian1");
+        temp.setRoomNum("c8");
+        temp.setPatientName("Kumaar K");
+        temp.setBillingStatus("Billable Rounding");
+        temp.setHospitalName("BPH-Hospital2");
+
+        workList.add(temp);
+
+        temp = new WorkListDTO();
+        temp.setDay("WED");
+        temp.setDate("Oct 20,2015");
+        temp.setPhysicianName("Ph. Dr.Physian1");
+        temp.setRoomNum("c16");
+        temp.setPatientName("Kummar K");
+        temp.setBillingStatus("Billable Rounding");
+        temp.setHospitalName("BPH-Hospital1");
+
+        workList.add(temp);
+    }
     // Handle our Wearable List's click events
     private WearableListView.ClickListener mClickListener =
             new WearableListView.ClickListener() {
@@ -73,15 +129,6 @@ public class DashBoardWearableListFragment extends Fragment {
                             String.format("You selected item #%s",
                                     viewHolder.getLayoutPosition()+1),
                             Toast.LENGTH_SHORT).show();
-                    if( viewHolder.getLayoutPosition()+1 == 1){
-                        getFragmentManager().beginTransaction()
-                                .replace(R.id.framelayout, new WorkListWearableListFragment()).addToBackStack(null)
-                                .commit();
-                    }else if( viewHolder.getLayoutPosition()+1 == 2){
-                        getFragmentManager().beginTransaction()
-                                .replace(R.id.framelayout, new ReminderListWearableListFragment()).addToBackStack(null)
-                                .commit();
-                    }
                 }
 
                 @Override
@@ -101,7 +148,7 @@ public class DashBoardWearableListFragment extends Fragment {
                     // Only scroll the title up from its original base position
                     // and not down.
                     if (i > 0) {
-                        mHeader.setY(-i);
+                        listHeader.setY(-i);
                     }
                 }
 
