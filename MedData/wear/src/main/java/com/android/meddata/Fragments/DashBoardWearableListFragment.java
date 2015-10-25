@@ -81,6 +81,10 @@ public class DashBoardWearableListFragment extends Fragment {
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.framelayout, new ReminderListWearableListFragment()).addToBackStack(null)
                                 .commit();
+                    }else if( viewHolder.getLayoutPosition()+1 == 4){
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.framelayout, new Account_Details_Fragment()).addToBackStack(null)
+                                .commit();
                     }
                 }
 

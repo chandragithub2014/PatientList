@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/ic_launcher"
+
+         />
+    <include
+        android:id="@+id/mandatory_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imageView"
+        layout="@layout/mandatory_text_field"
+        ></include>
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/admin_label"
+    android:textColor="#000000"
+    android:text="Admin"
+    android:textSize="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_below="@+id/mandatory_name"
+    android:layout_toEndOf="@+id/imageView" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/admin_label2"
+        android:textColor="#000000"
+        android:layout_marginLeft="10dp"
+        android:text="Admin"
+        android:textSize="10dp"
+        android:layout_below="@+id/admin_label"
+        android:layout_toEndOf="@+id/imageView" />
+<include
+    android:id="@+id/email_layout"
+    layout="@layout/email_mandatory_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    android:layout_below="@+id/admin_label2"
+    ></include>
+    <include android:id="@+id/location_layout"
+        layout="@layout/spinner_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/email_layout"
+        ></include>
+
+    <include android:id="@+id/default_location_layout"
+        layout="@layout/default_location_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/location_layout"
+        ></include>
+</RelativeLayout>
+
+    <!--<TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000000"
+        android:text="Admin"
+        android:id="@+id/textView"
+        android:layout_below="@+id/editText"
+        android:layout_toEndOf="@+id/imageView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#000000"
+        android:text="Admin"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/textView"
+        android:layout_toEndOf="@+id/imageView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mail_img"
+        android:layout_below="@+id/imageView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/mail_icon_account"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:layout_toRightOf="@id/mail_img"
+        android:layout_alignTop="@+id/mail_img"
+         android:layout_alignBottom="@+id/mail_img" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/location_mg"
+        android:layout_below="@id/mail_img"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="50dp"
+        android:src="@drawable/location_icon_account"
+         />
+
+<include
+    android:layout_alignTop="@id/location_mg"
+    android:layout_alignBottom="@id/location_mg"
+    android:layout_toRightOf="@id/location_mg"
+    android:layout_alignEnd="@+id/editText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/loation_layout"
+    android:layout_marginLeft="30dp"
+    layout="@layout/spinner_layout"></include>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/default_loc_img"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/location_icon_account"
+        android:layout_below="@+id/location_mg"
+        android:layout_alignStart="@+id/location_mg" />
+    <include
+        android:layout_alignTop="@id/default_loc_img"
+        android:layout_alignBottom="@id/default_loc_img"
+        android:layout_toRightOf="@id/default_loc_img"
+        android:layout_alignEnd="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/loation_layout"
+        android:layout_marginLeft="30dp"
+        layout="@layout/default_location_layout"></include>-->
+

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.support.wearable.view.WearableListView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 
 import com.android.meddata.Adapters.ReminderListAdapter;
 import com.android.meddata.Adapters.WorkListAdapter;
+import com.android.meddata.Application.MobileApplication;
+import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.RemindersDTO;
 import com.android.meddata.MedDataDTO.WorkListDTO;
 import com.android.meddata.R;
@@ -42,9 +46,15 @@ public class ReminderListWearableListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  =  inflater.inflate(R.layout.reminderlist_wearable_list_layout, container, false);
+        Log.d("TAG", "ReminderList:::" + MobileApplication.getInstance().getReminderList());
 
 
-        populateWorkList();
+        if(!TextUtils.isEmpty(MobileApplication.getInstance().getReminderList())){
+            remindersDTOList = JSONParser.getInstance().getRemindersList(MobileApplication.getInstance().getReminderList());
+        }else{
+            //Dummy Data
+            populateWorkList();
+        }
 
         // This is our list header
 

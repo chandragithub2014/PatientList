@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.support.wearable.view.WearableListView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.meddata.Adapters.WorkListAdapter;
+import com.android.meddata.Application.MobileApplication;
+import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.WorkListDTO;
 import com.android.meddata.R;
 
@@ -42,9 +46,14 @@ public class WorkListWearableListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view  =  inflater.inflate(R.layout.worklist_wearable_list_layout, container, false);
 
+        Log.d("TAG", "WorkList:::" + MobileApplication.getInstance().getPatientList());
 
-        populateWorkList();
-
+        if(!TextUtils.isEmpty(MobileApplication.getInstance().getPatientList())){
+            workList = JSONParser.getInstance().getWorkList(MobileApplication.getInstance().getPatientList());
+        }else{
+            //Dummy Data
+            populateWorkList();
+        }
         // This is our list header
 
          listHeader = (RelativeLayout)view.findViewById(R.id.work_list_header);

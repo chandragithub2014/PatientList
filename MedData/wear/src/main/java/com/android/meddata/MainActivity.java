@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.android.meddata.Fragments.DashBoardWearableListFragment;
+import com.android.meddata.MessageAPI.MessageService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setContentInsetsAbsolute(0,0);
         toolbar.setTitle("");
     //    toolbar.setContentInsetsAbsolute(0,0);
+        MessageService.getInstance().startMessageService(MainActivity.this,"companion");
         setSupportActionBar(toolbar);
 
         LayoutInflater mInflater= LayoutInflater.from(getApplicationContext());
