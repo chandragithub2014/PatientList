@@ -40,6 +40,7 @@ public class ReminderListAdapter extends WearableListView.Adapter {
         listViewRowView.getSecPhysician().setText(remindersDTOList.get(position).getSecPhysician());
         listViewRowView.getPatient().setText(remindersDTOList.get(position).getPatientName());
         listViewRowView.getHospital().setText(remindersDTOList.get(position).getHospitalName());
+        listViewRowView.setTag(remindersDTOList.get(position).getEncounterId());
 
     }
 

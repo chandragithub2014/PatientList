@@ -19,6 +19,7 @@ import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.LocationDTO;
 import com.android.meddata.MedDataDTO.PhysicianDTO;
+import com.android.meddata.MedDataDTO.WorkListDTO;
 import com.android.meddata.R;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class PatentDetailsFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String encounterID;
     private String mParam2;
 
 
@@ -50,7 +51,7 @@ public class PatentDetailsFragment extends Fragment {
     LinearLayout nameLayout,roomLayout,encounterDateLayout,mrnLayout,ageLayout,dobLayout,adminLayout,finanLayout;
     RelativeLayout location_spinner_layout,pr_phy_spinner_layout,billing_spinner_layout,dispoistion_spinner_layout,gender_spinner_layout,notes_category_spinner_layout,second_phy_spinner_layout;
     RelativeLayout dateLayout,admission_layout,finance_layout;
-
+    private WorkListDTO tempWorkListDto;
 
     /**
      * Use this factory method to create a new instance of
@@ -78,7 +79,7 @@ public class PatentDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            encounterID = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -88,25 +89,34 @@ public class PatentDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.worklist_details, container, false);
         mContainerId = container.getId();
-        initAndPopulateLabels(v);
+        if(!TextUtils.isEmpty(encounterID)){
+            tempWorkListDto = JSONParser.getInstance().getPatientDetail(encounterID);
+        }
+        if(tempWorkListDto!=null) {
+            initAndPopulateLabels(v);
+        }
         return  v;
     }
 
 private void initAndPopulateLabels(View v ){
     nameLayout = (LinearLayout)v.findViewById(R.id.name_label);
     patientName = (TextView)nameLayout.findViewById(R.id.mandatory_label);
-    patientName.setText("Name");
 
+    patientName.setText("Name");
+    EditText patientNameVal = (EditText)nameLayout.findViewById(R.id.editText2);
+    patientNameVal.setText(tempWorkListDto.getPatientName());
 
     roomLayout =  (LinearLayout)v.findViewById(R.id.name_val_layout);
     patientRoom  = (TextView)roomLayout.findViewById(R.id.mandatory_label);
     patientRoom.setText("Room No");
-
+    EditText patientRoomVal = (EditText)roomLayout.findViewById(R.id.editText2);
+    patientRoomVal.setText(tempWorkListDto.getRoomNum());
 
     encounterDateLayout =  (LinearLayout)v.findViewById(R.id.encounter_date_val_layout);
     encounterDate= (TextView)encounterDateLayout.findViewById(R.id.mandatory_label);
     encounterDate.setText("Encounter Date");
-
+    EditText encounterDateVal = (EditText)encounterDateLayout.findViewById(R.id.editText2);
+    encounterDateVal.setText(tempWorkListDto.getDate());
 
     location_spinner_layout = (RelativeLayout)v.findViewById(R.id.hospital_row);
     pr_phy_spinner_layout =   (RelativeLayout)v.findViewById(R.id.physician_row);
@@ -137,6 +147,13 @@ private void initAndPopulateLabels(View v ){
     mrn.setText("MRN");
 
 
+    EditText mrnVal = (EditText)mrnLayout.findViewById(R.id.editText2);
+    mrnVal.setText(tempWorkListDto.getMrn());
+
+    EditText financeVal = (EditText)finance_layout.findViewById(R.id.editText2);
+    financeVal.setText(tempWorkListDto.getFinancialNum());
+
+
     Spinner locationSpinner = (Spinner)location_spinner_layout.findViewById(R.id.mand_spinner);
     if(!TextUtils.isEmpty(MobileApplication.getInstance().getLocationList())){
         List<LocationDTO> locList = JSONParser.getInstance().getLocationList(MobileApplication.getInstance().getLocationList());
@@ -148,6 +165,10 @@ private void initAndPopulateLabels(View v ){
             if(hospitalList!=null && hospitalList.size()>0) {
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, hospitalList);
                 locationSpinner.setAdapter(adapter);
+                if(!TextUtils.isEmpty(tempWorkListDto.getHospitalName())){
+                    int spinnerPosition = adapter.getPosition(tempWorkListDto.getHospitalName());
+                    locationSpinner.setSelection(spinnerPosition);
+                }
             }
         }
     }
@@ -166,6 +187,13 @@ private void initAndPopulateLabels(View v ){
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, phyList);
                 physicianSpinner.setAdapter(adapter);
                 secPhySpinner.setAdapter(adapter);
+                if(!TextUtils.isEmpty(tempWorkListDto.getPhysicianName())){
+                    int spinnerPosition = adapter.getPosition(tempWorkListDto.getPhysicianName());
+                    physicianSpinner.setSelection(spinnerPosition);
+                }if(!TextUtils.isEmpty(tempWorkListDto.getSecPhysician())){
+                    int spinnerPosition = adapter.getPosition(tempWorkListDto.getSecPhysician());
+                    secPhySpinner.setSelection(spinnerPosition);
+                }
             }
         }
     }
@@ -181,7 +209,12 @@ private void initAndPopulateLabels(View v ){
             if(hospitalList!=null && hospitalList.size()>0) {
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, hospitalList);
                 genderSpinner.setAdapter(adapter);
+                if(!TextUtils.isEmpty(tempWorkListDto.getGender())){
+                    int spinnerPosition = adapter.getPosition(tempWorkListDto.getGender());
+                    genderSpinner.setSelection(spinnerPosition);
+                }
             }
+
         }
     }
 
@@ -196,6 +229,12 @@ private void initAndPopulateLabels(View v ){
             if(hospitalList!=null && hospitalList.size()>0) {
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, hospitalList);
                 dispSpinner.setAdapter(adapter);
+
+
+                if(!TextUtils.isEmpty(tempWorkListDto.getBillingType())){
+                    int spinnerPosition = adapter.getPosition(tempWorkListDto.getBillingType());
+                    dispSpinner.setSelection(spinnerPosition);
+                }
             }
         }
     }
@@ -211,6 +250,10 @@ private void initAndPopulateLabels(View v ){
             if(hospitalList!=null && hospitalList.size()>0) {
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, hospitalList);
                 billingSpinner.setAdapter(adapter);
+                if(!TextUtils.isEmpty(tempWorkListDto.getBillingStatus())){
+                    int spinnerPosition = adapter.getPosition(tempWorkListDto.getBillingStatus());
+                    billingSpinner.setSelection(spinnerPosition);
+                }
             }
         }
     }
@@ -226,7 +269,12 @@ private void initAndPopulateLabels(View v ){
             if(hospitalList!=null && hospitalList.size()>0) {
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, hospitalList);
                 notesSpinner.setAdapter(adapter);
+                if(!TextUtils.isEmpty(tempWorkListDto.getNotesType())){
+                    int spinnerPosition = adapter.getPosition(tempWorkListDto.getNotesType());
+                    billingSpinner.setSelection(spinnerPosition);
+                }
             }
+
         }
     }
 }

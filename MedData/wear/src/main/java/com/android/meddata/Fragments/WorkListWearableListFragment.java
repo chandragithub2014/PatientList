@@ -143,7 +143,7 @@ public class WorkListWearableListFragment extends Fragment {
                             Toast.LENGTH_SHORT).show();
 
                     getFragmentManager().beginTransaction()
-                            .replace(R.id.framelayout, PatentDetailsFragment.newInstance("","")).addToBackStack(null)
+                            .replace(R.id.framelayout, PatentDetailsFragment.newInstance(tag_clicked,"")).addToBackStack(null)
                             .commit();
                 }
 

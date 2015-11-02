@@ -1,7 +1,9 @@
 package com.android.meddata.JSONParser;
 
 import android.content.Context;
+import android.text.TextUtils;
 
+import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.MedDataDTO.LocationDTO;
 import com.android.meddata.MedDataDTO.PhysicianDTO;
 import com.android.meddata.MedDataDTO.RemindersDTO;
@@ -61,6 +63,28 @@ Context ctx;
                     e.printStackTrace();
                 }
                 temp.setEncounterId(jsonObject.getString("EncounterId"));
+                temp.setMrn(jsonObject.getString("MedicalRecordNo"));
+                temp.setAge(jsonObject.getString("Age"));
+                temp.setBillingType(jsonObject.getString("BillingType"));
+                if(jsonObject.has("gender") && jsonObject.getString("gender")!=null){
+                 temp.setGender(jsonObject.getString("gender"));
+                }
+                if(jsonObject.getString("DOB")!=null){
+                    temp.setDob(jsonObject.getString("DOB"));
+                }
+                if(!TextUtils.isEmpty(jsonObject.getString("NotesType"))){
+                      temp.setNotesType(jsonObject.getString("NotesType"));
+                }
+                if(!TextUtils.isEmpty(jsonObject.getString("SecondaryPhysician"))){
+                    temp.setSecPhysician(jsonObject.getString("SecondaryPhysician"));
+                }
+                if(!TextUtils.isEmpty(jsonObject.getString("FinancialNo"))){
+                    temp.setFinancialNum(jsonObject.getString("FinancialNo"));
+                }
+                if(!TextUtils.isEmpty(jsonObject.getString("AdmissionNo"))){
+                    temp.setAdminNum(jsonObject.getString("AdmissionNo"));
+                }
+
                 workList.add(temp);
             }
         }
@@ -72,6 +96,42 @@ Context ctx;
     }
 
 
+    public WorkListDTO getPatientDetail(String encounterId){
+        WorkListDTO temp  = new WorkListDTO();
+        try {
+            JSONArray workList = new JSONArray(MobileApplication.getInstance().getPatientList());
+            for(int i=0;i<workList.length();i++){
+                JSONObject jsonObject = workList.getJSONObject(i);
+                if(jsonObject.getString("EncounterId").equalsIgnoreCase(encounterId)){
+                    temp.setPatientName(jsonObject.getString("Patientname"));
+                    temp.setRoomNum(jsonObject.getString("RoomNumber"));
+                    String encounterDate = jsonObject.getString("FormattedEncDate");
+                    SimpleDateFormat input = new SimpleDateFormat("yy/MM/dd");
+                    SimpleDateFormat output = new SimpleDateFormat("MMM dd, yyyy");
+                    try {
+                        Date oneWayTripDate = input.parse(encounterDate);                 // parse input
+                        String readableDate = (output.format(oneWayTripDate));
+                        temp.setDate(readableDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    temp.setHospitalName(jsonObject.getString("LocationId"));
+                    temp.setPhysicianName(jsonObject.getString("PrimaryPhysician"));
+                    temp.setMrn(jsonObject.getString("MedicalRecordNo"));
+                    temp.setAge(jsonObject.getString("Age"));
+                    temp.setBillingType(jsonObject.getString("BillingType"));
+                    temp.setBillingStatus(jsonObject.getString("DispositionId"));
+                }else{
+                    continue;
+                }
+            }
+        }
+       catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        return temp;
+    }
     public List<RemindersDTO> getRemindersList(String jsonArray){
         List<RemindersDTO> reminderList = new ArrayList<RemindersDTO>();
 
@@ -95,6 +155,30 @@ Context ctx;
                     temp.setPrimaryPhysician("Pr." + jsonObject.getString("PrimaryPhysician"));
                     temp.setSecPhysician("Sec." + jsonObject.getString("SecondaryPhysician"));
                     temp.setHospitalName(jsonObject.getString("LocationId"));
+
+
+                    temp.setEncounterId(jsonObject.getString("EncounterId"));
+                    temp.setMrn(jsonObject.getString("MedicalRecordNo"));
+                    temp.setAge(jsonObject.getString("Age"));
+                    temp.setBillingType(jsonObject.getString("BillingType"));
+                    if(jsonObject.has("gender") && jsonObject.getString("gender")!=null){
+                        temp.setGender(jsonObject.getString("gender"));
+                    }
+                    if(jsonObject.getString("DOB")!=null){
+                        temp.setDob(jsonObject.getString("DOB"));
+                    }
+                    if(!TextUtils.isEmpty(jsonObject.getString("NotesType"))){
+                        temp.setNotesType(jsonObject.getString("NotesType"));
+                    }
+                    if(!TextUtils.isEmpty(jsonObject.getString("SecondaryPhysician"))){
+                        temp.setSecPhysician("Sec."+jsonObject.getString("SecondaryPhysician"));
+                    }
+                    if(!TextUtils.isEmpty(jsonObject.getString("FinancialNo"))){
+                        temp.setFinancialNum(jsonObject.getString("FinancialNo"));
+                    }
+                    if(!TextUtils.isEmpty(jsonObject.getString("AdmissionNo"))){
+                        temp.setAdminNum(jsonObject.getString("AdmissionNo"));
+                    }
                     reminderList.add(temp);
                 }
         }

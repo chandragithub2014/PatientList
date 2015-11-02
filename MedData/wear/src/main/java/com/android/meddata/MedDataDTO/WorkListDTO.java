@@ -12,6 +12,15 @@ public class WorkListDTO {
     private String roomNum;
     private String billingStatus;
     private String encounterId;
+    private String mrn;
+    private String age;
+    private  String billingType;
+    private String gender;
+    private String dob;
+    private String notesType;
+    private String secPhysician;
+    private String financialNum;
+    private String adminNum;
 
     public String getDay() {
         return day;
@@ -75,5 +84,78 @@ public class WorkListDTO {
 
     public void setEncounterId(String encounterId) {
         this.encounterId = encounterId;
+    }
+
+    public String getMrn() {
+        return mrn;
+    }
+
+    public void setMrn(String mrn) {
+        this.mrn = mrn;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getBillingType() {
+        return billingType;
+    }
+
+    public void setBillingType(String billingType) {
+        this.billingType = billingType;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+
+    public String getNotesType() {
+        return notesType;
+    }
+
+    public void setNotesType(String notesType) {
+        this.notesType = notesType;
+    }
+
+    public String getSecPhysician() {
+        return secPhysician;
+    }
+
+    public void setSecPhysician(String secPhysician) {
+        this.secPhysician = secPhysician;
+    }
+
+    public String getFinancialNum() {
+        return financialNum;
+    }
+
+    public void setFinancialNum(String financialNum) {
+        this.financialNum = financialNum;
+    }
+
+    public String getAdminNum() {
+        return adminNum;
+    }
+
+    public void setAdminNum(String adminNum) {
+        this.adminNum = adminNum;
     }
 }

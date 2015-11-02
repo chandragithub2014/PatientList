@@ -18,7 +18,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.android.meddata.Adapters.ReminderListAdapter;
+import com.android.meddata.Adapters.ReminderListItemLayout;
 import com.android.meddata.Adapters.WorkListAdapter;
+import com.android.meddata.Adapters.WorkListItemLayout;
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.RemindersDTO;
@@ -137,6 +139,16 @@ public class ReminderListWearableListFragment extends Fragment {
                             String.format("You selected item #%s",
                                     viewHolder.getLayoutPosition()+1),
                             Toast.LENGTH_SHORT).show();
+                    ReminderListItemLayout listViewRowView = (ReminderListItemLayout) viewHolder.itemView;
+                    String tag_clicked = (String)listViewRowView.getTag();
+                    Toast.makeText(getActivity(),
+                            String.format("You selected item #%s",
+                                    viewHolder.getLayoutPosition()+1) +"TAG Clicked"+tag_clicked,
+                            Toast.LENGTH_SHORT).show();
+
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.framelayout, PatentDetailsFragment.newInstance(tag_clicked,"")).addToBackStack(null)
+                            .commit();
                 }
 
                 @Override
