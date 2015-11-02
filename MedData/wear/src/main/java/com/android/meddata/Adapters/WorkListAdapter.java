@@ -40,6 +40,7 @@ public class WorkListAdapter extends WearableListView.Adapter {
         listViewRowView.getPatient().setText(workList.get(position).getPatientName());
         listViewRowView.getBilling().setText(workList.get(position).getBillingStatus());
         listViewRowView.getHospital().setText(workList.get(position).getHospitalName());
+        listViewRowView.setTag(workList.get(position).getEncounterId());
 
     }
 

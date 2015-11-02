@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.meddata.Adapters.WorkListAdapter;
+import com.android.meddata.Adapters.WorkListItemLayout;
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.WorkListDTO;
@@ -134,10 +135,16 @@ public class WorkListWearableListFragment extends Fragment {
             new WearableListView.ClickListener() {
                 @Override
                 public void onClick(WearableListView.ViewHolder viewHolder) {
+                    WorkListItemLayout listViewRowView = (WorkListItemLayout) viewHolder.itemView;
+                    String tag_clicked = (String)listViewRowView.getTag();
                     Toast.makeText(getActivity(),
                             String.format("You selected item #%s",
-                                    viewHolder.getLayoutPosition()+1),
+                                    viewHolder.getLayoutPosition()+1) +"TAG Clicked"+tag_clicked,
                             Toast.LENGTH_SHORT).show();
+
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.framelayout, PatentDetailsFragment.newInstance("","")).addToBackStack(null)
+                            .commit();
                 }
 
                 @Override

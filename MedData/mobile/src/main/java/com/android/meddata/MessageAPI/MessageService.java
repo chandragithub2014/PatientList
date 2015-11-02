@@ -52,7 +52,27 @@ public class MessageService implements  GoogleApiClient.ConnectionCallbacks,
                         }else if(type.equalsIgnoreCase("myaccount")){
                             Log.d("TAG","Send message when myaccount");
                             result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("myaccount"+"$"+MobileApplication.getInstance().getAccountDetails()).getBytes()).await();
+                        }else if(type.equalsIgnoreCase("locations")){
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("locations"+"$"+MobileApplication.getInstance().getLocationList()).getBytes()).await();
+                            Log.d("TAG","Send message when locations"+"locations"+"$"+MobileApplication.getInstance().getLocationList());
+                    }else if(type.equalsIgnoreCase("physicians")){
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("physicians"+"$"+MobileApplication.getInstance().getPhysicianList()).getBytes()).await();
+                            Log.d("TAG","Send message when physicians"+"physicians"+"$"+MobileApplication.getInstance().getPhysicianList());
+                        }else if(type.equalsIgnoreCase("disposition")){
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("disposition"+"$"+MobileApplication.getInstance().getDispositionList()).getBytes()).await();
+                            Log.d("TAG","Send message when disposition"+"disposition"+"$"+MobileApplication.getInstance().getDispositionList());
                         }
+                        else if(type.equalsIgnoreCase("gender")){
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("gender"+"$"+MobileApplication.getInstance().getGender()).getBytes()).await();
+                            Log.d("TAG","Send message when gender"+"gender"+"$"+MobileApplication.getInstance().getGender());
+                        }else if(type.equalsIgnoreCase("notestype")){
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("notestype"+"$"+MobileApplication.getInstance().getNotesType()).getBytes()).await();
+                            Log.d("TAG","Send message when notestype"+"notestype"+"$"+MobileApplication.getInstance().getNotesType());
+                        }else if(type.equalsIgnoreCase("billing")){
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("billing"+"$"+MobileApplication.getInstance().getBillingList()).getBytes()).await();
+                            Log.d("TAG","Send message when billing"+"billing"+"$"+MobileApplication.getInstance().getBillingList());
+                        }
+
                         else {
                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", MobileApplication.getInstance().getPropertiesJSON().getBytes()).await();
                         }

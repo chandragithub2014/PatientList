@@ -11,6 +11,7 @@ public class WorkListDTO {
     private String hospitalName;
     private String roomNum;
     private String billingStatus;
+    private String encounterId;
 
     public String getDay() {
         return day;
@@ -66,5 +67,13 @@ public class WorkListDTO {
 
     public void setBillingStatus(String billingStatus) {
         this.billingStatus = billingStatus;
+    }
+
+    public String getEncounterId() {
+        return encounterId;
+    }
+
+    public void setEncounterId(String encounterId) {
+        this.encounterId = encounterId;
     }
 }

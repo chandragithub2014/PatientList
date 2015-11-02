@@ -52,7 +52,11 @@ Context ctx;
         this.requestjsonObject=requestjsonObject;
         this.type = type;
         pd = new ProgressDialog(ctx);
-        pd.setMessage("Authorizing..."+type);
+        if(TextUtils.isEmpty(type)) {
+            pd.setMessage("Authorizing..." + type);
+        }else{
+            pd.setMessage("Fetching..." + type);
+        }
         pd.setCancelable(false);
         pd.show();
     }
@@ -73,7 +77,7 @@ Context ctx;
     protected void onPostExecute(String response) {
         if(!TextUtils.isEmpty(response)){
             pd.dismiss();
-            Log.d("TAG", "Login Response::::" + response);
+            Log.d("TAG", type+" Response::::" + response);
             String flag = parseResponse(response);
             inReceiveListener.receiveResult(flag);
 
@@ -96,6 +100,24 @@ Context ctx;
             }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("myaccount")){
                 MobileApplication.getInstance().setAccountDetails(response);
                 flag = "myaccount";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("locations")){
+                MobileApplication.getInstance().setLocationList(response);
+                flag = "locations";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("physicians")){
+                MobileApplication.getInstance().setPhysicianList(response);
+                flag = "physicians";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("notestype")){
+                MobileApplication.getInstance().setNotesType(response);
+                flag = "notestype";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("billing")){
+                MobileApplication.getInstance().setBillingList(response);
+                flag = "billing";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("disposition")){
+                MobileApplication.getInstance().setDispositionList(response);
+                flag = "disposition";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("gender")){
+                MobileApplication.getInstance().setGender(response);
+                flag = "gender";
             }
             else {
                 JSONObject responseJsonObject = new JSONObject(response);

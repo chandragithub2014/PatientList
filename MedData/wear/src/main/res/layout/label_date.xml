@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    >
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView5"
-        android:src="@drawable/ic_mf_indicator_input_mandatory"
+        android:id="@+id/mandatory_label"
+        android:text = "Mandatory Label"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="20dp"
-        />
+        android:layout_alignParentLeft="true"/>
+
+
+
+
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
+        android:layout_alignParentRight="true"
         android:text="Name"
         android:ems="10"
         android:id="@+id/editText2"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/imageView5"
+
          />
 </RelativeLayout>

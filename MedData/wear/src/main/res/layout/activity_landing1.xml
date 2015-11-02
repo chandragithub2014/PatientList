@@ -5,27 +5,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-   >
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_box="all">
-    <LinearLayout
+    >
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="2dp"
-        android:layout_gravity="top|left">
+        android:layout_gravity="top|left"
+        app:layout_box="top|left">
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar_custom_view"
+            />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/framelayout"
-        >
-    </FrameLayout>
-    </LinearLayout>
-    </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/framelayout"
+            android:layout_below="@+id/toolbar"
+            >
+        </FrameLayout>
+
+
+
+    </RelativeLayout>
 </android.support.wearable.view.BoxInsetLayout>

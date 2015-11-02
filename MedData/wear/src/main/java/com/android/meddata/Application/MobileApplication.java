@@ -15,6 +15,12 @@ public class MobileApplication extends Application {
     private String patientList;
     private String reminderList;
     private String accountDetails;
+    private String locationList;
+    private String physicianList;
+    private String billingList;
+    private String dispositionList;
+    private String gender;
+    private String notesType;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -76,5 +82,53 @@ public class MobileApplication extends Application {
 
     public void setAccountDetails(String accountDetails) {
         this.accountDetails = accountDetails;
+    }
+
+    public String getLocationList() {
+        return locationList;
+    }
+
+    public void setLocationList(String locationList) {
+        this.locationList = locationList;
+    }
+
+    public String getPhysicianList() {
+        return physicianList;
+    }
+
+    public void setPhysicianList(String physicianList) {
+        this.physicianList = physicianList;
+    }
+
+    public String getBillingList() {
+        return billingList;
+    }
+
+    public void setBillingList(String billingList) {
+        this.billingList = billingList;
+    }
+
+    public String getDispositionList() {
+        return dispositionList;
+    }
+
+    public void setDispositionList(String dispositionList) {
+        this.dispositionList = dispositionList;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getNotesType() {
+        return notesType;
+    }
+
+    public void setNotesType(String notesType) {
+        this.notesType = notesType;
     }
 }

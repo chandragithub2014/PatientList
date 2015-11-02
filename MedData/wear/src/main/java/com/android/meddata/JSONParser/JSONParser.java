@@ -2,6 +2,8 @@ package com.android.meddata.JSONParser;
 
 import android.content.Context;
 
+import com.android.meddata.MedDataDTO.LocationDTO;
+import com.android.meddata.MedDataDTO.PhysicianDTO;
 import com.android.meddata.MedDataDTO.RemindersDTO;
 import com.android.meddata.MedDataDTO.WorkListDTO;
 
@@ -58,6 +60,7 @@ Context ctx;
                     } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                temp.setEncounterId(jsonObject.getString("EncounterId"));
                 workList.add(temp);
             }
         }
@@ -104,4 +107,53 @@ Context ctx;
 
         return reminderList;
     }
+
+
+  public List<LocationDTO> getLocationList(String jsonArray){
+      List<LocationDTO> locationList = new ArrayList<LocationDTO>();
+      try{
+          JSONArray jsonArray1 = new JSONArray(jsonArray);
+          for(int i=0;i<jsonArray1.length();i++){
+              JSONObject jsonObject = jsonArray1.getJSONObject(i);
+              LocationDTO temp = new LocationDTO();
+              temp.setCategory(jsonObject.getString("Category"));
+              temp.setListDesc(jsonObject.getString("ListDesc"));
+              temp.setListId(jsonObject.getString("ListId"));
+              temp.setLocId(jsonObject.getString("LocID"));
+              locationList.add(temp);
+          }
+      } catch(JSONException e){
+          e.printStackTrace();
+      }
+      catch(Exception e){
+          e.printStackTrace();
+      }
+      return locationList;
+  }
+
+    public List<PhysicianDTO> getPhysicianList(String jsonArray){
+        List<PhysicianDTO> physicianList = new ArrayList<PhysicianDTO>();
+        try{
+            JSONArray jsonArray1 = new JSONArray(jsonArray);
+            for(int i=0;i<jsonArray1.length();i++){
+                JSONObject jsonObject = jsonArray1.getJSONObject(i);
+                PhysicianDTO temp = new PhysicianDTO();
+                temp.setCategory(jsonObject.getString("Category"));
+                temp.setPhyDesc(jsonObject.getString("ListDesc"));
+                temp.setListId(jsonObject.getString("ListId"));
+                temp.setLocId(jsonObject.getString("LocID"));
+                physicianList.add(temp);
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return physicianList;
+    }
+
+
+
+
 }

@@ -46,6 +46,10 @@ public class ListenerService extends WearableListenerService {
                 String workList = message.substring(message.lastIndexOf("$") + 1);
                 Log.d("TAG","WorkList:::"+workList);
                 MobileApplication.getInstance().setPatientList(workList);
+            }else if(message.contains("physicians")){
+                String physiciansDetails = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","physiciansDetails:::"+physiciansDetails);
+                MobileApplication.getInstance().setPhysicianList(physiciansDetails);
             }
             else if(message.contains("reminderlist")){
                 String reminderList = message.substring(message.lastIndexOf("$") + 1);
@@ -55,6 +59,26 @@ public class ListenerService extends WearableListenerService {
                 String accountDetails = message.substring(message.lastIndexOf("$") + 1);
                 Log.d("TAG","accountDetails:::"+accountDetails);
                 MobileApplication.getInstance().setAccountDetails(accountDetails);
+            }else if(message.contains("locations")){
+                String locationDetails = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","locationDetails:::"+locationDetails);
+                MobileApplication.getInstance().setLocationList(locationDetails);
+            }else if(message.contains("disposition")){
+                String dispositionDetails = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","disposition:::"+dispositionDetails);
+                MobileApplication.getInstance().setDispositionList(dispositionDetails);
+            }else if(message.contains("billing")){
+                String billingDetails = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","billingDetails:::"+billingDetails);
+                MobileApplication.getInstance().setBillingList(billingDetails);
+            }else if(message.contains("notestype")){
+                String notestype = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","notestype:::"+notestype);
+                MobileApplication.getInstance().setNotesType(notestype);
+            }else if(message.contains("gender")){
+                String genderDetails = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","genderDetails:::"+genderDetails);
+                MobileApplication.getInstance().setGender(genderDetails);
             }
             else{
                 MobileApplication.getInstance().setPropertiesJSON(message);

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements OMSReceiveListene
         super.onResume();
         try {
             JSONObject loginJsonObject = new JSONObject();
-            loginJsonObject.put("Login_Id", "test1");
+            loginJsonObject.put("Login_Id", "veereshm");
             loginJsonObject.put("Password", "test@123");
             JSONObject requestJsonObject = new JSONObject();
             requestJsonObject.put("request", loginJsonObject);
@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity implements OMSReceiveListene
                  int entityId = jsonObject.getInt("EntityID");
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
-                 loginJsonObject.put("EntityID", entityId);
-                 loginJsonObject.put("Login_Id", "test1");
+                 loginJsonObject.put("EntityID", -1);
+                 loginJsonObject.put("Login_Id", "veereshm");
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
                  new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"worklist").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetPatientsWorkList");
@@ -111,8 +111,8 @@ public class MainActivity extends AppCompatActivity implements OMSReceiveListene
                  int locationId = jsonObject.getInt("Location");
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
-                 loginJsonObject.put("EntityID", entityId);
-                 loginJsonObject.put("Login_Id", "test1");
+                 loginJsonObject.put("EntityID", -1);
+                 loginJsonObject.put("Login_Id", "veereshm");
                  loginJsonObject.put("LocationId", locationId);
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements OMSReceiveListene
                  String key = jsonObject.getString("Key");
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
-                 loginJsonObject.put("LoginId", "test1");
+                 loginJsonObject.put("LoginId", "veereshm");
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
                  new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"myaccount").execute("https://dev-patientlists.meddata.com/UserLoginService.svc/GetMyAccountDetails");
@@ -138,6 +138,104 @@ public class MainActivity extends AppCompatActivity implements OMSReceiveListene
              }
          }else if(result.equalsIgnoreCase("myaccount")){
              MessageService.getInstance().startMessageService(MainActivity.this,"myaccount");
+             try{
+                 globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+                 JSONObject jsonObject = new JSONObject(globalJSON);
+                 String key = jsonObject.getString("Key");
+                 JSONObject loginJsonObject = new JSONObject();
+                 loginJsonObject.put("Key", key);
+                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("ListType", "LOC");
+                 JSONObject requestJsonObject = new JSONObject();
+                 requestJsonObject.put("request", loginJsonObject);
+                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"locations").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+             }
+             catch(Exception e){
+                 e.printStackTrace();
+             }
+         }else if(result.equalsIgnoreCase("locations")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"locations");
+             try{
+                 globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+                 JSONObject jsonObject = new JSONObject(globalJSON);
+                 String key = jsonObject.getString("Key");
+                 JSONObject loginJsonObject = new JSONObject();
+                 loginJsonObject.put("Key", key);
+                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("ListType", "PHYS");
+                 JSONObject requestJsonObject = new JSONObject();
+                 requestJsonObject.put("request", loginJsonObject);
+                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"physicians").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+             } catch(Exception e){
+                 e.printStackTrace();
+             }
+         }else if(result.equalsIgnoreCase("physicians")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"physicians");
+             try{
+                 globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+                 JSONObject jsonObject = new JSONObject(globalJSON);
+                 String key = jsonObject.getString("Key");
+                 JSONObject loginJsonObject = new JSONObject();
+                 loginJsonObject.put("Key", key);
+                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("ListType", "BILLING");
+                 JSONObject requestJsonObject = new JSONObject();
+                 requestJsonObject.put("request", loginJsonObject);
+                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"billing").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+             } catch(Exception e){
+                 e.printStackTrace();
+             }
+         }else if(result.equalsIgnoreCase("billing")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"billing");
+             try{
+                 globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+                 JSONObject jsonObject = new JSONObject(globalJSON);
+                 String key = jsonObject.getString("Key");
+                 JSONObject loginJsonObject = new JSONObject();
+                 loginJsonObject.put("Key", key);
+                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("ListType", "DISPOSITION");
+                 JSONObject requestJsonObject = new JSONObject();
+                 requestJsonObject.put("request", loginJsonObject);
+                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"disposition").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+             } catch(Exception e){
+                 e.printStackTrace();
+             }
+         }else if(result.equalsIgnoreCase("disposition")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"disposition");
+             try{
+                 globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+                 JSONObject jsonObject = new JSONObject(globalJSON);
+                 String key = jsonObject.getString("Key");
+                 JSONObject loginJsonObject = new JSONObject();
+                 loginJsonObject.put("Key", key);
+                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("ListType", "GENDER");
+                 JSONObject requestJsonObject = new JSONObject();
+                 requestJsonObject.put("request", loginJsonObject);
+                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"gender").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+             } catch(Exception e){
+                 e.printStackTrace();
+             }
+         }else if(result.equalsIgnoreCase("gender")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"gender");
+             try{
+                 globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+                 JSONObject jsonObject = new JSONObject(globalJSON);
+                 String key = jsonObject.getString("Key");
+                 JSONObject loginJsonObject = new JSONObject();
+                 loginJsonObject.put("Key", key);
+                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("ListType", "NotesTypes");
+                 JSONObject requestJsonObject = new JSONObject();
+                 requestJsonObject.put("request", loginJsonObject);
+                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"notestype").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+             } catch(Exception e){
+                 e.printStackTrace();
+             }
+
+         } else if(result.equalsIgnoreCase("notestype")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"notestype");
          }
     }
 }
