@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:lines="2"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="10dp"
+
 
         >
     </TextView>
@@ -23,17 +24,18 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:maxLines="2"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="10dp"
         >
     </TextView>
 
     <TextView
-        android:text="Patient \nDetails"
+        android:text="Details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
         android:maxLines="2"
-        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="10dp"
         >
     </TextView>
 

@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.support.wearable.view.WearableListView;
 import android.text.TextUtils;
@@ -13,11 +14,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.meddata.Adapters.AlertAdapter;
 import com.android.meddata.Adapters.WorkListAdapter;
 import com.android.meddata.Adapters.WorkListItemLayout;
 import com.android.meddata.Application.MobileApplication;
@@ -37,6 +40,8 @@ public class WorkListWearableListFragment extends Fragment {
     private static List<WorkListDTO> workList;
     RelativeLayout listHeader;
     int mContainerId = -1;
+    RelativeLayout header;
+    ImageButton floatingToolBarButton;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +61,12 @@ public class WorkListWearableListFragment extends Fragment {
             populateWorkList();
         }
         // This is our list header
-
+        floatingToolBarButton = (ImageButton)view.findViewById(R.id.fab);
          listHeader = (RelativeLayout)view.findViewById(R.id.work_list_header);
         mContainerId = container.getId();
         WearableListView wearableListView =
                 (WearableListView)view. findViewById(R.id.work_List);
+        header = (RelativeLayout)view. findViewById(R.id.work_list_header);
         Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
         ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
         back_img.setVisibility(View.VISIBLE);
@@ -70,6 +76,51 @@ public class WorkListWearableListFragment extends Fragment {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(mContainerId, new DashBoardWearableListFragment()).addToBackStack(null).commit();
+            }
+        });
+        floatingToolBarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+                View sortDialogView = inflater.inflate(R.layout.alert_dialog_status_list, null);
+                WearableListView sortListView = (WearableListView) sortDialogView.findViewById(R.id.dlg_sort_listview);
+
+                TextView title = (TextView) sortDialogView.findViewById(R.id.dlg_sort_title);
+                title.setText("Apply Status to all Patients");
+                List<String> listItems = new ArrayList<String>();
+                listItems.add("Billable Rounding");
+                listItems.add("Signed Off");
+                sortListView.setAdapter(new AlertAdapter(getActivity(), listItems));
+                WearableListView.ItemDecoration itemDecoration =
+                        new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+                sortListView.addItemDecoration(itemDecoration);
+                sortListView.setClickListener(new WearableListView.ClickListener() {
+                    @Override
+                    public void onClick(WearableListView.ViewHolder viewHolder) {
+                        RelativeLayout listViewRowView = (RelativeLayout) viewHolder.itemView;
+                     //   String tag_clicked = (String)listViewRowView.getTag();
+                        Toast.makeText(getActivity(),
+                                String.format("You selected item #%s",
+                                        viewHolder.getLayoutPosition()+1) ,
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onTopEmptyRegionClick() {
+
+                    }
+                });
+                dialogBuilder.setView(sortDialogView);
+              /*  dialogBuilder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });*/
+                AlertDialog  sortByDialog = dialogBuilder.create();
+                sortByDialog.show();
             }
         });
         wearableListView.setAdapter(new WorkListAdapter(getActivity(), workList));
@@ -130,6 +181,9 @@ public class WorkListWearableListFragment extends Fragment {
 
         workList.add(temp);
     }
+
+
+
     // Handle our Wearable List's click events
     private WearableListView.ClickListener mClickListener =
             new WearableListView.ClickListener() {
@@ -154,6 +208,7 @@ public class WorkListWearableListFragment extends Fragment {
                 }
             };
 
+// header.setY(header.getY() - scroll);
 
     // The following code ensures that the title scrolls as the user scrolls up
     // or down the list
@@ -161,16 +216,16 @@ public class WorkListWearableListFragment extends Fragment {
             new WearableListView.OnScrollListener() {
                 @Override
                 public void onAbsoluteScrollChange(int i) {
-                    // Only scroll the title up from its original base position
+                   /* // Only scroll the title up from its original base position
                     // and not down.
                     if (i > 0) {
                         listHeader.setY(-i);
-                    }
+                    }*/
                 }
 
                 @Override
                 public void onScroll(int i) {
-                    // Placeholder
+                    listHeader.setY(listHeader.getY() - i);
                 }
 
                 @Override
