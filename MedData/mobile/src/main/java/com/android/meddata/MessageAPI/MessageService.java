@@ -71,6 +71,9 @@ public class MessageService implements  GoogleApiClient.ConnectionCallbacks,
                         }else if(type.equalsIgnoreCase("billing")){
                             result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("billing"+"$"+MobileApplication.getInstance().getBillingList()).getBytes()).await();
                             Log.d("TAG","Send message when billing"+"billing"+"$"+MobileApplication.getInstance().getBillingList());
+                        }else if(type.equalsIgnoreCase("bulk")){
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("bulk"+"$"+MobileApplication.getInstance().getBulkUpdateResponse()).getBytes()).await();
+                            Log.d("TAG","Send message when bulk"+"bulk"+"$"+MobileApplication.getInstance().getBulkUpdateResponse());
                         }
 
                         else {

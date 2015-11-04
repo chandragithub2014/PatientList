@@ -42,7 +42,13 @@ public class MessageService implements  GoogleApiClient.ConnectionCallbacks,
                 public void run() {
                     NodeApi.GetConnectedNodesResult nodes = Wearable.NodeApi.getConnectedNodes(mGoogleApiClient).await();
                     for(Node node : nodes.getNodes()) {
-                        MessageApi.SendMessageResult result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", message.getBytes()).await();
+                        MessageApi.SendMessageResult result = null;
+                        if(message.equalsIgnoreCase("bulk")){
+                            Log.d("TAG","Send message when bulk");
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("bulk"+"$"+ MobileApplication.getInstance().getBulkUpdatedList()).getBytes()).await();
+                        }else {
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", message.getBytes()).await();
+                        }
                         if(!result.getStatus().isSuccess()){
                             Log.e("test", "error");
                         } else {

@@ -95,7 +95,54 @@ Context ctx;
         return workList;
     }
 
+/*
+"DispositionId" : "Signed Off",
+      "Login_Id" : "test1",
+      "PrimaryPhysician" : "Phy444",
+      "EncounterId" : 199,
+      "Key" : "9C4A6Z:l",
+      "TransactionType" : "WA"
+ */
+    public JSONObject  getUpdatedPatientList(String depositionId){
+        JSONObject requestJsonObject = null;
+        JSONArray updatedJSONArray = new JSONArray();
+        JSONObject updatedJSON = new JSONObject();
+        String globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+        String key = "";
+        try {
+            JSONObject jsonObject = new JSONObject(globalJSON);
+             key = jsonObject.getString("Key");
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
 
+        String jsonArray = MobileApplication.getInstance().getPatientList();
+        try{
+            JSONArray jsonArray1 = new JSONArray(jsonArray);
+            for(int i=0;i<jsonArray1.length();i++){
+                JSONObject jsonObject = jsonArray1.getJSONObject(i);
+
+                updatedJSON.put("DispositionId",depositionId);
+                updatedJSON.put("Login_Id","veereshm");
+                updatedJSON.put("PrimaryPhysician",jsonObject.getString("PrimaryPhysician"));
+                updatedJSON.put("EncounterId",jsonObject.getString("EncounterId"));
+                updatedJSON.put("Key",key);
+                updatedJSON.put("TransactionType" , "WA");
+
+                updatedJSONArray.put(updatedJSON);
+
+
+            }
+             requestJsonObject = new JSONObject();
+            requestJsonObject.put("request", updatedJSONArray);
+
+        }
+        catch(JSONException e){
+            e.printStackTrace();
+        }
+        return  requestJsonObject;
+    }
     public WorkListDTO getPatientDetail(String encounterId){
         WorkListDTO temp  = new WorkListDTO();
         try {

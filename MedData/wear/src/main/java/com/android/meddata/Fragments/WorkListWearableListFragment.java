@@ -4,8 +4,13 @@ package com.android.meddata.Fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.support.wearable.view.WearableListView;
@@ -26,7 +31,10 @@ import com.android.meddata.Adapters.WorkListItemLayout;
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.WorkListDTO;
+import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +50,14 @@ public class WorkListWearableListFragment extends Fragment {
     int mContainerId = -1;
     RelativeLayout header;
     ImageButton floatingToolBarButton;
+    AlertDialog  sortByDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Register the local broadcast receiver
+        IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
+        MessageReceiver messageReceiver = new MessageReceiver();
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(messageReceiver, messageFilter);
     }
 
     @Nullable
@@ -100,11 +113,24 @@ public class WorkListWearableListFragment extends Fragment {
                     public void onClick(WearableListView.ViewHolder viewHolder) {
                         RelativeLayout listViewRowView = (RelativeLayout) viewHolder.itemView;
                      //   String tag_clicked = (String)listViewRowView.getTag();
-                        Toast.makeText(getActivity(),
+                       /* Toast.makeText(getActivity(),
                                 String.format("You selected item #%s",
                                         viewHolder.getLayoutPosition()+1) ,
-                                Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT).show();*/
+                        JSONObject parsedJSONArray;
+                        if(viewHolder.getLayoutPosition()+1 == 1){
+                             parsedJSONArray = JSONParser.getInstance().getUpdatedPatientList("Billable Rounding");
+                        }else{
+                             parsedJSONArray = JSONParser.getInstance().getUpdatedPatientList("Signed Off");
+                        }
 
+                        String updatePatientList = ""+parsedJSONArray;
+                        if(!TextUtils.isEmpty(updatePatientList)){
+                            MobileApplication.getInstance().setBulkUpdatedList(updatePatientList);
+                        }
+                        MessageService.getInstance().startMessageService(getActivity(),"bulk");
+                        sortByDialog.dismiss();
+                        Log.d("TAG","ParsedJSON"+parsedJSONArray);
                     }
 
                     @Override
@@ -119,7 +145,7 @@ public class WorkListWearableListFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });*/
-                AlertDialog  sortByDialog = dialogBuilder.create();
+                sortByDialog = dialogBuilder.create();
                 sortByDialog.show();
             }
         });
@@ -238,4 +264,29 @@ public class WorkListWearableListFragment extends Fragment {
                     // Placeholder
                 }
             };
+
+
+    public class MessageReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //  String message = intent.getStringExtra("message");
+            //Log.v("myTag", "Main activity received message: " + message);
+
+
+            //
+            if(intent.hasExtra("result")) {
+               String result_data  = intent.getStringExtra("result");
+                if(result_data.equalsIgnoreCase("bulk")){
+                    Log.d("TAG", "BulkResponse::::" + MobileApplication.getInstance().getBulkUpdateResponse());
+                    Toast.makeText(getActivity(),MobileApplication.getInstance().getBulkUpdateResponse(),Toast.LENGTH_LONG).show();
+                }
+              /*  Bitmap b = BitmapFactory.decodeByteArray(
+                        intent.getByteArrayExtra("byteArray"),0,intent.getByteArrayExtra("byteArray").length);
+                productImage.setImageBitmap(b);*/
+            }
+            //
+            // Display message in UI
+            //  mTextView.setText(message);
+        }
+    }
 }

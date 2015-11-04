@@ -118,6 +118,17 @@ Context ctx;
             }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("gender")){
                 MobileApplication.getInstance().setGender(response);
                 flag = "gender";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("bulk")){
+                JSONObject responseJsonObject = new JSONObject(response);
+                flag = responseJsonObject.getString("Flag");
+                if(flag.equalsIgnoreCase("S")){
+                    MobileApplication.getInstance().setBulkUpdateResponse("The account status has been updated");
+                }else if(flag.equalsIgnoreCase("C")){
+                    MobileApplication.getInstance().setBulkUpdateResponse("Please update the earlier encounters before closing this patient record.");
+                }else if(flag.equalsIgnoreCase("E")){
+                    MobileApplication.getInstance().setBulkUpdateResponse("Error");
+                }
+                flag="bulk";
             }
             else {
                 JSONObject responseJsonObject = new JSONObject(response);

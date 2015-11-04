@@ -19,14 +19,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity implements OMSReceiveListener{
-
+    String intentExtra = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+if(getIntent().getExtras()!=null){
+   intentExtra = getIntent().getStringExtra("BULK");
+    Log.d("TAG","Extra Message :::"+intentExtra);
 
+}
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,19 +45,30 @@ public class MainActivity extends AppCompatActivity implements OMSReceiveListene
     @Override
     protected void onResume() {
         super.onResume();
-        try {
-            JSONObject loginJsonObject = new JSONObject();
-            loginJsonObject.put("Login_Id", "veereshm");
-            loginJsonObject.put("Password", "test@123");
-            JSONObject requestJsonObject = new JSONObject();
-            requestJsonObject.put("request", loginJsonObject);
-            new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this,requestJsonObject ).execute("https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser");
-        }
-        catch(JSONException e){
-            e.printStackTrace();;
-        }
-        catch(Exception e){
-            e.printStackTrace();
+        Log.d("TAG","In OnResume()");
+        if(intentExtra.equalsIgnoreCase("bulk")){
+            try {
+                JSONObject bulkList = new JSONObject(MobileApplication.getInstance().getBulkUpdatedList());
+                   Log.d("TAG","Bulk.......");
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, bulkList,"bulk").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/SetDispositionAndPhysician");
+            }
+            catch (JSONException e){
+                e.printStackTrace();
+            }
+        }else {
+            try {
+                JSONObject loginJsonObject = new JSONObject();
+                loginJsonObject.put("Login_Id", "veereshm");
+                loginJsonObject.put("Password", "test@123");
+                JSONObject requestJsonObject = new JSONObject();//
+                requestJsonObject.put("request", loginJsonObject);
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject).execute("https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                ;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -236,6 +251,8 @@ public class MainActivity extends AppCompatActivity implements OMSReceiveListene
 
          } else if(result.equalsIgnoreCase("notestype")){
              MessageService.getInstance().startMessageService(MainActivity.this,"notestype");
+         }else if(result.equalsIgnoreCase("bulk")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"bulk");
          }
     }
 }

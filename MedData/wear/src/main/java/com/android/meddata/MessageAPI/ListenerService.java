@@ -79,6 +79,14 @@ public class ListenerService extends WearableListenerService {
                 String genderDetails = message.substring(message.lastIndexOf("$") + 1);
                 Log.d("TAG","genderDetails:::"+genderDetails);
                 MobileApplication.getInstance().setGender(genderDetails);
+            }else if(message.contains("bulk")){
+                String bulkResponse = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","genderDetails:::"+bulkResponse);
+                MobileApplication.getInstance().setBulkUpdateResponse(bulkResponse);
+                Intent messageIntent = new Intent();
+                messageIntent.setAction(Intent.ACTION_SEND);
+                messageIntent.putExtra("result","bulk");
+                LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
             }
             else{
                 MobileApplication.getInstance().setPropertiesJSON(message);

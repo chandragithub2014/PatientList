@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.android.meddata.Application.MobileApplication;
-import com.android.meddata.CompanionActivity;
 import com.android.meddata.MainActivity;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
@@ -26,6 +25,15 @@ public class ListenerService extends WearableListenerService {
                Intent i = new Intent(this, MainActivity.class);
               i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                startActivity(i);
+          } else  if(message.contains("bulk")){
+              String bulkList = message.substring(message.lastIndexOf("$") + 1);
+              Log.d("TAG","bulkList:::"+bulkList);
+              Intent i = new Intent(this, MainActivity.class);
+
+              i.putExtra("BULK", "bulk");
+              i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              startActivity(i);
+              MobileApplication.getInstance().setBulkUpdatedList(bulkList);
           }
 
         }else {

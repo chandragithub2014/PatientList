@@ -22,6 +22,8 @@ public class MobileApplication extends Application {
     private String dispositionList;
     private String gender;
     private String notesType;
+    private String bulkUpdatedList;
+    private String bulkUpdateResponse;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -141,5 +143,21 @@ public class MobileApplication extends Application {
 
     public void setNotesType(String notesType) {
         this.notesType = notesType;
+    }
+
+    public String getBulkUpdatedList() {
+        return bulkUpdatedList;
+    }
+
+    public void setBulkUpdatedList(String bulkUpdatedList) {
+        this.bulkUpdatedList = bulkUpdatedList;
+    }
+
+    public String getBulkUpdateResponse() {
+        return bulkUpdateResponse;
+    }
+
+    public void setBulkUpdateResponse(String bulkUpdateResponse) {
+        this.bulkUpdateResponse = bulkUpdateResponse;
     }
 }
