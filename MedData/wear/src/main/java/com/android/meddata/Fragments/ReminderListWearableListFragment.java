@@ -19,12 +19,9 @@ import android.widget.Toast;
 
 import com.android.meddata.Adapters.ReminderListAdapter;
 import com.android.meddata.Adapters.ReminderListItemLayout;
-import com.android.meddata.Adapters.WorkListAdapter;
-import com.android.meddata.Adapters.WorkListItemLayout;
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.RemindersDTO;
-import com.android.meddata.MedDataDTO.WorkListDTO;
 import com.android.meddata.R;
 
 import java.util.ArrayList;
@@ -167,14 +164,15 @@ public class ReminderListWearableListFragment extends Fragment {
                 public void onAbsoluteScrollChange(int i) {
                     // Only scroll the title up from its original base position
                     // and not down.
-                    if (i > 0) {
+                 /*   if (i > 0) {
                         listHeader.setY(-i);
-                    }
+                    }*/
                 }
 
                 @Override
                 public void onScroll(int i) {
                     // Placeholder
+                    listHeader.setY(listHeader.getY() - i);
                 }
 
                 @Override

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
+     <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/back_float_icon"
+        android:tint="@android:color/white"
+        android:id="@+id/fab_back"
+        android:elevation="1dp"
+        android:background="@drawable/ripple"
+        android:stateListAnimator="@anim/fab_anim"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="8dp"
+        android:text="From Date"
+        android:id="@+id/textView2"
+        android:textColor="#000000" />
+
+    <EditText
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/todate_val"
+        android:textSize="8dp"
+        android:hint="Select" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="8dp"
+        android:text="To Date"
+        android:id="@+id/textView4"
+        android:textColor="#000000" />
+
+    <EditText
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/from_date_val"
+        android:textSize="8dp"
+        android:hint="Select" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="8dp"
+        android:text="Location"
+        android:id="@+id/textView5"
+        android:textColor="#000000" />
+
+    <Spinner
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/loc_spinner" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="8dp"
+        android:text="Primary Physician"
+        android:id="@+id/textView6"
+        android:textColor="#000000" />
+
+    <Spinner
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/pr_phy" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="search"
+        android:textSize="8dp"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:id="@+id/search_handoff"
+        android:backgroundTint="@color/orange"
+
+
+        />
+
+
+</LinearLayout>
+    </ScrollView>

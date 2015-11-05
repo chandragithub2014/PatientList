@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/back_float_icon"
+            android:tint="@android:color/white"
+            android:id="@+id/fab_back"
+            android:elevation="1dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ripple"
+            android:stateListAnimator="@anim/fab_anim"
+           android:layout_alignParentLeft="true"
+            />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/save_fab"
+            android:tint="@android:color/white"
+            android:id="@+id/fab_save"
+            android:elevation="1dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ripple"
+            android:stateListAnimator="@anim/fab_anim"
+            android:layout_alignParentRight="true"
+            />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="10dp"
+        android:background="@android:color/darker_gray"
+        android:text="Hand Off All To"
+        android:textColor="#ffffff"
+        android:id="@+id/textView7"
+        android:backgroundTint="@color/orange"/>
+
+    <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*" >
+       <!-- <TableRow>
+          <include android:id="@+id/header_layout"
+              layout="@layout/table_header_layout"></include>
+        </TableRow>
+        <TableRow>
+            <include android:id="@+id/header_data_layout"
+                layout="@layout/table_data_layout"></include>
+        </TableRow>-->
+    </TableLayout>
+</LinearLayout>
+    </ScrollView>
+</LinearLayout>

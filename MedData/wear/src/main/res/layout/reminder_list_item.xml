@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/patientName"
-        android:textSize="10dp"
+        android:textSize="8dp"
         android:text=""
         android:textColor="#000000"
         android:alpha="0.6"/>
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/prim_physician"
-        android:textSize="10dp"
+        android:textSize="8dp"
         android:text=""
         android:textColor="#000000"
         android:alpha="0.6"/>
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sec_physician"
-        android:textSize="10dp"
+        android:textSize="8dp"
         android:text=""
         android:textColor="#000000"
         android:alpha="0.6"/>
@@ -68,7 +68,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="10dp"
+        android:textSize="8dp"
         android:id="@+id/hospitial_name"
         android:text=""
         android:textColor="#FF0000"

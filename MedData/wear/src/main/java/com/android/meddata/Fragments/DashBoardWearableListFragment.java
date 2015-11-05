@@ -69,10 +69,10 @@ public class DashBoardWearableListFragment extends Fragment {
             new WearableListView.ClickListener() {
                 @Override
                 public void onClick(WearableListView.ViewHolder viewHolder) {
-                    Toast.makeText(getActivity(),
+                   /* Toast.makeText(getActivity(),
                             String.format("You selected item #%s",
                                     viewHolder.getLayoutPosition()+1),
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();*/
                     if( viewHolder.getLayoutPosition()+1 == 1){
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.framelayout, new WorkListWearableListFragment()).addToBackStack(null)
@@ -84,6 +84,10 @@ public class DashBoardWearableListFragment extends Fragment {
                     }else if( viewHolder.getLayoutPosition()+1 == 4){
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.framelayout, new Account_Details_Fragment()).addToBackStack(null)
+                                .commit();
+                    }else if( viewHolder.getLayoutPosition()+1 == 3){
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.framelayout, new HandOffListFragment()).addToBackStack(null)
                                 .commit();
                     }
                 }
