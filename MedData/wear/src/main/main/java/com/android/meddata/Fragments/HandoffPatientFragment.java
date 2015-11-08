@@ -3,7 +3,6 @@ package com.android.meddata.Fragments;
 //http://stackoverflow.com/questions/17312435/change-divider-color-or-theme-of-android-datepicker-dialog
 
 import android.app.DatePickerDialog;
-import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -17,27 +16,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 
-import com.android.meddata.Application.MobileApplication;
-import com.android.meddata.JSONParser.JSONParser;
-import com.android.meddata.MedDataDTO.LocationDTO;
-import com.android.meddata.MedDataDTO.PhysicianDTO;
 import com.android.meddata.R;
-import com.android.meddata.custom.CustomSpinner;
-import com.android.meddata.interfaces.SendDataDialogListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -45,7 +34,7 @@ import java.util.Locale;
  * Use the {@link HandoffPatientFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HandoffPatientFragment extends Fragment implements View.OnClickListener,SendDataDialogListener {
+public class HandoffPatientFragment extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -66,7 +55,6 @@ public class HandoffPatientFragment extends Fragment implements View.OnClickList
     boolean isDateCancel = false;
     boolean isDateSet = false;
     private boolean isFromSelected = false;
-
 
     /**
      * Use this factory method to create a new instance of
@@ -132,95 +120,24 @@ public class HandoffPatientFragment extends Fragment implements View.OnClickList
         toDateVal.setTextColor(Color.parseColor("#999999"));
         toDateVal.setOnClickListener(this);
         fromDateVal.setOnClickListener(this);
-
-        String dayOfTheWeek = (String) android.text.format.DateFormat.format("EEEE", dt);//Thursday
-        String stringMonth = (String) android.text.format.DateFormat.format("MMM", dt); //Jun
-        String intMonth = (String) android.text.format.DateFormat.format("MM", dt); //06
-        String year = (String) android.text.format.DateFormat.format("yyyy", dt); //2013
-        String day = (String) android.text.format.DateFormat.format("dd", dt); //20
-
-        Log.d("TAG","Day Of Week:::"+dayOfTheWeek);
-        Log.d("TAG","Day Of stringMonth:::"+stringMonth);
-        Log.d("TAG","Day Of intMonth:::"+intMonth);
-        Log.d("TAG","Day Of year:::"+year);
-        Log.d("TAG","Day Of day:::"+day);
-        initSpinners(view);
         return view;
     }
 
-    private void initSpinners(View v) {
-        Spinner locationSpinner = (Spinner) v.findViewById(R.id.loc_spinner);
-        Spinner physicianSpinner = (Spinner) v.findViewById(R.id.pr_phy);
-
-        List<LocationDTO> locList = JSONParser.getInstance().getLocationList(MobileApplication.getInstance().getLocationList());
-        List<String> hospitalList = new ArrayList<String>();
-        if (locList != null && locList.size() > 0) {
-            for (int i = 0; i < locList.size(); i++) {
-                hospitalList.add(locList.get(i).getListDesc());
-            }
-            if (hospitalList != null && hospitalList.size() > 0) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, hospitalList);
-                locationSpinner.setAdapter(adapter);
-            }
-
-        }
-
-        if (!TextUtils.isEmpty(MobileApplication.getInstance().getPhysicianList())) {
-            List<PhysicianDTO> prPhyList = JSONParser.getInstance().getPhysicianList(MobileApplication.getInstance().getPhysicianList());
-            List<String> phyList = new ArrayList<String>();
-            if (prPhyList != null && prPhyList.size() > 0) {
-                for (int i = 0; i < prPhyList.size(); i++) {
-                    phyList.add(prPhyList.get(i).getPhyDesc());
-                }
-                if (phyList != null && phyList.size() > 0) {
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, phyList);
-                    physicianSpinner.setAdapter(adapter);
-                    physicianSpinner.setAdapter(adapter);
-                   /* if(!TextUtils.isEmpty(tempWorkListDto.getPhysicianName())){
-                        int spinnerPosition = adapter.getPosition(tempWorkListDto.getPhysicianName());
-                        physicianSpinner.setSelection(spinnerPosition);
-                    }*/
-                }
-            }
-        }
-    }
 
     @Override
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.to_date_val:
 
-               /* FragmentManager fragmentManager = getFragmentManager();
+                FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(mContainerId, DatePickerWearFragment.newInstance("","")).addToBackStack(null).commit();*/
-
-              /*  DialogFragment newFragment = new DatePickerDialogFragment();
-                newFragment.show(getFragmentManager(), "datePicker");*/
-
-                FragmentManager fm = getFragmentManager();
-                DatePickerDialogFragment dialogFragment = new DatePickerDialogFragment ();
-                Bundle args = new Bundle();
-                args.putString("date", toDateVal.getText().toString());
-                dialogFragment.setArguments(args);
-                dialogFragment.setTargetFragment(this, 0);
-                dialogFragment.show(fm, "Date Dialog Fragment");
+                fragmentTransaction.replace(mContainerId, DatePickerWearFragment.newInstance("","")).addToBackStack(null).commit();
               //  showDatePicker();
                 //processDate(toDateVal.getText().toString());
                 break;
             case R.id.from_date_val:
                 isFromSelected = true;
-                FragmentManager fm1 = getFragmentManager();
-                DatePickerDialogFragment dialogFragment1 = new DatePickerDialogFragment ();
-                Bundle args1 = new Bundle();
-                args1.putString("date", "value");
-                dialogFragment1.setArguments(args1);
-                dialogFragment1.setTargetFragment(this, 0);
-                dialogFragment1.show(fm1, "Date Dialog Fragment");
-
-               /* FragmentManager fragmentManager = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(mContainerId, CustomDatePickerFragment.newInstance("","")).addToBackStack(null).commit();*/
-              //  processDate(fromDateVal.getText().toString());
+                processDate(fromDateVal.getText().toString());
                 break;
         }
     }
@@ -387,12 +304,5 @@ if(isFromSelected) {
         return readableDate;
     }
 
-    @Override
-    public void onFinishDialog(String inputText) {
-        if(!TextUtils.isEmpty(inputText)) {
-            if (toDateVal != null) {
-                toDateVal.setText(inputText);
-            }
-        }
-    }
+
 }

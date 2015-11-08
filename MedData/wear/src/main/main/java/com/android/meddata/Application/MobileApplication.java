@@ -23,7 +23,6 @@ public class MobileApplication extends Application {
     private String notesType;
     private String bulkUpdatedList;
     private String bulkUpdateResponse;
-
     @Override
     public void onCreate() {
         super.onCreate();

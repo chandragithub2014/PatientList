@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mandatory_label"
+        android:text = "Mandatory Label"
+        android:layout_marginTop="3dp"
+        android:textSize="10dp"
+        android:textColor="#000000"
+      />
+<RelativeLayout
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:id="@+id/mandatory_text_field_layout"
+    >
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView5"
+        android:src="@drawable/ic_mf_indicator_input_mandatory"
+        android:layout_marginTop="5dp"
+
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:textSize="10dp"
+        android:textColor="#000000"
+        android:alpha="0.6"
+        android:text="Name"
+        android:ems="10"
+        android:id="@+id/editText2"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imageView5"
+        android:editable="false"
+
+         />
+</RelativeLayout>
+</LinearLayout>

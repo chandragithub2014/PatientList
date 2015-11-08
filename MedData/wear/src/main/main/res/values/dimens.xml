@@ -1,0 +1,9 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="small_circle_radius">16dp</dimen>
+    <dimen name="big_circle_radius">20dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="end_z">1dp</dimen>
+    <dimen name="start_z">8dp</dimen>
+</resources>
