@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.R;
@@ -42,7 +41,6 @@ ImageView phyImg;
     View v =null;
 EditText mandatory_name,mandatory_email;
     int mContainerId = -1;
-    TextView phyName;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,12 +70,11 @@ EditText mandatory_name,mandatory_email;
     }
 
     private void initLayout(){
-        phyName = (TextView)v.findViewById(R.id.phy_name);
-       /* phyImg = (ImageView)v.findViewById(R.id.imageView);
+        phyImg = (ImageView)v.findViewById(R.id.imageView);
         RelativeLayout mandatory_layout = (RelativeLayout) v.findViewById(R.id.mandatory_name);
         mandatory_name = (EditText)mandatory_layout.findViewById(R.id.editText2);
         RelativeLayout mandatory_email_layout = (RelativeLayout) v.findViewById(R.id.email_layout);
-        mandatory_email = (EditText)mandatory_email_layout.findViewById(R.id.email);*/
+        mandatory_email = (EditText)mandatory_email_layout.findViewById(R.id.email);
     }
 
 

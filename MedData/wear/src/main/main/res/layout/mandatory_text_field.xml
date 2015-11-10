@@ -9,7 +9,6 @@
         android:src="@drawable/ic_mf_indicator_input_mandatory"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
-
         />
 
     <EditText

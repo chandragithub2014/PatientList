@@ -35,7 +35,6 @@ import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +76,6 @@ public class WorkListWearableListFragment extends Fragment {
         // This is our list header
         floatingToolBarButton = (ImageButton)view.findViewById(R.id.fab);
          listHeader = (RelativeLayout)view.findViewById(R.id.work_list_header);
-        listHeader.setVisibility(View.GONE);
         mContainerId = container.getId();
         WearableListView wearableListView =
                 (WearableListView)view. findViewById(R.id.work_List);
@@ -85,8 +83,6 @@ public class WorkListWearableListFragment extends Fragment {
         Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
         ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
         back_img.setVisibility(View.VISIBLE);
-      TextView toolbarTitle = (TextView)mToolBar.findViewById(R.id.title);
-        toolbarTitle.setText("Work List");
         back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,11 +217,11 @@ public class WorkListWearableListFragment extends Fragment {
                 public void onClick(WearableListView.ViewHolder viewHolder) {
                     WorkListItemLayout listViewRowView = (WorkListItemLayout) viewHolder.itemView;
                     String tag_clicked = (String)listViewRowView.getTag();
-                /*    Toast.makeText(getActivity(),
+                    Toast.makeText(getActivity(),
                             String.format("You selected item #%s",
                                     viewHolder.getLayoutPosition()+1) +"TAG Clicked"+tag_clicked,
                             Toast.LENGTH_SHORT).show();
-*/
+
                     getFragmentManager().beginTransaction()
                             .replace(R.id.framelayout, PatentDetailsFragment.newInstance(tag_clicked,"")).addToBackStack(null)
                             .commit();
@@ -282,7 +278,7 @@ public class WorkListWearableListFragment extends Fragment {
                String result_data  = intent.getStringExtra("result");
                 if(result_data.equalsIgnoreCase("bulk")){
                     Log.d("TAG", "BulkResponse::::" + MobileApplication.getInstance().getBulkUpdateResponse());
-              //      Toast.makeText(getActivity(),MobileApplication.getInstance().getBulkUpdateResponse(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),MobileApplication.getInstance().getBulkUpdateResponse(),Toast.LENGTH_LONG).show();
                 }
               /*  Bitmap b = BitmapFactory.decodeByteArray(
                         intent.getByteArrayExtra("byteArray"),0,intent.getByteArrayExtra("byteArray").length);
