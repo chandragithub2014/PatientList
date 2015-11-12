@@ -81,12 +81,29 @@ public class ListenerService extends WearableListenerService {
                 MobileApplication.getInstance().setGender(genderDetails);
             }else if(message.contains("bulk")){
                 String bulkResponse = message.substring(message.lastIndexOf("$") + 1);
-                Log.d("TAG","genderDetails:::"+bulkResponse);
+                Log.d("TAG","bulkResponse:::"+bulkResponse);
                 MobileApplication.getInstance().setBulkUpdateResponse(bulkResponse);
                 Intent messageIntent = new Intent();
                 messageIntent.setAction(Intent.ACTION_SEND);
                 messageIntent.putExtra("result","bulk");
                 LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
+            }else if(message.contains("accountUpdate")){
+                String accountUpdateResponse = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","accountUpdate:::"+accountUpdateResponse);
+                MobileApplication.getInstance().setAccount_update_response(accountUpdateResponse);
+                Intent messageIntent = new Intent();
+                messageIntent.setAction(Intent.ACTION_SEND);
+                messageIntent.putExtra("result", "accountUpdate");
+                LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
+            }else if(message.contains("handoffSearch")){
+                String handOffSearchResponse = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","handOffSearchResponse:::"+handOffSearchResponse);
+                MobileApplication.getInstance().setHandsOffSearchResponse(handOffSearchResponse);
+                Intent messageIntent = new Intent();
+                messageIntent.setAction(Intent.ACTION_SEND);
+                messageIntent.putExtra("result", "handoffSearch");
+                LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
+                //handoffSearch
             }
             else{
                 MobileApplication.getInstance().setPropertiesJSON(message);

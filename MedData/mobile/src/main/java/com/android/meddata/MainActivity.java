@@ -27,9 +27,17 @@ public class MainActivity extends AppCompatActivity implements OMSReceiveListene
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 if(getIntent().getExtras()!=null){
-   intentExtra = getIntent().getStringExtra("BULK");
-    Log.d("TAG","Extra Message :::"+intentExtra);
 
+if(getIntent().getStringExtra("BULK")!=null){
+    intentExtra = getIntent().getStringExtra("BULK");
+    Log.d("TAG","Extra Message :::"+intentExtra);
+}else if(getIntent().getStringExtra("ACCOUNT_UPDATE")!=null){
+    intentExtra = getIntent().getStringExtra("ACCOUNT_UPDATE");
+    Log.d("TAG","Extra Message :::account_update"+intentExtra);
+}else if(getIntent().getStringExtra("HANDOFF_SEARCH")!=null){
+    intentExtra = getIntent().getStringExtra("HANDOFF_SEARCH");
+    Log.d("TAG","Extra Message :::handoffSearch"+intentExtra);
+}
 }
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -49,13 +57,29 @@ if(getIntent().getExtras()!=null){
         if(intentExtra.equalsIgnoreCase("bulk")){
             try {
                 JSONObject bulkList = new JSONObject(MobileApplication.getInstance().getBulkUpdatedList());
-                   Log.d("TAG","Bulk.......");
+                   Log.d("TAG", "Bulk.......");
                 new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, bulkList,"bulk").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/SetDispositionAndPhysician");
             }
             catch (JSONException e){
                 e.printStackTrace();
             }
-        }else {
+        }else  if(intentExtra.equalsIgnoreCase("accountUpdate")){
+          try{
+              JSONObject accountUpdateList = new JSONObject(MobileApplication.getInstance().getUpdatedAccountDetails());
+              new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList,"accountUpdate").execute("https://dev-patientlists.meddata.com/UserLoginService.svc/UpdateMyAccount");
+          }catch (JSONException e){
+              e.printStackTrace();
+          }
+        }else if(intentExtra.equalsIgnoreCase("handoffSearch")){
+            try{
+                JSONObject accountUpdateList = new JSONObject(MobileApplication.getInstance().getHandOffSearchJSON());
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList,"handoffSearch").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetPatientForTransferOrRevert");
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
+        }
+        else {
             try {
                 JSONObject loginJsonObject = new JSONObject();
                 loginJsonObject.put("Login_Id", "veereshm");
@@ -253,6 +277,10 @@ if(getIntent().getExtras()!=null){
              MessageService.getInstance().startMessageService(MainActivity.this,"notestype");
          }else if(result.equalsIgnoreCase("bulk")){
              MessageService.getInstance().startMessageService(MainActivity.this,"bulk");
+         }else if(result.equalsIgnoreCase("accountUpdate")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"accountUpdate");
+         }else if(result.equalsIgnoreCase("handoffSearch")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"handoffSearch");
          }
     }
 }

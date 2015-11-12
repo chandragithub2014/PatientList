@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.meddata.Adapters.ReminderListAdapter;
@@ -63,6 +64,8 @@ public class ReminderListWearableListFragment extends Fragment {
                 (WearableListView)view. findViewById(R.id.reminder_List);
         mContainerId = container.getId();
         Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
+        TextView toolbarTitle = (TextView)mToolBar.findViewById(R.id.title);
+        toolbarTitle.setText("Reminders");
         ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
         back_img.setVisibility(View.VISIBLE);
         back_img.setOnClickListener(new View.OnClickListener() {

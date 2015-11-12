@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.interfaces.OMSReceiveListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -129,6 +130,26 @@ Context ctx;
                     MobileApplication.getInstance().setBulkUpdateResponse("Error");
                 }
                 flag="bulk";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("accountUpdate")){
+                JSONObject responseJsonObject = new JSONObject(response);
+                flag = responseJsonObject.getString("Flag");
+                if(flag.equalsIgnoreCase("S")){
+                    MobileApplication.getInstance().setAccount_update_response("Transaction is done");
+                }else  if(flag.equalsIgnoreCase("A")){
+                    MobileApplication.getInstance().setAccount_update_response("Physician alreday exists");
+                }else{
+                    MobileApplication.getInstance().setAccount_update_response("Error");
+                }
+                flag="accountUpdate";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("handoffSearch")){
+                //handoffSearch
+                JSONArray searchResponse = new JSONArray(response);
+                if(searchResponse.length()>0){
+                    MobileApplication.getInstance().setHandsOffSearchResponse(""+searchResponse);
+                }else{
+                    MobileApplication.getInstance().setHandsOffSearchResponse("No");
+                }
+                flag="handoffSearch";
             }
             else {
                 JSONObject responseJsonObject = new JSONObject(response);

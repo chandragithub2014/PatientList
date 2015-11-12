@@ -284,13 +284,9 @@ public class WorkListWearableListFragment extends Fragment {
                     Log.d("TAG", "BulkResponse::::" + MobileApplication.getInstance().getBulkUpdateResponse());
               //      Toast.makeText(getActivity(),MobileApplication.getInstance().getBulkUpdateResponse(),Toast.LENGTH_LONG).show();
                 }
-              /*  Bitmap b = BitmapFactory.decodeByteArray(
-                        intent.getByteArrayExtra("byteArray"),0,intent.getByteArrayExtra("byteArray").length);
-                productImage.setImageBitmap(b);*/
+
             }
-            //
-            // Display message in UI
-            //  mTextView.setText(message);
+
         }
     }
 }

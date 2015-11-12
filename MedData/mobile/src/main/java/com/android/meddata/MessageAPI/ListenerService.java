@@ -34,6 +34,26 @@ public class ListenerService extends WearableListenerService {
               i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
               startActivity(i);
               MobileApplication.getInstance().setBulkUpdatedList(bulkList);
+          } else  if(message.contains("accountUpdate")){
+              String account_updated_details = message.substring(message.lastIndexOf("$") + 1);
+              MobileApplication.getInstance().setUpdatedAccountDetails(account_updated_details);
+              Log.d("TAG", "account_updated_details:::" + account_updated_details);
+              Intent i = new Intent(this, MainActivity.class);
+
+              i.putExtra("ACCOUNT_UPDATE", "accountUpdate");
+              i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              startActivity(i);
+
+
+          }else  if(message.contains("handoffSearch")){
+              String handsOff_search_json  = message.substring(message.lastIndexOf("$") + 1);
+              MobileApplication.getInstance().setHandOffSearchJSON(handsOff_search_json);
+              Log.d("TAG", "handsOff_search_json:::" + handsOff_search_json);
+              Intent i = new Intent(this, MainActivity.class);
+
+              i.putExtra("HANDOFF_SEARCH", "handoffSearch");
+              i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              startActivity(i);
           }
 
         }else {

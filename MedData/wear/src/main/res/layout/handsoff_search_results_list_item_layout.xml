@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="10dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout"
+        android:layout_margin="5dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/patient_name"
+            android:textSize="10dp"
+            android:text="Patient"
+            android:textColor="#000000"
+            android:alpha="0.6"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/doctor_name"
+            android:text="Doctor"
+            android:textColor="#000000"
+            android:textSize="6dp"
+            android:alpha="0.6"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loc_name"
+            android:text="BPH-Hopital1"
+            android:textColor="#000000"
+            android:textSize="6dp"
+            android:alpha="0.6"/>
+    </LinearLayout>
+
+
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_list_detail"
+        android:scaleType="centerCrop"
+        android:id="@+id/detail"
+        android:alpha="0.6"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"/>
+
+
+
+
+
+</RelativeLayout>

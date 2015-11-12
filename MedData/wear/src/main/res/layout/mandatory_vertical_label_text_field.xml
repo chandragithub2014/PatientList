@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
     android:orientation="vertical"
+    android:layout_marginTop="16dp"
     >
 
     <TextView
@@ -28,10 +29,12 @@
         android:id="@+id/imageView5"
         android:src="@drawable/ic_mf_indicator_input_mandatory"
         android:layout_marginTop="5dp"
+        android:visibility="invisible"
 
         />
 
     <EditText
+        android:background="@drawable/edittext_gradient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
@@ -44,6 +47,7 @@
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/imageView5"
         android:editable="false"
+        android:layout_margin="10dp"
 
          />
 </RelativeLayout>

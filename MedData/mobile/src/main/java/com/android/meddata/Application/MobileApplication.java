@@ -24,6 +24,10 @@ public class MobileApplication extends Application {
     private String notesType;
     private String bulkUpdatedList;
     private String bulkUpdateResponse;
+    private String updatedAccountDetails;
+    private String account_update_response;
+    private String handOffSearchJSON;
+    private String handsOffSearchResponse;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -159,5 +163,37 @@ public class MobileApplication extends Application {
 
     public void setBulkUpdateResponse(String bulkUpdateResponse) {
         this.bulkUpdateResponse = bulkUpdateResponse;
+    }
+
+    public String getUpdatedAccountDetails() {
+        return updatedAccountDetails;
+    }
+
+    public void setUpdatedAccountDetails(String updatedAccountDetails) {
+        this.updatedAccountDetails = updatedAccountDetails;
+    }
+
+    public String getAccount_update_response() {
+        return account_update_response;
+    }
+
+    public void setAccount_update_response(String account_update_response) {
+        this.account_update_response = account_update_response;
+    }
+
+    public String getHandOffSearchJSON() {
+        return handOffSearchJSON;
+    }
+
+    public void setHandOffSearchJSON(String handOffSearchJSON) {
+        this.handOffSearchJSON = handOffSearchJSON;
+    }
+
+    public String getHandsOffSearchResponse() {
+        return handsOffSearchResponse;
+    }
+
+    public void setHandsOffSearchResponse(String handsOffSearchResponse) {
+        this.handsOffSearchResponse = handsOffSearchResponse;
     }
 }

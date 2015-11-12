@@ -56,6 +56,8 @@ public class DashBoardWearableListFragment extends Fragment {
         Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
         ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
         back_img.setVisibility(View.INVISIBLE);
+        TextView toolbarTitle = (TextView)mToolBar.findViewById(R.id.title);
+        toolbarTitle.setText("Patient List");
         wearableListView.setAdapter(new DashBoardAdapter(getActivity(), mIcons, dashBoardTitles));
         wearableListView.setClickListener(mClickListener);
         wearableListView.addOnScrollListener(mOnScrollListener);

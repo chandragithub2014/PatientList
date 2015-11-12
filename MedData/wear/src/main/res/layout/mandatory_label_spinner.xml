@@ -7,6 +7,7 @@
         android:layout_height="wrap_content"
         android:text="Location"
         android:textColor="#000000"
+        android:visibility="gone"
 
 
         android:id="@+id/spinner_label"
@@ -27,6 +28,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/imageView4"
         android:layout_marginTop="5dp"
+        android:visibility="invisible"
         android:src="@drawable/ic_mf_indicator_input_mandatory" />
     <Spinner
         android:layout_width="wrap_content"

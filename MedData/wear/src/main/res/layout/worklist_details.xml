@@ -107,5 +107,15 @@
            android:layout_height="wrap_content"
            android:layout_below="@+id/admission_layout"></include>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Notes"
+        android:backgroundTint="@color/blue"
+        android:id="@+id/view_notes_btn"
+        android:layout_below="@+id/financial_no_layout"
+        android:layout_margin="10dp"
+        ></Button>
+
 </RelativeLayout>
 </ScrollView>
