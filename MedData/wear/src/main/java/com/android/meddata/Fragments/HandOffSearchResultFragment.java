@@ -158,7 +158,7 @@ public class HandOffSearchResultFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(mContainerId, HandoffPatientFragment.newInstance("","")).addToBackStack(null).commit();
+                fragmentTransaction.replace(mContainerId, MyHandoffPatientFragment.newInstance("","")).addToBackStack(null).commit();
             }
         });
        // tableLayout.add

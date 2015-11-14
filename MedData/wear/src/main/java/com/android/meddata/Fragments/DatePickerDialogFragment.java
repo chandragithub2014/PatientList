@@ -54,7 +54,7 @@ public class DatePickerDialogFragment  extends DialogFragment
     int numPickerMonth = 1;
     TextView set_btn,cancel_btn;
     HashMap<Integer,String> monthlyHash;
-
+    String dateType="to";
 
 
 
@@ -65,7 +65,8 @@ public class DatePickerDialogFragment  extends DialogFragment
         if(getArguments()!=null) {
             Bundle mArgs = getArguments();
             receivedDate = mArgs.getString("date");
-            if (!TextUtils.isEmpty(receivedDate) && receivedDate.equalsIgnoreCase("select")) {
+            dateType =  mArgs.getString("type");
+            if (!TextUtils.isEmpty(receivedDate) && !receivedDate.equalsIgnoreCase("value")) {
                 parseDate(receivedDate);
             }
         }
@@ -193,7 +194,8 @@ private void populateMonthlyHash(){
               /*  SendDataDialogListener activity = (SendDataDialogListener) getActivity();
                 activity.onFinishDialog("monthlyHash.get(numPickerMonth)+\" \"+numPickerDay+\",\"+numPickerYear");*/
                 SendDataDialogListener mHost = (SendDataDialogListener)getTargetFragment();
-                mHost.onFinishDialog( monthlyHash.get(numPickerMonth)+" "+numPickerDay+","+numPickerYear);
+                String parsedDate = monthlyHash.get(numPickerMonth)+" "+numPickerDay+","+" "+numPickerYear;
+                mHost.onFinishDialog(parsedDate,dateType);
                 dismiss();
             }
         });

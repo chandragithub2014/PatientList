@@ -28,6 +28,11 @@ public class MobileApplication extends Application {
     private String account_update_response;
     private String handOffSearchJSON;
     private String handsOffSearchResponse;
+    private String handOffPatientJSON;
+    private String patientHandOffResponse;
+    private String patientRevertJSON;
+    private String patientRevertResponse;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -195,5 +200,37 @@ public class MobileApplication extends Application {
 
     public void setHandsOffSearchResponse(String handsOffSearchResponse) {
         this.handsOffSearchResponse = handsOffSearchResponse;
+    }
+
+    public String getHandOffPatientJSON() {
+        return handOffPatientJSON;
+    }
+
+    public void setHandOffPatientJSON(String handOffPatientJSON) {
+        this.handOffPatientJSON = handOffPatientJSON;
+    }
+
+    public String getPatientHandOffResponse() {
+        return patientHandOffResponse;
+    }
+
+    public void setPatientHandOffResponse(String patientHandOffResponse) {
+        this.patientHandOffResponse = patientHandOffResponse;
+    }
+
+    public String getPatientRevertJSON() {
+        return patientRevertJSON;
+    }
+
+    public void setPatientRevertJSON(String patientRevertJSON) {
+        this.patientRevertJSON = patientRevertJSON;
+    }
+
+    public String getPatientRevertResponse() {
+        return patientRevertResponse;
+    }
+
+    public void setPatientRevertResponse(String patientRevertResponse) {
+        this.patientRevertResponse = patientRevertResponse;
     }
 }

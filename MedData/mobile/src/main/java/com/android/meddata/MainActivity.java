@@ -37,6 +37,12 @@ if(getIntent().getStringExtra("BULK")!=null){
 }else if(getIntent().getStringExtra("HANDOFF_SEARCH")!=null){
     intentExtra = getIntent().getStringExtra("HANDOFF_SEARCH");
     Log.d("TAG","Extra Message :::handoffSearch"+intentExtra);
+}else if(getIntent().getStringExtra("HANDOFF_PATIENT")!=null){
+    intentExtra = getIntent().getStringExtra("HANDOFF_PATIENT");
+    Log.d("TAG","Extra Message :::handoffpatient"+intentExtra);
+}else if(getIntent().getStringExtra("REVERT_PATIENT")!=null){
+    intentExtra = getIntent().getStringExtra("REVERT_PATIENT");
+    Log.d("TAG","Extra Message :::revertpatient"+intentExtra);
 }
 }
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -78,6 +84,22 @@ if(getIntent().getStringExtra("BULK")!=null){
                 e.printStackTrace();
             }
 
+        }else if(intentExtra.equalsIgnoreCase("handoffpatient")){
+              try{
+                  JSONObject handOffPatientJSON = new JSONObject(MobileApplication.getInstance().getHandOffPatientJSON());
+                  new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON,"handoffpatient").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers");
+                  //https://dev-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers
+              }catch (JSONException e){
+                  e.printStackTrace();
+              }
+        }else if(intentExtra.equalsIgnoreCase("revertpatient")){
+            try{
+                JSONObject handOffPatientJSON = new JSONObject(MobileApplication.getInstance().getPatientRevertJSON());
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON,"revertpatient").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/RevertTransfers");
+                //https://dev-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
         }
         else {
             try {
@@ -281,6 +303,11 @@ if(getIntent().getStringExtra("BULK")!=null){
              MessageService.getInstance().startMessageService(MainActivity.this,"accountUpdate");
          }else if(result.equalsIgnoreCase("handoffSearch")){
              MessageService.getInstance().startMessageService(MainActivity.this,"handoffSearch");
+         }else if(result.equalsIgnoreCase("handoffpatient")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"handoffpatient");
+         }else if(result.equalsIgnoreCase("revertpatient")){
+             MessageService.getInstance().startMessageService(MainActivity.this,"revertpatient");
          }
+        //revertpatient
     }
 }

@@ -104,6 +104,22 @@ public class ListenerService extends WearableListenerService {
                 messageIntent.putExtra("result", "handoffSearch");
                 LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
                 //handoffSearch
+            }else if(message.contains("handoffpatient")){
+                String handOffPatientResponse = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","handOffPatientResponse:::"+handOffPatientResponse);
+                MobileApplication.getInstance().setPatientHandOffResponse(handOffPatientResponse);
+                Intent messageIntent = new Intent();
+                messageIntent.setAction(Intent.ACTION_SEND);
+                messageIntent.putExtra("result", "handoffpatient");
+                LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
+            }else if(message.contains("revertpatient")){
+                String revertPatientResponse = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","revertpatientPatientResponse:::"+revertPatientResponse);
+                MobileApplication.getInstance().setPatientRevertResponse(revertPatientResponse);
+                Intent messageIntent = new Intent();
+                messageIntent.setAction(Intent.ACTION_SEND);
+                messageIntent.putExtra("result", "revertpatient");
+                LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
             }
             else{
                 MobileApplication.getInstance().setPropertiesJSON(message);

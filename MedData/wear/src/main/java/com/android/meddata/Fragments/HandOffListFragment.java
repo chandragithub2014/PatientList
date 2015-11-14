@@ -82,7 +82,9 @@ public class HandOffListFragment extends Fragment {
                             .replace(R.id.framelayout, HandOffSearchListFragment.newInstance("","")).addToBackStack(null)
                             .commit();
                 } else {
-
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.framelayout, MyHandoffPatientFragment.newInstance("","")).addToBackStack(null)
+                            .commit();
                 }
             }
         });

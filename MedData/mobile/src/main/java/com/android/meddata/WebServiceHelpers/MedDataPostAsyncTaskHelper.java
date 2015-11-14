@@ -150,7 +150,28 @@ Context ctx;
                     MobileApplication.getInstance().setHandsOffSearchResponse("No");
                 }
                 flag="handoffSearch";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("handoffpatient")){
+                //handoffpatient
+                JSONObject responseJsonObject = new JSONObject(response);
+                flag = responseJsonObject.getString("Flag");
+                if(flag.equalsIgnoreCase("S")){
+                    MobileApplication.getInstance().setPatientHandOffResponse("Patient handed Off");
+                }else{
+                    MobileApplication.getInstance().setPatientHandOffResponse("Error");
+                }
+                flag="handoffpatient";
+            }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("revertpatient")){
+                //handoffpatient
+                JSONObject responseJsonObject = new JSONObject(response);
+                flag = responseJsonObject.getString("Flag");
+                if(flag.equalsIgnoreCase("S")){
+                    MobileApplication.getInstance().setPatientRevertResponse("Patient Reverted");
+                }else{
+                    MobileApplication.getInstance().setPatientRevertResponse("Error");
+                }
+                flag="revertpatient";
             }
+            //revertpatient
             else {
                 JSONObject responseJsonObject = new JSONObject(response);
                 flag = responseJsonObject.getString("Flag");

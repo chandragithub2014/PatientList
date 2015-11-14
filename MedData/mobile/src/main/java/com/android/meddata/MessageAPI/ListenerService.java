@@ -54,10 +54,26 @@ public class ListenerService extends WearableListenerService {
               i.putExtra("HANDOFF_SEARCH", "handoffSearch");
               i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
               startActivity(i);
+          }else if(message.contains("handoffpatient")){
+              String handoffpatient_json =  message.substring(message.lastIndexOf("$") + 1);
+              MobileApplication.getInstance().setHandOffPatientJSON(handoffpatient_json);
+              Log.d("TAG", "handoffpatient_json:::" + handoffpatient_json);
+              Intent i = new Intent(this, MainActivity.class);
+              i.putExtra("HANDOFF_PATIENT", "handoffpatient");
+              i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              startActivity(i);
+          }else if(message.contains("revertpatient")){
+              String  revertpatient_json =  message.substring(message.lastIndexOf("$") + 1);
+              MobileApplication.getInstance().setPatientRevertJSON(revertpatient_json);
+              Log.d("TAG", "revertpatient_json:::" + revertpatient_json);
+              Intent i = new Intent(this, MainActivity.class);
+              i.putExtra("REVERT_PATIENT", "revertpatient");
+              i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              startActivity(i);
           }
 
         }else {
-            super.onMessageReceived(messageEvent);
+           super.onMessageReceived(messageEvent);
         }
     }
 

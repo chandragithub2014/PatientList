@@ -1,3 +1,4 @@
+<!--
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -26,10 +27,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Month"
+        android:text="Mon"
         android:layout_gravity="center"
         android:textSize="10dp"/>
-    <!-- Month -->
+    &lt;!&ndash; Month &ndash;&gt;
     <NumberPicker
         android:id="@+id/month"
         android:layout_width="wrap_content"
@@ -53,7 +54,7 @@
             android:text="Day"
             android:layout_gravity="center"
             android:textSize="10dp"/>
-    <!-- Day -->
+    &lt;!&ndash; Day &ndash;&gt;
     <NumberPicker
         android:id="@+id/day"
         android:layout_width="wrap_content"
@@ -74,10 +75,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Year"
+            android:text="Yr"
           android:layout_gravity="center"
             android:textSize="10dp"/>
-    <!-- Year -->
+    &lt;!&ndash; Year &ndash;&gt;
     <NumberPicker
         android:id="@+id/year"
         android:layout_width="wrap_content"
@@ -116,3 +117,131 @@
            android:layout_alignParentRight="true"/>
     </RelativeLayout>
 </LinearLayout>
+-->
+
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/numpicker_title"
+        android:text="Date Picker"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentTop="true"
+        android:textSize="10dp"
+     />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/header"
+        android:layout_below="@+id/numpicker_title">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="MM"
+            android:textColor="#000000"
+            android:layout_weight="1"
+            android:textSize="8dp"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="DD"
+            android:textColor="#000000"
+            android:layout_weight="1"
+            android:textSize="8dp"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="YY"
+            android:textColor="#000000"
+            android:layout_weight="1"
+            android:textSize="8dp"
+            android:gravity="center"/>
+    </LinearLayout>
+<LinearLayout
+
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_below="@+id/header"
+>
+
+<!-- Month -->
+<NumberPicker
+    android:id="@+id/month"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:scaleX="0.4"
+    android:scaleY="0.4"
+    android:layout_weight="1"
+
+    />
+
+<!-- Day -->
+<NumberPicker
+    android:id="@+id/day"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+
+     android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:scaleX="0.4"
+    android:scaleY="0.4"
+    android:layout_toRightOf="@+id/month"
+    android:layout_weight="1"
+
+    />
+
+<!-- Year -->
+<NumberPicker
+    android:id="@+id/year"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:scaleX="0.4"
+    android:scaleY="0.4"
+    android:layout_toRightOf="@+id/day"
+    android:layout_weight="1"
+    />
+
+
+
+</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="Cancel"
+            android:id="@+id/cancel_dialog"
+            android:gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_alignParentLeft="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="Set"
+            android:id="@+id/set_dialog"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+</RelativeLayout>

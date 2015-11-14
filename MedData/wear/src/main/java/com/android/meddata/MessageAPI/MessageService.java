@@ -53,6 +53,12 @@ public class MessageService implements  GoogleApiClient.ConnectionCallbacks,
                             //handoffSearch
                             Log.d("TAG","Send message when handoffSearch");
                             result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("handoffSearch"+"$"+ MobileApplication.getInstance().getHandOffSearchJSON()).getBytes()).await();
+                        }else  if(message.equalsIgnoreCase("handoffpatient")){
+                            Log.d("TAG","Send message when handoffpatient");
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("handoffpatient"+"$"+ MobileApplication.getInstance().getHandOffPatientJSON()).getBytes()).await();
+                        }else  if(message.equalsIgnoreCase("revertpatient")){
+                            Log.d("TAG","Send message when revertpatient");
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("revertpatient"+"$"+ MobileApplication.getInstance().getPatientRevertJSON()).getBytes()).await();
                         }
                         else {
                             result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", message.getBytes()).await();

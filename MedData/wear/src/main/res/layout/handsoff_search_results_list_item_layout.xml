@@ -5,7 +5,8 @@
     android:gravity="center_vertical"
     android:paddingStart="20dp"
     android:paddingEnd="10dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -39,10 +40,27 @@
             android:textColor="#000000"
             android:textSize="6dp"
             android:alpha="0.6"/>
+
+
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:id="@+id/rt_linearLayout"
+        android:layout_margin="5dp">
 
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/encounter_date"
+            android:layout_above="@+id/detail"
+            android:textColor="#000000"
+            android:text=" Encounter Date"
+            android:textSize="6dp"
+            android:alpha="0.6"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -57,6 +75,29 @@
 
 
 
-
+    </LinearLayout>
 
 </RelativeLayout>
+
+
+
+
+ <!--<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/patient_id"
+            android:text="BPH-Hopital1"
+            android:textColor="#000000"
+            android:textSize="6dp"
+            android:visibility="visible"
+            android:alpha="0.6"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/encounter_id"
+            android:text="BPH-Hopital1"
+            android:textColor="#000000"
+            android:textSize="6dp"
+            android:visibility="visible"
+            android:alpha="0.6"/>-->

@@ -1,15 +1,14 @@
 package com.android.meddata.Fragments;
 
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.ParseException;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.wearable.view.WearableListView;
 import android.text.TextUtils;
@@ -17,16 +16,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.meddata.Adapters.HandOffAdapter;
-import com.android.meddata.Adapters.WorkListItemLayout;
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.LocationDTO;
+import com.android.meddata.MedDataDTO.PhysicianDTO;
 import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
 
@@ -58,6 +59,9 @@ public class HandsoffLocationSearchFragment extends Fragment {
     int clickedLocationId = 1;
     String locationId="";
     int mContainerId = -1;
+    Spinner location_spinner,primary_phy_spinner;
+    Button search_patients;
+    String selectedPhy="";
 
 
     /**
@@ -98,10 +102,15 @@ public class HandsoffLocationSearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view  =  inflater.inflate(R.layout.handoff_wearable_list_layout, container, false);
+      //  View view  =  inflater.inflate(R.layout.handoff_wearable_list_layout, container, false);
+        View view  =  inflater.inflate(R.layout.handoff_search_layout, container, false);
+
         mContainerId = container.getId();
-        RelativeLayout headerLayout = (RelativeLayout)view.findViewById(R.id.handoff_list_header);
-        headerLayout.setVisibility(View.INVISIBLE);
+      /*  RelativeLayout headerLayout = (RelativeLayout)view.findViewById(R.id.handoff_list_header);
+        headerLayout.setVisibility(View.INVISIBLE);*/
+
+        location_spinner = (Spinner)view.findViewById(R.id.loc_spinner);
+        primary_phy_spinner = (Spinner)view.findViewById(R.id.primary_spinner);
         locationHash = new HashMap<String,String>();
         List<LocationDTO> locList = JSONParser.getInstance().getLocationList(MobileApplication.getInstance().getLocationList());
         List<String> hospitalList = new ArrayList<String>();
@@ -120,12 +129,65 @@ public class HandsoffLocationSearchFragment extends Fragment {
         }
 
 
-        WearableListView handoffListView = (WearableListView) view.findViewById(R.id.handoff_List);
+        if(hospitalList!=null && hospitalList.size()>0) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, hospitalList);
+            location_spinner.setAdapter(adapter);
+            location_spinner.setSelection(0);
+
+        }
+
+        location_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selctedLocation = parent.getItemAtPosition(position)
+                        .toString();
+                locationId =selctedLocation;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        if (!TextUtils.isEmpty(MobileApplication.getInstance().getPhysicianList())) {
+            List<PhysicianDTO> prPhyList = JSONParser.getInstance().getPhysicianList(MobileApplication.getInstance().getPhysicianList());
+            List<String> phyList = new ArrayList<String>();
+            if (prPhyList != null && prPhyList.size() > 0) {
+                for (int i = 0; i < prPhyList.size(); i++) {
+                    phyList.add(prPhyList.get(i).getPhyDesc());
+                }
+                if (phyList != null && phyList.size() > 0) {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, phyList);
+                    primary_phy_spinner.setAdapter(adapter);
+              //      primary_phy_spinner.setAdapter(adapter);
+                   /* if(!TextUtils.isEmpty(tempWorkListDto.getPhysicianName())){
+                        int spinnerPosition = adapter.getPosition(tempWorkListDto.getPhysicianName());
+                        physicianSpinner.setSelection(spinnerPosition);
+                    }*/
+                }
+            }
+        }
+
+        primary_phy_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedPhy = parent.getItemAtPosition(position)
+                        .toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        search_patients  = (Button)view.findViewById(R.id.search_handsoff);
+      /*  WearableListView handoffListView = (WearableListView) view.findViewById(R.id.handoff_List);
         handoffListView.setAdapter(new HandOffAdapter(getActivity(), hospitalList));
         WearableListView.ItemDecoration itemDecoration =
                 new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
         handoffListView.addItemDecoration(itemDecoration);
-        handoffListView.setClickListener(mClickListener);
+        handoffListView.setClickListener(mClickListener);*/
 
         ImageButton back_float = (ImageButton)view.findViewById(R.id.fab_back);
         back_float.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +199,12 @@ public class HandsoffLocationSearchFragment extends Fragment {
             }
         });
 
+        search_patients.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postForSearchResults();
+            }
+        });
 
         return view;
     }
@@ -200,7 +268,11 @@ public class HandsoffLocationSearchFragment extends Fragment {
         JSONObject    requestJsonObject = null;
         try {
             updateJSON = new JSONObject();
-            updateJSON.put("PrimaryPhysician", "Tyy Dr"); //Sue Chilson
+            if(!TextUtils.isEmpty(selectedPhy)){
+                updateJSON.put("PrimaryPhysician", selectedPhy);
+            }else {
+                updateJSON.put("PrimaryPhysician", "Tyy Dr"); //Sue Chilson
+            }
             updateJSON.put("FromDate", null);
             updateJSON.put("ToDate", null);
             updateJSON.put("MedicalRecordNo", "");
@@ -242,7 +314,7 @@ public class HandsoffLocationSearchFragment extends Fragment {
                         if(MobileApplication.getInstance().getHandsOffSearchResponse().equalsIgnoreCase("No")){
                             Toast.makeText(getActivity(),"No Records Found",Toast.LENGTH_SHORT).show();
                         }else{
-                             Log.d("TAG","Search Response:::"+MobileApplication.getInstance().getHandsOffSearchResponse());
+                            Log.d("TAG","Search Response:::"+MobileApplication.getInstance().getHandsOffSearchResponse());
                             getFragmentManager().beginTransaction()
                                     .replace(R.id.framelayout, HandsOffPatientSearchResultFragment.newInstance("","")).addToBackStack(null)
                                     .commit();

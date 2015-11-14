@@ -7,6 +7,9 @@ public class HandOffResultDTO {
     private  String patientName;
     private  String hospitalLocation;
     private String primPhy;
+    private int patientId;
+    private int encounterId;
+    private String encounterDate;
 
     public String getPatientName() {
         return patientName;
@@ -30,5 +33,29 @@ public class HandOffResultDTO {
 
     public void setHospitalLocation(String hospitalLocation) {
         this.hospitalLocation = hospitalLocation;
+    }
+
+    public int getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
+    }
+
+    public int getEncounterId() {
+        return encounterId;
+    }
+
+    public void setEncounterId(int encounterId) {
+        this.encounterId = encounterId;
+    }
+
+    public String getEncounterDate() {
+        return encounterDate;
+    }
+
+    public void setEncounterDate(String encounterDate) {
+        this.encounterDate = encounterDate;
     }
 }
