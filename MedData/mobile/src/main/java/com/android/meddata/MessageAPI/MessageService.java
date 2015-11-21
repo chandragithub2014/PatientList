@@ -89,6 +89,9 @@ public class MessageService implements  GoogleApiClient.ConnectionCallbacks,
                             //revertpatient
                             result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("revertpatient"+"$"+MobileApplication.getInstance().getPatientRevertResponse()).getBytes()).await();
                             Log.d("TAG","Send message when revertpatient"+"revertpatient"+"$"+MobileApplication.getInstance().getPatientRevertResponse());
+                        }else  if(type.equalsIgnoreCase("reminderCount")){
+                            Log.d("TAG","Send message when reminderCount");
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("reminderCount"+"$"+ MobileApplication.getInstance().getReminderCount()).getBytes()).await();
                         }
 
                         else {

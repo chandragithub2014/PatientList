@@ -32,6 +32,7 @@ public class MobileApplication extends Application {
     private String patientHandOffResponse;
     private String patientRevertJSON;
     private String patientRevertResponse;
+    private int reminderCount;
 
     @Override
     public void onCreate() {
@@ -232,5 +233,13 @@ public class MobileApplication extends Application {
 
     public void setPatientRevertResponse(String patientRevertResponse) {
         this.patientRevertResponse = patientRevertResponse;
+    }
+
+    public int getReminderCount() {
+        return reminderCount;
+    }
+
+    public void setReminderCount(int reminderCount) {
+        this.reminderCount = reminderCount;
     }
 }

@@ -5,19 +5,25 @@ import android.util.Log;
 
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.MainActivity;
+import com.android.meddata.WebServiceHelpers.MedDataPostAsyncTaskHelper;
+import com.android.meddata.interfaces.OMSReceiveListener;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.WearableListenerService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 /**
  * Created by 245742 on 9/28/2015.
  */
-public class ListenerService extends WearableListenerService {
-
+public class ListenerService extends WearableListenerService  implements OMSReceiveListener {
+    private  String webServiceMessage;
     @Override
     public void onMessageReceived(MessageEvent messageEvent) {
         Log.i("test", "onMessageReceived()");
        if(messageEvent.getPath().equals("/message_path")) {
             final String message = new String(messageEvent.getData());
+           webServiceMessage = message;
             Log.d("TAG", "Received url:::" + message);
             MobileApplication.getInstance().setMessage(message);
           if(message.equalsIgnoreCase("companion")) {
@@ -70,6 +76,8 @@ public class ListenerService extends WearableListenerService {
               i.putExtra("REVERT_PATIENT", "revertpatient");
               i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
               startActivity(i);
+          }else if(message.contains("reminderCount")){
+              makeWebServiceCalls();
           }
 
         }else {
@@ -83,10 +91,30 @@ public class ListenerService extends WearableListenerService {
         super.onDataChanged(dataEvents);
     }
 */
-
+    private void makeWebServiceCalls(){
+        if(webServiceMessage.equalsIgnoreCase("reminderCount")){
+            new MedDataPostAsyncTaskHelper(ListenerService.this,ListenerService.this,"reminderCount").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+        }
+    }
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d("ListenerService","ListenerService Mobile:::::");
+    }
+
+    @Override
+    public void receiveResult(String result) {
+        Log.d("TAG","Receive Result:::"+result);
+        if(result.equalsIgnoreCase("reminderCount")) {
+            String reminderResponse = MobileApplication.getInstance().getReminderList();
+            try {
+                JSONArray jsonArray1 = new JSONArray(reminderResponse);
+                MobileApplication.getInstance().setReminderCount(jsonArray1.length());
+                MessageService.getInstance().startMessageService(getApplicationContext(), "reminderCount");
+            }
+            catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -37,6 +37,19 @@ Context ctx;
     String jsonObject;
     JSONObject requestjsonObject;
     String type="";
+    private boolean isFace=false;
+
+
+    public MedDataPostAsyncTaskHelper(Context ctx, OMSReceiveListener inReceiveListener,String type){
+        this.ctx=ctx;
+        this.inReceiveListener=inReceiveListener;
+        this.requestjsonObject=requestjsonObject;
+        this.type = type;
+        isFace = true;
+
+    }
+
+
     public MedDataPostAsyncTaskHelper(Context ctx, OMSReceiveListener inReceiveListener,JSONObject requestjsonObject){
         this.ctx=ctx;
         this.inReceiveListener=inReceiveListener;
@@ -65,7 +78,11 @@ Context ctx;
     protected String doInBackground(String... params) {
         String response="";
         url = params[0];
-        response = doURLConnectionPost(url);
+        if(!isFace) {
+            response = doURLConnectionPost(url);
+        }else{
+            response = doURLConnectionPostForLogin("");
+        }
         return response;
     }
 
@@ -77,7 +94,9 @@ Context ctx;
     @Override
     protected void onPostExecute(String response) {
         if(!TextUtils.isEmpty(response)){
-            pd.dismiss();
+            if(!isFace) {
+                pd.dismiss();
+            }
             Log.d("TAG", type+" Response::::" + response);
             String flag = parseResponse(response);
             inReceiveListener.receiveResult(flag);
@@ -145,7 +164,7 @@ Context ctx;
                 //handoffSearch
                 JSONArray searchResponse = new JSONArray(response);
                 if(searchResponse.length()>0){
-                    MobileApplication.getInstance().setHandsOffSearchResponse(""+searchResponse);
+                    MobileApplication.getInstance().setHandsOffSearchResponse("" + searchResponse);
                 }else{
                     MobileApplication.getInstance().setHandsOffSearchResponse("No");
                 }
@@ -172,6 +191,10 @@ Context ctx;
                 flag="revertpatient";
             }
             //revertpatient
+            else if( !TextUtils.isEmpty(type) && type.equalsIgnoreCase("reminderCount")){
+                MobileApplication.getInstance().setReminderList(response);
+                flag = "reminderCount";
+            }
             else {
                 JSONObject responseJsonObject = new JSONObject(response);
                 flag = responseJsonObject.getString("Flag");
@@ -255,4 +278,136 @@ Context ctx;
 
         return response;
     }
+
+
+    private String doURLConnectionPostForLogin(String loginURL){
+        /*Login_Id: "test", Password: "test"
+
+        */
+        Log.d("TAG","In doURLConnectionPostForLogin()");
+        loginURL =   "https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser";
+        JSONObject requestJsonObject = new JSONObject();//
+        try {
+            JSONObject loginJsonObject = new JSONObject();
+            loginJsonObject.put("Login_Id", "veereshm");
+            loginJsonObject.put("Password", "test@123");
+            //  JSONObject requestJsonObject = new JSONObject();//
+            requestJsonObject.put("request", loginJsonObject);
+            //  new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject).execute("https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String response="";
+        //do this wherever you are wanting to POST
+        URL url;
+        HttpURLConnection conn;
+        //String loginURL = "https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser";
+        try{
+            url=new URL(loginURL);
+            //you need to encode ONLY the values of the parameters
+            String param="Login_Id=" + URLEncoder.encode("test1","UTF-8")+
+                    "&Password="+URLEncoder.encode("test@123","UTF-8");
+
+            conn=(HttpURLConnection)url.openConnection();
+            //set the output to true, indicating you are outputting(uploading) POST data
+            conn.setDoOutput(true);
+            conn.setChunkedStreamingMode(0);
+//once you set the output to true, you don’t really need to set the request method to post, but I’m doing it anyway
+            conn.setRequestMethod("POST");
+            //     conn.setFixedLengthStreamingMode(param.getBytes().length);
+            conn.setRequestProperty("Content-Type", "application/json");
+            //   conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.connect();
+
+
+
+            // Write serialized JSON data to output stream.
+            OutputStream out = new BufferedOutputStream(conn.getOutputStream());
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+            writer.write(requestJsonObject.toString());
+
+            // Close streams and disconnect.
+            writer.close();
+            out.close();
+            //  urlConnection.disconnect();
+
+
+            //build the string to store the response text from the server
+            //  String response= “”;
+
+//start listening to the stream
+            Log.d("TAG","Response Code:::"+conn.getResponseCode());
+            if(conn.getResponseCode() == 200) {
+                Scanner inStream = new Scanner(conn.getInputStream());
+
+//process the stream and store it in StringBuilder
+                while (inStream.hasNextLine())
+                    response += (inStream.nextLine());
+            }
+        }
+        //catch some error
+        catch(MalformedURLException ex){
+            Toast.makeText(ctx, ex.toString(), Toast.LENGTH_LONG).show();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        String finalResponse = "";
+        Log.d("TAG","Login Response:::"+response);
+        if(!TextUtils.isEmpty(response)) {
+            finalResponse = parseLoginResponse(response);
+        }
+        return finalResponse;
+    }
+
+
+    private String parseLoginResponse(String response){
+        Log.d("TAG","ParseLoginResponse");
+        String result="";
+        String flag="";
+        String finalResponse="";
+        try {
+            response.replace("\\n", "");
+            response.replace("\\t", "");
+
+            //revertpatient
+            //  else {
+            JSONObject responseJsonObject = new JSONObject(response);
+            flag = responseJsonObject.getString("Flag");
+            Log.d("TAG","Login Response Flag::: &&& Type"+flag+"::::"+type);
+            if (flag.equalsIgnoreCase("Y")) {
+                MobileApplication.getInstance().setPropertiesJSON(response);
+                if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("reminderCount")){
+                    try {
+                        String  globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+                        JSONObject jsonObject = new JSONObject(globalJSON);
+                        String key = jsonObject.getString("Key");
+                        int entityId = jsonObject.getInt("EntityID");
+                        int locationId = jsonObject.getInt("Location");
+                        JSONObject loginJsonObject = new JSONObject();
+                        loginJsonObject.put("Key", key);
+                        loginJsonObject.put("EntityID", -1);
+                        loginJsonObject.put("Login_Id", "veereshm");
+                        loginJsonObject.put("LocationId", locationId);
+                        JSONObject remiderRequestJsonObject = new JSONObject();
+                        remiderRequestJsonObject.put("request", loginJsonObject);
+                        requestjsonObject = remiderRequestJsonObject;
+                        finalResponse = doURLConnectionPost("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+                        //        new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"reminderlist").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+            //  }
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return finalResponse;
+    }
+
 }
