@@ -19,13 +19,12 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Scanner;
-
+import com.android.meddata.MedDataUtils.MedDataConstants;
 /**
  * Created by CHANDRASAIMOHAN on 10/23/2015.
  */
@@ -195,6 +194,10 @@ Context ctx;
                 MobileApplication.getInstance().setReminderList(response);
                 flag = "reminderCount";
             }
+            else if( !TextUtils.isEmpty(type) && type.equalsIgnoreCase("worklistCount")){
+                MobileApplication.getInstance().setPatientList(response);
+                flag = "worklistCount";
+            }
             else {
                 JSONObject responseJsonObject = new JSONObject(response);
                 flag = responseJsonObject.getString("Flag");
@@ -285,12 +288,16 @@ Context ctx;
 
         */
         Log.d("TAG","In doURLConnectionPostForLogin()");
-        loginURL =   "https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser";
+       if(MedDataConstants.USE_TEST_SERVICE){
+       loginURL =   "https://test-patientlists.meddata.com/UserLoginService.svc/ValidateUser";
+       }else {
+           loginURL = "https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser";
+       }
         JSONObject requestJsonObject = new JSONObject();//
         try {
             JSONObject loginJsonObject = new JSONObject();
-            loginJsonObject.put("Login_Id", "veereshm");
-            loginJsonObject.put("Password", "test@123");
+            loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
+            loginJsonObject.put("Password", MedDataConstants.LOGIN_PASS_WORD);
             //  JSONObject requestJsonObject = new JSONObject();//
             requestJsonObject.put("request", loginJsonObject);
             //  new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject).execute("https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser");
@@ -391,12 +398,39 @@ Context ctx;
                         JSONObject loginJsonObject = new JSONObject();
                         loginJsonObject.put("Key", key);
                         loginJsonObject.put("EntityID", -1);
-                        loginJsonObject.put("Login_Id", "veereshm");
+                        loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
                         loginJsonObject.put("LocationId", locationId);
                         JSONObject remiderRequestJsonObject = new JSONObject();
                         remiderRequestJsonObject.put("request", loginJsonObject);
                         requestjsonObject = remiderRequestJsonObject;
-                        finalResponse = doURLConnectionPost("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+                        if(MedDataConstants.USE_TEST_SERVICE){
+                            finalResponse = doURLConnectionPost("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+                        }else {
+                            finalResponse = doURLConnectionPost("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+                        }
+                        //        new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"reminderlist").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }else if(!TextUtils.isEmpty(type) && type.equalsIgnoreCase("worklistCount")){
+                    try {
+                        String  globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+                        JSONObject jsonObject = new JSONObject(globalJSON);
+                        String key = jsonObject.getString("Key");
+                        int entityId = jsonObject.getInt("EntityID");
+                        JSONObject loginJsonObject = new JSONObject();
+                        loginJsonObject.put("Key", key);
+                        loginJsonObject.put("EntityID", -1);
+                        loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
+                        JSONObject requestJsonObject = new JSONObject();
+                        requestJsonObject.put("request", loginJsonObject);
+                        requestjsonObject = requestJsonObject;
+                        if(MedDataConstants.USE_TEST_SERVICE){
+                            finalResponse = doURLConnectionPost("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetPatientsWorkList");
+                        }else {
+                            finalResponse = doURLConnectionPost("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetPatientsWorkList");
+                        }
+
                         //        new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"reminderlist").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
                     }catch (Exception e){
                         e.printStackTrace();

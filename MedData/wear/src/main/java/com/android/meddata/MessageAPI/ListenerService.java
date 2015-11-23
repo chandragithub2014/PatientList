@@ -127,6 +127,13 @@ public class ListenerService extends WearableListenerService {
                 messageIntent.setAction(Intent.ACTION_SEND);
                 messageIntent.putExtra("reminder", reminderCount);
                 LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
+            }else  if(message.contains("patientlistCount")){
+                String worklistCount = message.substring(message.lastIndexOf("$") + 1);
+                Log.d("TAG","patientlistCount:::"+worklistCount);
+                Intent messageIntent = new Intent();
+                messageIntent.setAction(Intent.ACTION_SEND);
+                messageIntent.putExtra("worklist", worklistCount);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
             }
             else{
                 MobileApplication.getInstance().setPropertiesJSON(message);

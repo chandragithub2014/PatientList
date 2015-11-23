@@ -37,10 +37,10 @@ public class DashBoardWearableListFragment extends Fragment {
         View view  =  inflater.inflate(R.layout.dashboard_wearable_list_layout, container, false);
         // Sample icons for the list
         mIcons = new ArrayList<Integer>();
-        mIcons.add(R.drawable.ic_action_attach);
-        mIcons.add(R.drawable.ic_action_call);
+        mIcons.add(R.drawable.ic_action_worklist);
+        mIcons.add(R.drawable.ic_action_reminder);
         mIcons.add(R.drawable.ic_action_star);
-        mIcons.add(R.drawable.ic_action_user);
+        mIcons.add(R.drawable.ic_action_myaccount);
 
         dashBoardTitles = new ArrayList<String>();
         dashBoardTitles.add("Work List");

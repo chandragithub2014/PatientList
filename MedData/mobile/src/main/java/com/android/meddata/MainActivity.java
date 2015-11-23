@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.android.meddata.Application.MobileApplication;
+import com.android.meddata.MedDataUtils.MedDataConstants;
 import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.WebServiceHelpers.MedDataPostAsyncTaskHelper;
 import com.android.meddata.interfaces.OMSReceiveListener;
@@ -64,7 +65,12 @@ if(getIntent().getStringExtra("BULK")!=null){
             try {
                 JSONObject bulkList = new JSONObject(MobileApplication.getInstance().getBulkUpdatedList());
                    Log.d("TAG", "Bulk.......");
-                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, bulkList,"bulk").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/SetDispositionAndPhysician");
+                if(MedDataConstants.USE_TEST_SERVICE){
+                    new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, bulkList,"bulk").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/SetDispositionAndPhysician");
+                }else{
+                    new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, bulkList,"bulk").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/SetDispositionAndPhysician");
+                }
+
             }
             catch (JSONException e){
                 e.printStackTrace();
@@ -72,14 +78,22 @@ if(getIntent().getStringExtra("BULK")!=null){
         }else  if(intentExtra.equalsIgnoreCase("accountUpdate")){
           try{
               JSONObject accountUpdateList = new JSONObject(MobileApplication.getInstance().getUpdatedAccountDetails());
-              new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList,"accountUpdate").execute("https://dev-patientlists.meddata.com/UserLoginService.svc/UpdateMyAccount");
+              if(MedDataConstants.USE_TEST_SERVICE){
+                  new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList,"accountUpdate").execute("https://test-patientlists.meddata.com/UserLoginService.svc/UpdateMyAccount");
+              }else {
+                  new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList, "accountUpdate").execute("https://dev-patientlists.meddata.com/UserLoginService.svc/UpdateMyAccount");
+              }
           }catch (JSONException e){
               e.printStackTrace();
           }
         }else if(intentExtra.equalsIgnoreCase("handoffSearch")){
             try{
                 JSONObject accountUpdateList = new JSONObject(MobileApplication.getInstance().getHandOffSearchJSON());
-                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList,"handoffSearch").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetPatientForTransferOrRevert");
+                if(MedDataConstants.USE_TEST_SERVICE){
+                    new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList, "handoffSearch").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetPatientForTransferOrRevert");
+                }else {
+                    new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList, "handoffSearch").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetPatientForTransferOrRevert");
+                }
             }catch (JSONException e){
                 e.printStackTrace();
             }
@@ -87,7 +101,11 @@ if(getIntent().getStringExtra("BULK")!=null){
         }else if(intentExtra.equalsIgnoreCase("handoffpatient")){
               try{
                   JSONObject handOffPatientJSON = new JSONObject(MobileApplication.getInstance().getHandOffPatientJSON());
-                  new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON,"handoffpatient").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers");
+                  if(MedDataConstants.USE_TEST_SERVICE){
+                      new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON, "handoffpatient").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers");
+                  }else {
+                      new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON, "handoffpatient").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers");
+                  }
                   //https://dev-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers
               }catch (JSONException e){
                   e.printStackTrace();
@@ -95,7 +113,11 @@ if(getIntent().getStringExtra("BULK")!=null){
         }else if(intentExtra.equalsIgnoreCase("revertpatient")){
             try{
                 JSONObject handOffPatientJSON = new JSONObject(MobileApplication.getInstance().getPatientRevertJSON());
-                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON,"revertpatient").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/RevertTransfers");
+                if(MedDataConstants.USE_TEST_SERVICE){
+                    new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON, "revertpatient").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/RevertTransfers");
+                }else {
+                    new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON, "revertpatient").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/RevertTransfers");
+                }
                 //https://dev-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers
             }catch (JSONException e){
                 e.printStackTrace();
@@ -104,11 +126,15 @@ if(getIntent().getStringExtra("BULK")!=null){
         else {
             try {
                 JSONObject loginJsonObject = new JSONObject();
-                loginJsonObject.put("Login_Id", "veereshm");
-                loginJsonObject.put("Password", "test@123");
+                loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
+                loginJsonObject.put("Password", MedDataConstants.LOGIN_PASS_WORD);
                 JSONObject requestJsonObject = new JSONObject();//
                 requestJsonObject.put("request", loginJsonObject);
-                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject).execute("https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser");
+                if(MedDataConstants.USE_TEST_SERVICE){
+                    new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject).execute("https://test-patientlists.meddata.com/UserLoginService.svc/ValidateUser");
+                }else {
+                    new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject).execute("https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser");
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
                 ;
@@ -155,10 +181,14 @@ if(getIntent().getStringExtra("BULK")!=null){
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
                  loginJsonObject.put("EntityID", -1);
-                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
-                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"worklist").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetPatientsWorkList");
+                 if(MedDataConstants.USE_TEST_SERVICE){
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "worklist").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetPatientsWorkList");
+                 }else {
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "worklist").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetPatientsWorkList");
+                 }
              }catch (Exception e){
                  e.printStackTrace();
              }
@@ -173,12 +203,16 @@ if(getIntent().getStringExtra("BULK")!=null){
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
                  loginJsonObject.put("EntityID", -1);
-                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
                  loginJsonObject.put("LocationId", locationId);
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
-                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"reminderlist").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
-             }catch (Exception e){
+                 if(MedDataConstants.USE_TEST_SERVICE){
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "reminderlist").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+                 }else {
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "reminderlist").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+                 }
+                 }catch (Exception e){
                  e.printStackTrace();
              }
          }else if(result.equalsIgnoreCase("reminderlist")){
@@ -189,10 +223,14 @@ if(getIntent().getStringExtra("BULK")!=null){
                  String key = jsonObject.getString("Key");
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
-                 loginJsonObject.put("LoginId", "veereshm");
+                 loginJsonObject.put("LoginId", MedDataConstants.LOGIN_ID);
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
-                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"myaccount").execute("https://dev-patientlists.meddata.com/UserLoginService.svc/GetMyAccountDetails");
+                 if(MedDataConstants.USE_TEST_SERVICE){
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "myaccount").execute("https://test-patientlists.meddata.com/UserLoginService.svc/GetMyAccountDetails");
+                 }else {
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "myaccount").execute("https://dev-patientlists.meddata.com/UserLoginService.svc/GetMyAccountDetails");
+                 }
              }
              catch(Exception e){
                  e.printStackTrace();
@@ -205,11 +243,15 @@ if(getIntent().getStringExtra("BULK")!=null){
                  String key = jsonObject.getString("Key");
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
-                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
                  loginJsonObject.put("ListType", "LOC");
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
-                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"locations").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 if(MedDataConstants.USE_TEST_SERVICE){
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "locations").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 }else {
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "locations").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 }
              }
              catch(Exception e){
                  e.printStackTrace();
@@ -222,11 +264,15 @@ if(getIntent().getStringExtra("BULK")!=null){
                  String key = jsonObject.getString("Key");
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
-                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
                  loginJsonObject.put("ListType", "PHYS");
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
-                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"physicians").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 if(MedDataConstants.USE_TEST_SERVICE){
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "physicians").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 }else {
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "physicians").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 }
              } catch(Exception e){
                  e.printStackTrace();
              }
@@ -238,12 +284,15 @@ if(getIntent().getStringExtra("BULK")!=null){
                  String key = jsonObject.getString("Key");
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
-                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
                  loginJsonObject.put("ListType", "BILLING");
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
-                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"billing").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
-             } catch(Exception e){
+                 if(MedDataConstants.USE_TEST_SERVICE){
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "billing").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 }else {
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "billing").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 } } catch(Exception e){
                  e.printStackTrace();
              }
          }else if(result.equalsIgnoreCase("billing")){
@@ -254,12 +303,15 @@ if(getIntent().getStringExtra("BULK")!=null){
                  String key = jsonObject.getString("Key");
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
-                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
                  loginJsonObject.put("ListType", "DISPOSITION");
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
-                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"disposition").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
-             } catch(Exception e){
+                 if(MedDataConstants.USE_TEST_SERVICE){
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "disposition").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 }else {
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "disposition").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 } } catch(Exception e){
                  e.printStackTrace();
              }
          }else if(result.equalsIgnoreCase("disposition")){
@@ -270,12 +322,15 @@ if(getIntent().getStringExtra("BULK")!=null){
                  String key = jsonObject.getString("Key");
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
-                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("Login_Id",MedDataConstants.LOGIN_ID);
                  loginJsonObject.put("ListType", "GENDER");
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
-                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"gender").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
-             } catch(Exception e){
+                 if(MedDataConstants.USE_TEST_SERVICE){
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "gender").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 }else {
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "gender").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 } } catch(Exception e){
                  e.printStackTrace();
              }
          }else if(result.equalsIgnoreCase("gender")){
@@ -286,12 +341,15 @@ if(getIntent().getStringExtra("BULK")!=null){
                  String key = jsonObject.getString("Key");
                  JSONObject loginJsonObject = new JSONObject();
                  loginJsonObject.put("Key", key);
-                 loginJsonObject.put("Login_Id", "veereshm");
+                 loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
                  loginJsonObject.put("ListType", "NotesTypes");
                  JSONObject requestJsonObject = new JSONObject();
                  requestJsonObject.put("request", loginJsonObject);
-                 new MedDataPostAsyncTaskHelper(MainActivity.this,MainActivity.this,requestJsonObject,"notestype").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
-             } catch(Exception e){
+                 if(MedDataConstants.USE_TEST_SERVICE){
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "notestype").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 }else {
+                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject, "notestype").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetList");
+                 }  } catch(Exception e){
                  e.printStackTrace();
              }
 

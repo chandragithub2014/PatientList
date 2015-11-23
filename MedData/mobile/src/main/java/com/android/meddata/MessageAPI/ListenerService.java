@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.MainActivity;
+import com.android.meddata.MedDataUtils.MedDataConstants;
 import com.android.meddata.WebServiceHelpers.MedDataPostAsyncTaskHelper;
 import com.android.meddata.interfaces.OMSReceiveListener;
 import com.google.android.gms.wearable.MessageEvent;
@@ -93,7 +94,11 @@ public class ListenerService extends WearableListenerService  implements OMSRece
 */
     private void makeWebServiceCalls(){
         if(webServiceMessage.equalsIgnoreCase("reminderCount")){
-            new MedDataPostAsyncTaskHelper(ListenerService.this,ListenerService.this,"reminderCount").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+            if(MedDataConstants.USE_TEST_SERVICE){
+                new MedDataPostAsyncTaskHelper(ListenerService.this, ListenerService.this, "reminderCount").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+            }else {
+                new MedDataPostAsyncTaskHelper(ListenerService.this, ListenerService.this, "reminderCount").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+            }
         }
     }
     @Override
@@ -105,7 +110,9 @@ public class ListenerService extends WearableListenerService  implements OMSRece
     @Override
     public void receiveResult(String result) {
         Log.d("TAG","Receive Result:::"+result);
+        String next = "";
         if(result.equalsIgnoreCase("reminderCount")) {
+            next = "worklistCount";
             String reminderResponse = MobileApplication.getInstance().getReminderList();
             try {
                 JSONArray jsonArray1 = new JSONArray(reminderResponse);
@@ -114,6 +121,26 @@ public class ListenerService extends WearableListenerService  implements OMSRece
             }
             catch (JSONException e){
                 e.printStackTrace();
+            }
+
+        }
+        if(result.equalsIgnoreCase("worklistCount")){
+            next="";
+            String workListResponse = MobileApplication.getInstance().getPatientList();
+            try {
+                JSONArray jsonArray1 = new JSONArray(workListResponse);
+                MobileApplication.getInstance().setWorkListCount(jsonArray1.length());
+                MessageService.getInstance().startMessageService(getApplicationContext(), "worklistCount");
+            }
+            catch (JSONException e){
+                e.printStackTrace();
+            }
+        }
+        if(next.equalsIgnoreCase("worklistCount")) {
+            if (MedDataConstants.USE_TEST_SERVICE) {
+                new MedDataPostAsyncTaskHelper(ListenerService.this, ListenerService.this, "worklistCount").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
+            } else {
+                new MedDataPostAsyncTaskHelper(ListenerService.this, ListenerService.this, "worklistCount").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetReminders");
             }
         }
     }

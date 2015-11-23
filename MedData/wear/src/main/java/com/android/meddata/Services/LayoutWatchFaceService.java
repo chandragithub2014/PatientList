@@ -83,9 +83,10 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
     private class Engine extends CanvasWatchFaceService.Engine {
         private int specW, specH;
         private View myLayout;
-        private TextView day, date, month, hour, minute, second,reminderVal;
+        private TextView day, date, month, hour, minute, second,reminderVal,worklistVal;
         private final Point displaySize = new Point();
         private  String reminderCount = "0";
+        private  String worklistCount = "0";
         final Handler mUpdateTimeHandler = new EngineHandler(this);
 
         final BroadcastReceiver mTimeZoneReceiver = new BroadcastReceiver() {
@@ -178,6 +179,7 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
             minute = (TextView) myLayout.findViewById(R.id.minute);
             second = (TextView) myLayout.findViewById(R.id.second);
             reminderVal = (TextView)myLayout.findViewById(R.id.reminder);
+            worklistVal  = (TextView)myLayout.findViewById(R.id.worklist);
           /* TextView reminderLable =  (TextView)myLayout.findViewById(R.id.reminder_label);
             reminderLable.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -321,6 +323,7 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
             hour.setText(String.format("%02d", mTime.hour));
             minute.setText(String.format("%02d", mTime.minute));
             reminderVal.setText(reminderCount);
+            worklistVal.setText(worklistCount);
             if (!mAmbient) {
                 second.setText(String.format("%02d", mTime.second));
             }
@@ -381,16 +384,27 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
         public class MessageReceiver extends BroadcastReceiver {
             @Override
             public void onReceive(Context context, Intent intent) {
-                String ReminderCount = intent.getStringExtra("reminder");
-                //int workListCount = intent.getIntExtra("workListCount",0);
+                if(intent.getStringExtra("reminder")!=null) {
+                    String ReminderCount = intent.getStringExtra("reminder");
+                    //int workListCount = intent.getIntExtra("workListCount",0);
 
 
-                // Display message in UI
-                String display = "ReminderCount: " + ReminderCount  ;
-                  reminderCount  = ReminderCount;
-                myLayout.invalidate();
-                Log.d("TAG", "Couts::::" + display);
+                    // Display message in UI
+                    String display = "ReminderCount: " + ReminderCount;
+                    reminderCount = ReminderCount;
+                    myLayout.invalidate();
+                    Log.d("TAG", "Couts::::" + display);
+                }else if(intent.getStringExtra("worklist")!=null){
+                    String workListCount = intent.getStringExtra("worklist");
+                    //int workListCount = intent.getIntExtra("workListCount",0);
 
+
+                    // Display message in UI
+                    String display = "workListCount: " + workListCount;
+                    worklistCount = workListCount;
+                    myLayout.invalidate();
+                    Log.d("TAG", "WorkListCount::::" + display);
+                }
         /*    processCounts(ReminderCount, workListCount);
             invalidateIfNecessary();*/
                 //   mTextView.setText(display);
