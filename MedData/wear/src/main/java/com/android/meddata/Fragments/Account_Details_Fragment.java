@@ -32,11 +32,13 @@ import android.widget.Toast;
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.LocationDTO;
+import com.android.meddata.MedDataUtils.MedDataConstants;
 import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -103,6 +105,9 @@ EditText mandatory_name,mandatory_email;
     private void initLayout(){
         String default_location_selection = "";
         phyName = (TextView)v.findViewById(R.id.phy_name);
+        if(!TextUtils.isEmpty(name)){
+            phyName.setText(name);
+        }
         account_save_btn = (Button)v.findViewById(R.id.save_btn);
         account_save_btn.setOnClickListener(this);
         RelativeLayout location_spinner_layout = (RelativeLayout)v.findViewById(R.id.location_layout);
@@ -215,7 +220,7 @@ private void parseJSONForAccountDetails(){
         JSONObject    requestJsonObject = null;
         try {
             updateJSON = new JSONObject();
-            updateJSON.put("LoginId", "veereshm");
+            updateJSON.put("LoginId", MedDataConstants.LOGIN_ID);
             updateJSON.put("Key",key);
             if(!TextUtils.isEmpty(name)){
                 updateJSON.put("Name",name);

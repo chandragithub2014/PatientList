@@ -35,6 +35,7 @@ import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.LocationDTO;
 import com.android.meddata.MedDataDTO.PhysicianDTO;
+import com.android.meddata.MedDataUtils.MedDataConstants;
 import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
 import com.android.meddata.custom.CustomSpinner;
@@ -503,7 +504,7 @@ if(isFromSelected) {
             }
             updateJSON.put("MedicalRecordNo", "");
             updateJSON.put("Key",key);
-            updateJSON.put("Login_Id", "veereshm");
+            updateJSON.put("Login_Id", MedDataConstants.LOGIN_ID);
             updateJSON.put("TransactionType", "R");
             updateJSON.put("FirstName", "");
             updateJSON.put("LocationId", selctedLocation);

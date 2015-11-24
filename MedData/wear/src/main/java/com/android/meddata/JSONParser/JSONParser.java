@@ -8,6 +8,7 @@ import com.android.meddata.MedDataDTO.LocationDTO;
 import com.android.meddata.MedDataDTO.PhysicianDTO;
 import com.android.meddata.MedDataDTO.RemindersDTO;
 import com.android.meddata.MedDataDTO.WorkListDTO;
+import com.android.meddata.MedDataUtils.MedDataConstants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -124,7 +125,7 @@ Context ctx;
                 JSONObject jsonObject = jsonArray1.getJSONObject(i);
 
                 updatedJSON.put("DispositionId",depositionId);
-                updatedJSON.put("Login_Id","veereshm");
+                updatedJSON.put("Login_Id", MedDataConstants.LOGIN_ID);
                 updatedJSON.put("PrimaryPhysician",jsonObject.getString("PrimaryPhysician"));
                 updatedJSON.put("EncounterId",jsonObject.getString("EncounterId"));
                 updatedJSON.put("Key",key);
