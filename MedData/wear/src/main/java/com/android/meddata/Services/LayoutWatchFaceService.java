@@ -83,7 +83,7 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
     private class Engine extends CanvasWatchFaceService.Engine {
         private int specW, specH;
         private View myLayout;
-        private TextView day, date, month, hour, minute, second,reminderVal,worklistVal;
+        private TextView day, date, month, hour,reminderVal,worklistVal;
         private final Point displaySize = new Point();
         private  String reminderCount = "0";
         private  String worklistCount = "0";
@@ -99,8 +99,8 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
 
         boolean mRegisteredTimeZoneReceiver = false;
 
-     //   Paint mBackgroundPaint;
-    //    Paint mTextPaint;
+        //   Paint mBackgroundPaint;
+        //    Paint mTextPaint;
 
         boolean mAmbient;
 
@@ -153,7 +153,7 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
             mBackgroundPaint.setColor(resources.getColor(R.color.digital_background));
 
             mTextPaint = new Paint();*/
-        //    mTextPaint = createTextPaint(resources.getColor(R.color.digital_text));
+            //    mTextPaint = createTextPaint(resources.getColor(R.color.digital_text));
 
             mTime = new Time();
 
@@ -172,12 +172,12 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
                     View.MeasureSpec.EXACTLY);
 
             // Find some views for later use
-            day = (TextView) myLayout.findViewById(R.id.day);
+         /*   day = (TextView) myLayout.findViewById(R.id.day);
             date = (TextView) myLayout.findViewById(R.id.date);
-            month = (TextView) myLayout.findViewById(R.id.month);
+            month = (TextView) myLayout.findViewById(R.id.month);*/
             hour = (TextView) myLayout.findViewById(R.id.hour);
-            minute = (TextView) myLayout.findViewById(R.id.minute);
-            second = (TextView) myLayout.findViewById(R.id.second);
+        /*    minute = (TextView) myLayout.findViewById(R.id.minute);
+            second = (TextView) myLayout.findViewById(R.id.second);*/
             reminderVal = (TextView)myLayout.findViewById(R.id.reminder);
             worklistVal  = (TextView)myLayout.findViewById(R.id.worklist);
           /* TextView reminderLable =  (TextView)myLayout.findViewById(R.id.reminder_label);
@@ -193,7 +193,7 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
             LocalBroadcastManager.getInstance(getApplicationContext()).registerReceiver(messageReceiver, messageFilter);
 
             MessageService.getInstance().startMessageService(getApplicationContext(),"reminderCount");
-       //     DataLayerService.getInstance().startDataLayerService(getApplicationContext(), "");
+            //     DataLayerService.getInstance().startDataLayerService(getApplicationContext(), "");
         }
 
         @Override
@@ -292,11 +292,11 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
 
                 // Show/hide the seconds fields
                 if (inAmbientMode) {
-                    second.setVisibility(View.GONE);
-                    myLayout.findViewById(R.id.second_label).setVisibility(View.GONE);
+                    //second.setVisibility(View.GONE);
+                   // myLayout.findViewById(R.id.second_label).setVisibility(View.GONE);
                 } else {
-                    second.setVisibility(View.VISIBLE);
-                    myLayout.findViewById(R.id.second_label).setVisibility(View.VISIBLE);
+                    //second.setVisibility(View.VISIBLE);
+                 //   myLayout.findViewById(R.id.second_label).setVisibility(View.VISIBLE);
                 }
 
                 // Switch between bold & normal font
@@ -316,18 +316,18 @@ public class LayoutWatchFaceService extends CanvasWatchFaceService {
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
             mTime.setToNow();
-            day.setText(String.format("%ta", mTime.toMillis(false)));
-            date.setText(String.format("%02d", mTime.monthDay));
-            month.setText(String.format("%ta", mTime.toMillis(false)));
+            //    day.setText(String.format("%ta", mTime.toMillis(false)));
+            //   date.setText(String.format("%02d", mTime.monthDay));
+            // month.setText(String.format("%02d", mTime.month));
 
-            hour.setText(String.format("%02d", mTime.hour));
-            minute.setText(String.format("%02d", mTime.minute));
+            hour.setText(String.format("%02d", mTime.hour)+":"+String.format("%02d", mTime.minute)+":"+String.format("%02d", mTime.second));
+            //minute.setText(String.format("%02d", mTime.minute));
             reminderVal.setText(reminderCount);
             worklistVal.setText(worklistCount);
-            if (!mAmbient) {
+          /*  if (!mAmbient) {
                 second.setText(String.format("%02d", mTime.second));
             }
-
+*/
             // Update the layout
             myLayout.measure(specW, specH);
             myLayout.layout(0, 0, myLayout.getMeasuredWidth(), myLayout.getMeasuredHeight());

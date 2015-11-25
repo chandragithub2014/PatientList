@@ -88,7 +88,7 @@ public class PatentDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.worklist_details, container, false);
+        v = inflater.inflate(R.layout.worklist_details1, container, false);
         mContainerId = container.getId();
         if(!TextUtils.isEmpty(encounterID)){
             tempWorkListDto = JSONParser.getInstance().getPatientDetail(encounterID);
@@ -106,28 +106,19 @@ public class PatentDetailsFragment extends Fragment {
     }
 
 private void initAndPopulateLabels(View v ){
-    nameLayout = (LinearLayout)v.findViewById(R.id.name_label);
-    patientName = (TextView)nameLayout.findViewById(R.id.mandatory_label);
 
-    patientName.setText("Name");
-    patientName.setVisibility(View.GONE);
-    EditText patientNameVal = (EditText)nameLayout.findViewById(R.id.editText2);
-    patientNameVal.setText(tempWorkListDto.getPatientName());
 
-    roomLayout =  (LinearLayout)v.findViewById(R.id.name_val_layout);
-    patientRoom  = (TextView)roomLayout.findViewById(R.id.mandatory_label);
-    patientRoom.setText("Room No");
-    patientRoom.setVisibility(View.GONE);
+    patientName = (TextView)v.findViewById(R.id.patientName);
+    patientName.setText(tempWorkListDto.getPatientName());
 
-    EditText patientRoomVal = (EditText)roomLayout.findViewById(R.id.editText2);
-    patientRoomVal.setText(tempWorkListDto.getRoomNum());
 
-    encounterDateLayout =  (LinearLayout)v.findViewById(R.id.encounter_date_val_layout);
-    encounterDate= (TextView)encounterDateLayout.findViewById(R.id.mandatory_label);
-    encounterDate.setText("Encounter Date");
-    encounterDate.setVisibility(View.GONE);
 
-    EditText encounterDateVal = (EditText)encounterDateLayout.findViewById(R.id.editText2);
+    patientRoom = (TextView)v.findViewById(R.id.roomNo);
+    patientRoom.setText(tempWorkListDto.getRoomNum());
+
+
+
+    TextView encounterDateVal = (TextView)v.findViewById(R.id.patientDate);
     encounterDateVal.setText(tempWorkListDto.getDate());
 
     location_spinner_layout = (RelativeLayout)v.findViewById(R.id.hospital_row);
@@ -162,16 +153,16 @@ private void initAndPopulateLabels(View v ){
     ((TextView)admission_layout.findViewById(R.id.mandatory_label)).setVisibility(View.GONE);//.setText("Admission");
     ((TextView)finance_layout.findViewById(R.id.mandatory_label)).setVisibility(View.GONE);//.setText("Finance No");
 
-    mrnLayout =  (LinearLayout)v.findViewById(R.id.mrn_layout);
+    /*mrnLayout =  (LinearLayout)v.findViewById(R.id.mrn_layout);
     mrn= (TextView)mrnLayout.findViewById(R.id.mandatory_label);
     mrn.setText("MRN");
-    mrn.setVisibility(View.GONE);//
+    mrn.setVisibility(View.GONE);//*/
 
 
-    EditText mrnVal = (EditText)mrnLayout.findViewById(R.id.editText2);
+   /* EditText mrnVal = (EditText)mrnLayout.findViewById(R.id.editText2);
     mrnVal.setText(tempWorkListDto.getMrn());
     mrnVal.setVisibility(View.GONE);
-
+*/
     EditText financeVal = (EditText)finance_layout.findViewById(R.id.editText2);
     financeVal.setText(tempWorkListDto.getFinancialNum());
     financeVal.setVisibility(View.GONE);
@@ -304,29 +295,19 @@ private void initAndPopulateLabels(View v ){
 
 
     private void initAndDisableUnwantedViews(View v ){
-        nameLayout = (LinearLayout)v.findViewById(R.id.name_label);
-        patientName = (TextView)nameLayout.findViewById(R.id.mandatory_label);
-
+        patientName = (TextView)v.findViewById(R.id.patientName);
         patientName.setText("Name");
-        patientName.setVisibility(View.GONE);
-        EditText patientNameVal = (EditText)nameLayout.findViewById(R.id.editText2);
-//        patientNameVal.setText(tempWorkListDto.getPatientName());
 
-        roomLayout =  (LinearLayout)v.findViewById(R.id.name_val_layout);
-        patientRoom  = (TextView)roomLayout.findViewById(R.id.mandatory_label);
-        patientRoom.setText("Room No");
-        patientRoom.setVisibility(View.GONE);
 
-        EditText patientRoomVal = (EditText)roomLayout.findViewById(R.id.editText2);
-  //      patientRoomVal.setText(tempWorkListDto.getRoomNum());
 
-        encounterDateLayout =  (LinearLayout)v.findViewById(R.id.encounter_date_val_layout);
-        encounterDate= (TextView)encounterDateLayout.findViewById(R.id.mandatory_label);
-        encounterDate.setText("Encounter Date");
-        encounterDate.setVisibility(View.GONE);
+        patientRoom = (TextView)v.findViewById(R.id.roomNo);
+        patientRoom.setText("Room Num");
 
-        EditText encounterDateVal = (EditText)encounterDateLayout.findViewById(R.id.editText2);
-  //      encounterDateVal.setText(tempWorkListDto.getDate());
+
+
+        TextView encounterDateVal = (TextView)v.findViewById(R.id.patientDate);
+        encounterDateVal.setText("Date");
+
 
         location_spinner_layout = (RelativeLayout)v.findViewById(R.id.hospital_row);
         pr_phy_spinner_layout =   (RelativeLayout)v.findViewById(R.id.physician_row);
@@ -360,7 +341,7 @@ private void initAndPopulateLabels(View v ){
         ((TextView)admission_layout.findViewById(R.id.mandatory_label)).setVisibility(View.GONE);//.setText("Admission");
         ((TextView)finance_layout.findViewById(R.id.mandatory_label)).setVisibility(View.GONE);//.setText("Finance No");
 
-        mrnLayout =  (LinearLayout)v.findViewById(R.id.mrn_layout);
+     /*   mrnLayout =  (LinearLayout)v.findViewById(R.id.mrn_layout);
         mrn= (TextView)mrnLayout.findViewById(R.id.mandatory_label);
         mrn.setText("MRN");
         mrn.setVisibility(View.GONE);//
@@ -373,7 +354,7 @@ private void initAndPopulateLabels(View v ){
         EditText financeVal = (EditText)finance_layout.findViewById(R.id.editText2);
     //    financeVal.setText(tempWorkListDto.getFinancialNum());
         financeVal.setVisibility(View.GONE);
-
+*/
         Spinner locationSpinner = (Spinner)location_spinner_layout.findViewById(R.id.mand_spinner);
         if(!TextUtils.isEmpty(MobileApplication.getInstance().getLocationList())){
             List<LocationDTO> locList = JSONParser.getInstance().getLocationList(MobileApplication.getInstance().getLocationList());

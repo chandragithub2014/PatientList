@@ -35,7 +35,7 @@ public class ReminderListWearableListFragment extends Fragment {
     private static List<Integer> mIcons;
     private static List<String>dashBoardTitles;
     private static List<RemindersDTO> remindersDTOList;
-    RelativeLayout listHeader;
+  //  RelativeLayout listHeader;
     int mContainerId = -1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class ReminderListWearableListFragment extends Fragment {
 
         // This is our list header
 
-         listHeader = (RelativeLayout)view.findViewById(R.id.reminder_header);
+ //        listHeader = (RelativeLayout)view.findViewById(R.id.reminder_header);
 
         WearableListView wearableListView =
                 (WearableListView)view. findViewById(R.id.reminder_List);
@@ -135,16 +135,16 @@ public class ReminderListWearableListFragment extends Fragment {
             new WearableListView.ClickListener() {
                 @Override
                 public void onClick(WearableListView.ViewHolder viewHolder) {
-                    Toast.makeText(getActivity(),
+                  /*  Toast.makeText(getActivity(),
                             String.format("You selected item #%s",
                                     viewHolder.getLayoutPosition()+1),
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();*/
                     ReminderListItemLayout listViewRowView = (ReminderListItemLayout) viewHolder.itemView;
                     String tag_clicked = (String)listViewRowView.getTag();
-                    Toast.makeText(getActivity(),
+                  /*  Toast.makeText(getActivity(),
                             String.format("You selected item #%s",
                                     viewHolder.getLayoutPosition()+1) +"TAG Clicked"+tag_clicked,
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();*/
 
                     getFragmentManager().beginTransaction()
                             .replace(R.id.framelayout, PatentDetailsFragment.newInstance(tag_clicked,"")).addToBackStack(null)
@@ -153,8 +153,8 @@ public class ReminderListWearableListFragment extends Fragment {
 
                 @Override
                 public void onTopEmptyRegionClick() {
-                    Toast.makeText(getActivity(),
-                            "Top empty area tapped", Toast.LENGTH_SHORT).show();
+                 /*   Toast.makeText(getActivity(),
+                            "Top empty area tapped", Toast.LENGTH_SHORT).show();*/
                 }
             };
 
@@ -175,7 +175,7 @@ public class ReminderListWearableListFragment extends Fragment {
                 @Override
                 public void onScroll(int i) {
                     // Placeholder
-                    listHeader.setY(listHeader.getY() - i);
+               //     listHeader.setY(listHeader.getY() - i);
                 }
 
                 @Override

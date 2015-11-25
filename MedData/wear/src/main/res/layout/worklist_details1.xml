@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NOTES"
+        android:id="@+id/patient_notes"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/light_blue"/>
+
+    <TextView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/patient_notes"
+         android:id="@+id/patientName"/>
+
+     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/roomNo"
+         android:textColor="@color/black"
+         android:textSize="10dp"
+         android:layout_marginLeft="10dp"
+        android:layout_below="@+id/patientName"/>
+
+
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/patientDate"
+          android:textColor="@color/black"
+          android:textSize="10dp"
+          android:layout_marginLeft="10dp"
+        android:layout_below="@+id/roomNo"/>
+
+
+
+      <include
+           android:id="@+id/hospital_row"
+           layout="@layout/mandatory_label_spinner"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/patientDate"></include>
+      <include
+          android:id="@+id/physician_row"
+          layout="@layout/mandatory_label_spinner"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/hospital_row"></include>
+
+
+
+      <include
+          android:id="@+id/billing_layout"
+          layout="@layout/mandatory_label_spinner"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/physician_row"></include>
+
+      <include
+          android:id="@+id/disposition_layout"
+          layout="@layout/mandatory_label_spinner"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+       android:layout_below="@+id/billing_layout"></include>
+     <include
+        android:id="@+id/gender_layout"
+        layout="@layout/label_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/disposition_layout"></include>
+
+      <include
+        android:id="@+id/date_layout"
+        layout="@layout/label_text_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gender_layout"></include>
+
+
+        <include
+            android:id="@+id/notes_category_layout"
+            layout="@layout/label_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date_layout"></include>
+
+    <include
+           android:id="@+id/second_physician_layout"
+           layout="@layout/label_spinner"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/notes_category_layout"></include>
+
+       <include
+           android:id="@+id/admission_layout"
+           layout="@layout/label_text_field"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/second_physician_layout"></include>
+
+       <include
+           android:id="@+id/financial_no_layout"
+           layout="@layout/label_text_field"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_below="@+id/admission_layout"></include>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Notes"
+        android:backgroundTint="@color/blue"
+        android:id="@+id/view_notes_btn"
+        android:layout_below="@+id/financial_no_layout"
+        android:layout_margin="10dp"
+        android:visibility="invisible"
+        ></Button>
+
+</RelativeLayout>
+</ScrollView>
+
+
+
+ <!--<include
+        android:id="@+id/name_label"
+        layout="@layout/mandatory_vertical_label_text_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       ></include>
+     <include
+        android:id="@+id/name_val_layout"
+        layout="@layout/mandatory_vertical_label_text_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name_label"></include>
+
+    <include
+       android:id="@+id/encounter_date_val_layout"
+       layout="@layout/mandatory_vertical_label_text_field"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/name_val_layout"
+       ></include>-->

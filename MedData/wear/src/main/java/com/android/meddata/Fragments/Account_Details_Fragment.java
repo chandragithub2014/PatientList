@@ -89,6 +89,9 @@ EditText mandatory_name,mandatory_email;
         Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
         ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
 
+
+        TextView toolbarTitle = (TextView)mToolBar.findViewById(R.id.title);
+        toolbarTitle.setText("My Account");
         back_img.setVisibility(View.VISIBLE);
         back_img.setOnClickListener(new View.OnClickListener() {
             @Override

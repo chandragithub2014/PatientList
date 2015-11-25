@@ -86,7 +86,8 @@
             android:id="@+id/detail"
             android:alpha="0.6"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:visibility="gone"/>
 
 
 

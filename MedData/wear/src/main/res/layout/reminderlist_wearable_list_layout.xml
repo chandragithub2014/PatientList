@@ -25,14 +25,14 @@ app:layout_box="all"
 
     android:dividerHeight="0dp">
 </android.support.wearable.view.WearableListView>
-<include
+<!--<include
     android:id="@+id/reminder_header"
     layout="@layout/reminder_list_header"
     android:layout_alignParentTop="true"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
 
-    ></include>
+    ></include>-->
 
 
 </RelativeLayout>

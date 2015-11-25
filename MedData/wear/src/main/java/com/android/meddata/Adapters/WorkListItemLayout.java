@@ -20,22 +20,22 @@ public class WorkListItemLayout extends FrameLayout implements WearableListView.
     public WorkListItemLayout(Context context) {
         super(context);
         View.inflate(context, R.layout.work_list_item, this);
-        dayName = (TextView) findViewById(R.id.day);
-        date = (TextView) findViewById(R.id.date);
-        physician = (TextView) findViewById(R.id.physician);
+     //   dayName = (TextView) findViewById(R.id.day);
+      //  date = (TextView) findViewById(R.id.date);
+      //  physician = (TextView) findViewById(R.id.physician);
         patient = (TextView) findViewById(R.id.patientName);
-        billing = (TextView) findViewById(R.id.billing);
+     //   billing = (TextView) findViewById(R.id.billing);
         hospital = (TextView) findViewById(R.id.hospitial_name);
         room = (TextView) findViewById(R.id.room);
     }
 
     @Override
     public void onCenterPosition(boolean b) {
-        dayName.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
-        date.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
-        physician.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
+       // dayName.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
+      //  date.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
+      //  physician.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
         patient.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
-        billing.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
+     //   billing.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
         hospital.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
         room.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
 
@@ -43,11 +43,11 @@ public class WorkListItemLayout extends FrameLayout implements WearableListView.
 
     @Override
     public void onNonCenterPosition(boolean b) {
-        dayName.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
-        date.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
-        physician.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
+     //   dayName.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
+     //   date.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
+     //   physician.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
         patient.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
-        billing.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
+     //   billing.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
         hospital.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
         room.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
     }

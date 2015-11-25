@@ -33,12 +33,12 @@ public class WorkListAdapter extends WearableListView.Adapter {
     public void onBindViewHolder(WearableListView.ViewHolder holder, int position) {
         WorkListItemLayout listViewRowView = (WorkListItemLayout) holder.itemView;
 
-        listViewRowView.getDayName().setText(workList.get(position).getDay());
-        listViewRowView.getDate().setText(workList.get(position).getDate());
-        listViewRowView.getPhysician().setText(workList.get(position).getPhysicianName());
+     //   listViewRowView.getDayName().setText(workList.get(position).getDay());
+      //  listViewRowView.getDate().setText(workList.get(position).getDate());
+      //  listViewRowView.getPhysician().setText(workList.get(position).getPhysicianName());
         listViewRowView.getRoom().setText(workList.get(position).getRoomNum());
         listViewRowView.getPatient().setText(workList.get(position).getPatientName());
-        listViewRowView.getBilling().setText(workList.get(position).getBillingStatus());
+       // listViewRowView.getBilling().setText(workList.get(position).getBillingStatus());
         listViewRowView.getHospital().setText(workList.get(position).getHospitalName());
         listViewRowView.setTag(workList.get(position).getEncounterId());
 
