@@ -97,7 +97,7 @@ public class ReminderListWearableListFragment extends Fragment {
         temp.setPatientName("Kumar K");
         temp.setSecPhysician("Ph. Dr.Physian2");
         temp.setHospitalName("BPH-Hospital1");
-
+        temp.setRoomNum("561");
         remindersDTOList.add(temp);
 
         temp = new RemindersDTO();
@@ -107,7 +107,7 @@ public class ReminderListWearableListFragment extends Fragment {
         temp.setPatientName("Kumaaar K");
         temp.setSecPhysician("Ph. Dr.Physian22");
         temp.setHospitalName("BPH-Hospital1");
-
+        temp.setRoomNum("561");
         remindersDTOList.add(temp);
 
         temp = new RemindersDTO();
@@ -117,7 +117,7 @@ public class ReminderListWearableListFragment extends Fragment {
         temp.setPatientName("KuUmaaar K");
         temp.setSecPhysician("Ph. Dr.Physian222");
         temp.setHospitalName("BPH-Hospital1");
-
+        temp.setRoomNum("561");
         remindersDTOList.add(temp);
 
         temp = new RemindersDTO();
@@ -127,7 +127,7 @@ public class ReminderListWearableListFragment extends Fragment {
         temp.setPatientName("KUMARRR K");
         temp.setSecPhysician("");
         temp.setHospitalName("BPH-Hospita21");
-
+        temp.setRoomNum("561");
         remindersDTOList.add(temp);
     }
     // Handle our Wearable List's click events

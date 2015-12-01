@@ -102,6 +102,15 @@ EditText mandatory_name,mandatory_email;
             }
         });
 
+        TextView notesView = (TextView)mToolBar.findViewById(R.id.notes);
+        notesView.setText("SAVE");
+        notesView.setVisibility(View.VISIBLE);
+        notesView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postUpdatedAccount();
+            }
+        });
         return v;
     }
 
@@ -112,6 +121,7 @@ EditText mandatory_name,mandatory_email;
             phyName.setText(name);
         }
         account_save_btn = (Button)v.findViewById(R.id.save_btn);
+        account_save_btn.setVisibility(View.GONE);
         account_save_btn.setOnClickListener(this);
         RelativeLayout location_spinner_layout = (RelativeLayout)v.findViewById(R.id.location_layout);
         locationSpinner = (Spinner)location_spinner_layout.findViewById(R.id.location_spinner);

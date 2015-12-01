@@ -54,14 +54,96 @@ if(getIntent().getStringExtra("BULK")!=null){
                         .setAction("Action", null).show();
             }
         });
-
+callWebService();
     }
+private void callWebService(){
+    if(intentExtra.equalsIgnoreCase("bulk")){
+        try {
+            JSONObject bulkList = new JSONObject(MobileApplication.getInstance().getBulkUpdatedList());
+            Log.d("TAG", "Bulk.......");
+            if(MedDataConstants.USE_TEST_SERVICE){
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, bulkList,"bulk").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/SetDispositionAndPhysician");
+            }else{
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, bulkList,"bulk").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/SetDispositionAndPhysician");
+            }
 
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+    }else  if(intentExtra.equalsIgnoreCase("accountUpdate")){
+        try{
+            JSONObject accountUpdateList = new JSONObject(MobileApplication.getInstance().getUpdatedAccountDetails());
+            if(MedDataConstants.USE_TEST_SERVICE){
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList,"accountUpdate").execute("https://test-patientlists.meddata.com/UserLoginService.svc/UpdateMyAccount");
+            }else {
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList, "accountUpdate").execute("https://dev-patientlists.meddata.com/UserLoginService.svc/UpdateMyAccount");
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }else if(intentExtra.equalsIgnoreCase("handoffSearch")){
+        try{
+            JSONObject accountUpdateList = new JSONObject(MobileApplication.getInstance().getHandOffSearchJSON());
+            if(MedDataConstants.USE_TEST_SERVICE){
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList, "handoffSearch").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetPatientForTransferOrRevert");
+            }else {
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, accountUpdateList, "handoffSearch").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetPatientForTransferOrRevert");
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+    }else if(intentExtra.equalsIgnoreCase("handoffpatient")){
+        try{
+            JSONObject handOffPatientJSON = new JSONObject(MobileApplication.getInstance().getHandOffPatientJSON());
+            if(MedDataConstants.USE_TEST_SERVICE){
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON, "handoffpatient").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers");
+            }else {
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON, "handoffpatient").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers");
+            }
+            //https://dev-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }else if(intentExtra.equalsIgnoreCase("revertpatient")){
+        try{
+            JSONObject handOffPatientJSON = new JSONObject(MobileApplication.getInstance().getPatientRevertJSON());
+            if(MedDataConstants.USE_TEST_SERVICE){
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON, "revertpatient").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/RevertTransfers");
+            }else {
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, handOffPatientJSON, "revertpatient").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/RevertTransfers");
+            }
+            //https://dev-patientlists.meddata.com/PatientDetailsService.svc/CreateTransfers
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+    else {
+        try {
+            JSONObject loginJsonObject = new JSONObject();
+            loginJsonObject.put("Login_Id", MedDataConstants.LOGIN_ID);
+            loginJsonObject.put("Password", MedDataConstants.LOGIN_PASS_WORD);
+            JSONObject requestJsonObject = new JSONObject();//
+            requestJsonObject.put("request", loginJsonObject);
+            if(MedDataConstants.USE_TEST_SERVICE){
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject).execute("https://test-patientlists.meddata.com/UserLoginService.svc/ValidateUser");
+            }else {
+                new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, requestJsonObject).execute("https://dev-patientlists.meddata.com/UserLoginService.svc/ValidateUser");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
     @Override
     protected void onResume() {
         super.onResume();
         Log.d("TAG","In OnResume()");
-        if(intentExtra.equalsIgnoreCase("bulk")){
+       /* if(intentExtra.equalsIgnoreCase("bulk")){
             try {
                 JSONObject bulkList = new JSONObject(MobileApplication.getInstance().getBulkUpdatedList());
                    Log.d("TAG", "Bulk.......");
@@ -141,7 +223,7 @@ if(getIntent().getStringExtra("BULK")!=null){
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 
     @Override

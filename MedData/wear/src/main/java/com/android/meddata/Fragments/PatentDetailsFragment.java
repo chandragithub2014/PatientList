@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,6 +103,27 @@ public class PatentDetailsFragment extends Fragment {
         Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
         TextView toolbarTitle = (TextView)mToolBar.findViewById(R.id.title);
         toolbarTitle.setText("Patient Details");
+        ImageView disposition_btn = (ImageView)mToolBar.findViewById(R.id.right_icon);
+        disposition_btn.setVisibility(View.GONE);
+    /*    disposition_btn.setImageResource(R.drawable.selectall);*/
+        disposition_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TAG", "Clicked Notes::::");
+            }
+        });
+
+        TextView notesView = (TextView)mToolBar.findViewById(R.id.notes);
+        notesView.setVisibility(View.VISIBLE);
+        notesView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TAG", "Clicked Notes::::");
+            }
+        });
+      /*  TextView rightToolbarTitle = (TextView)mToolBar.findViewById(R.id.right_text);
+        rightToolbarTitle.setVisibility(View.VISIBLE);*/
+       // toolbarTitle.setText("Patient Details");
         return  v;
     }
 

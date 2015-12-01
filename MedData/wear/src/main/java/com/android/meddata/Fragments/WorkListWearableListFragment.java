@@ -52,6 +52,7 @@ public class WorkListWearableListFragment extends Fragment {
     RelativeLayout header;
     ImageButton floatingToolBarButton;
     AlertDialog  sortByDialog;
+    ImageView disposition_btn;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,17 +77,24 @@ public class WorkListWearableListFragment extends Fragment {
         }
         // This is our list header
         floatingToolBarButton = (ImageButton)view.findViewById(R.id.fab);
+        floatingToolBarButton.setVisibility(View.GONE);
          listHeader = (RelativeLayout)view.findViewById(R.id.work_list_header);
         listHeader.setVisibility(View.GONE);
         mContainerId = container.getId();
         WearableListView wearableListView =
-                (WearableListView)view. findViewById(R.id.work_List);
+                (WearableListView) view.findViewById(R.id.work_List);
         header = (RelativeLayout)view. findViewById(R.id.work_list_header);
         Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
         ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
         back_img.setVisibility(View.VISIBLE);
+         disposition_btn = (ImageView)mToolBar.findViewById(R.id.right_icon);
+        disposition_btn.setVisibility(View.VISIBLE);
+         disposition_btn.setImageResource(R.drawable.selectall);
+
       TextView toolbarTitle = (TextView)mToolBar.findViewById(R.id.title);
         toolbarTitle.setText("Work List");
+        TextView notesView = (TextView)mToolBar.findViewById(R.id.notes);
+        notesView.setVisibility(View.GONE);
         back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,7 +103,7 @@ public class WorkListWearableListFragment extends Fragment {
                 fragmentTransaction.replace(mContainerId, new DashBoardWearableListFragment()).addToBackStack(null).commit();
             }
         });
-        floatingToolBarButton.setOnClickListener(new View.OnClickListener() {
+        /*floatingToolBarButton*/ disposition_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
@@ -116,25 +124,25 @@ public class WorkListWearableListFragment extends Fragment {
                     @Override
                     public void onClick(WearableListView.ViewHolder viewHolder) {
                         RelativeLayout listViewRowView = (RelativeLayout) viewHolder.itemView;
-                     //   String tag_clicked = (String)listViewRowView.getTag();
+                        //   String tag_clicked = (String)listViewRowView.getTag();
                        /* Toast.makeText(getActivity(),
                                 String.format("You selected item #%s",
                                         viewHolder.getLayoutPosition()+1) ,
                                 Toast.LENGTH_SHORT).show();*/
                         JSONObject parsedJSONArray;
-                        if(viewHolder.getLayoutPosition()+1 == 1){
-                             parsedJSONArray = JSONParser.getInstance().getUpdatedPatientList("Billable Rounding");
-                        }else{
-                             parsedJSONArray = JSONParser.getInstance().getUpdatedPatientList("Signed Off");
+                        if (viewHolder.getLayoutPosition() + 1 == 1) {
+                            parsedJSONArray = JSONParser.getInstance().getUpdatedPatientList("Billable Rounding");
+                        } else {
+                            parsedJSONArray = JSONParser.getInstance().getUpdatedPatientList("Signed Off");
                         }
 
-                        String updatePatientList = ""+parsedJSONArray;
-                        if(!TextUtils.isEmpty(updatePatientList)){
+                        String updatePatientList = "" + parsedJSONArray;
+                        if (!TextUtils.isEmpty(updatePatientList)) {
                             MobileApplication.getInstance().setBulkUpdatedList(updatePatientList);
                         }
-                        MessageService.getInstance().startMessageService(getActivity(),"bulk");
+                        MessageService.getInstance().startMessageService(getActivity(), "bulk");
                         sortByDialog.dismiss();
-                        Log.d("TAG","ParsedJSON"+parsedJSONArray);
+                        Log.d("TAG", "ParsedJSON" + parsedJSONArray);
                     }
 
                     @Override
@@ -226,6 +234,7 @@ public class WorkListWearableListFragment extends Fragment {
                                     viewHolder.getLayoutPosition()+1) +"TAG Clicked"+tag_clicked,
                             Toast.LENGTH_SHORT).show();
 */
+                    disposition_btn.setVisibility(View.GONE);
                     getFragmentManager().beginTransaction()
                             .replace(R.id.framelayout, PatentDetailsFragment.newInstance(tag_clicked,"")).addToBackStack(null)
                             .commit();
@@ -233,8 +242,8 @@ public class WorkListWearableListFragment extends Fragment {
 
                 @Override
                 public void onTopEmptyRegionClick() {
-                    Toast.makeText(getActivity(),
-                            "Top empty area tapped", Toast.LENGTH_SHORT).show();
+                 /*   Toast.makeText(getActivity(),
+                            "Top empty area tapped", Toast.LENGTH_SHORT).show();*/
                 }
             };
 

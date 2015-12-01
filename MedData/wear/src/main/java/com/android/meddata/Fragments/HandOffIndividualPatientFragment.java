@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.PhysicianDTO;
+import com.android.meddata.MedDataUtils.MedDataConstants;
 import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
 
@@ -161,7 +162,7 @@ JSONObject handOffJSON = prepareHandsOffPatientJSON();
 
 
             updateJSON.put("PatientID",pid);
-            updateJSON.put("Login_Id", "veereshm");
+            updateJSON.put("Login_Id", MedDataConstants.LOGIN_ID);
             updateJSON.put("EncounterId", eid);
 
 

@@ -24,6 +24,7 @@ import com.android.meddata.Adapters.HandOffSearchListItemLayout;
 import com.android.meddata.Adapters.HandOffSearchResultsPatientAdapter;
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.MedDataDTO.HandOffResultDTO;
+import com.android.meddata.MedDataUtils.MedDataConstants;
 import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
 
@@ -232,12 +233,12 @@ public class HandsOffPatientSearchResultFragment extends Fragment {
 
 
             updateJSON.put("PatientID",patientId);
-            updateJSON.put("Login_Id", "veereshm");
+            updateJSON.put("Login_Id", MedDataConstants.LOGIN_ID);
             updateJSON.put("EncounterId", encounterId);
 
 
 
-                updateJSON.put("PrimaryPhysician", "veeresh"); //Sue Chilson
+                updateJSON.put("PrimaryPhysician", "veera"); //Sue Chilson
 
 
             updateJSON.put("Key",key);

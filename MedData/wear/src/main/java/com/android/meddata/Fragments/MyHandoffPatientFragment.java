@@ -16,6 +16,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.meddata.Application.MobileApplication;
@@ -80,6 +83,7 @@ public class MyHandoffPatientFragment extends Fragment implements View.OnClickLi
     private boolean isFromSelected = false;
     String selctedLocation="";
     String selectedPhy="";
+    private boolean isHandOff=false;
 
 
 
@@ -112,6 +116,9 @@ public class MyHandoffPatientFragment extends Fragment implements View.OnClickLi
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        if(mParam1.equalsIgnoreCase("handoff")){
+            isHandOff = true;
+        }
         IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
         MessageReceiver messageReceiver = new MessageReceiver();
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(messageReceiver, messageFilter);
@@ -122,7 +129,24 @@ public class MyHandoffPatientFragment extends Fragment implements View.OnClickLi
                              Bundle savedInstanceState) {
          view  =  inflater.inflate(R.layout.handoffs_current_patients_layout, container, false);
         mContainerId = container.getId();
+
+        Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
+        ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
+        back_img.setVisibility(View.VISIBLE);
+
+        TextView notesView = (TextView)mToolBar.findViewById(R.id.notes);
+        notesView.setText("Search");
+        notesView.setVisibility(View.VISIBLE);
+        notesView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postForSearchResults();
+
+            }
+        });
+
         back_float = (ImageButton)view.findViewById(R.id.fab_back);
+        back_float.setVisibility(View.GONE);
         back_float.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,6 +156,7 @@ public class MyHandoffPatientFragment extends Fragment implements View.OnClickLi
             }
         });
         Button search = (Button)view.findViewById(R.id.search_handoff);
+        search.setVisibility(View.GONE);
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -576,8 +601,14 @@ if(isFromSelected) {
                     if (result_data.equalsIgnoreCase("handoffSearch")) {
                         Log.d("TAG", "handoffSearchResponse::::" + MobileApplication.getInstance().getHandsOffSearchResponse());
                         if(MobileApplication.getInstance().getHandsOffSearchResponse().equalsIgnoreCase("No")){
-                            Toast.makeText(getActivity(), "No Records Found", Toast.LENGTH_SHORT).show();
-                        }else{
+//                            Toast.makeText(getActivity(), "No Records Found", Toast.LENGTH_SHORT).show();
+                        }else if(isHandOff){
+                            Log.d("TAG","Search Response:::"+MobileApplication.getInstance().getHandsOffSearchResponse());
+                            getFragmentManager().beginTransaction()
+                                    .replace(R.id.framelayout, HandsOffPatientSearchResultFragment.newInstance("","")).addToBackStack(null)
+                                    .commit();
+                        }
+                        else{
                             Log.d("TAG","Search Response:::"+MobileApplication.getInstance().getHandsOffSearchResponse());
                             getFragmentManager().beginTransaction()
                                     .replace(R.id.framelayout, HandsOffPatientSearchResultFragment.newInstance("revert","")).addToBackStack(null)

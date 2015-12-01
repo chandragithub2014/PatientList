@@ -19,6 +19,7 @@ public class RemindersDTO {
     private String notesType;
     private String financialNum;
     private String adminNum;
+    private String roomNum;
 
     public String getDay() {
         return day;
@@ -139,5 +140,13 @@ public class RemindersDTO {
 
     public void setAdminNum(String adminNum) {
         this.adminNum = adminNum;
+    }
+
+    public String getRoomNum() {
+        return roomNum;
+    }
+
+    public void setRoomNum(String roomNum) {
+        this.roomNum = roomNum;
     }
 }

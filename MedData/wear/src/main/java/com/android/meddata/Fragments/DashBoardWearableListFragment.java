@@ -61,7 +61,10 @@ public class DashBoardWearableListFragment extends Fragment {
         wearableListView.setAdapter(new DashBoardAdapter(getActivity(), mIcons, dashBoardTitles));
         wearableListView.setClickListener(mClickListener);
         wearableListView.addOnScrollListener(mOnScrollListener);
-
+        ImageView disposition_btn = (ImageView)mToolBar.findViewById(R.id.right_icon);
+        disposition_btn.setVisibility(View.INVISIBLE);
+        TextView notesView = (TextView)mToolBar.findViewById(R.id.notes);
+        notesView.setVisibility(View.GONE);
 
         return view;
     }
@@ -96,8 +99,8 @@ public class DashBoardWearableListFragment extends Fragment {
 
                 @Override
                 public void onTopEmptyRegionClick() {
-                    Toast.makeText(getActivity(),
-                            "Top empty area tapped", Toast.LENGTH_SHORT).show();
+                   /* Toast.makeText(getActivity(),
+                            "Top empty area tapped", Toast.LENGTH_SHORT).show();*/
                 }
             };
 

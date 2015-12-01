@@ -227,6 +227,9 @@ Context ctx;
                     if(!TextUtils.isEmpty(jsonObject.getString("AdmissionNo"))){
                         temp.setAdminNum(jsonObject.getString("AdmissionNo"));
                     }
+                    if(!TextUtils.isEmpty(jsonObject.getString("RoomNumber"))) {
+                        temp.setRoomNum(jsonObject.getString("RoomNumber"));
+                    }
                     reminderList.add(temp);
                 }
         }

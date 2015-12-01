@@ -35,9 +35,9 @@ public class ReminderListAdapter extends WearableListView.Adapter {
         ReminderListItemLayout listViewRowView = (ReminderListItemLayout) holder.itemView;
 
         listViewRowView.getDayName().setText(remindersDTOList.get(position).getDay());
-        listViewRowView.getDate().setText(remindersDTOList.get(position).getDateOfDay());
-        listViewRowView.getPhysician().setText(remindersDTOList.get(position).getPrimaryPhysician());
-        listViewRowView.getSecPhysician().setText(remindersDTOList.get(position).getSecPhysician());
+     //   listViewRowView.getDate().setText(remindersDTOList.get(position).getDateOfDay());
+    //    listViewRowView.getPhysician().setText(remindersDTOList.get(position).getPrimaryPhysician());
+        listViewRowView.getRoomNum().setText(remindersDTOList.get(position).getRoomNum());
         listViewRowView.getPatient().setText(remindersDTOList.get(position).getPatientName());
         listViewRowView.getHospital().setText(remindersDTOList.get(position).getHospitalName());
         listViewRowView.setTag(remindersDTOList.get(position).getEncounterId());

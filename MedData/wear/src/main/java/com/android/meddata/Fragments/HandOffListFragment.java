@@ -78,8 +78,11 @@ public class HandOffListFragment extends Fragment {
                                 viewHolder.getLayoutPosition() + 1),
                         Toast.LENGTH_SHORT).show();*/
                 if ((viewHolder.getLayoutPosition() + 1) == 1) {
-                    getFragmentManager().beginTransaction()
+                    /*getFragmentManager().beginTransaction()
                             .replace(R.id.framelayout, HandOffSearchListFragment.newInstance("","")).addToBackStack(null)
+                            .commit();*/
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.framelayout, MyHandoffPatientFragment.newInstance("handoff","")).addToBackStack(null)
                             .commit();
                 } else {
                     getFragmentManager().beginTransaction()

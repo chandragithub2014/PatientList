@@ -20,14 +20,17 @@ app:layout_box="all"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/back_float_icon"
-        android:tint="@android:color/white"
+
         android:id="@+id/fab_back"
         android:elevation="1dp"
         android:layout_marginLeft="10dp"
         android:background="@drawable/ripple"
-        android:stateListAnimator="@anim/fab_anim"
+
         android:layout_alignParentLeft="true"
         />
+    <!--android:tint="@android:color/white"
+      android:stateListAnimator="@anim/fab_anim"
+      -->
 
 <android.support.wearable.view.WearableListView
     android:layout_below="@+id/fab_back"

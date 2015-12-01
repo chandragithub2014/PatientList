@@ -14,16 +14,17 @@ import com.android.meddata.R;
  */
 public class ReminderListItemLayout extends FrameLayout implements WearableListView.OnCenterProximityListener {
 
-  private TextView dayName,date,primphysician,secphysician,patient,hospital;
+  private TextView dayName,date,primphysician,secphysician,patient,hospital,roomNum;
 
 
     public ReminderListItemLayout(Context context) {
         super(context);
-        View.inflate(context, R.layout.reminder_list_item, this);
+        View.inflate(context, R.layout.reminder_list_item1, this);
         dayName = (TextView) findViewById(R.id.day);
-        date = (TextView) findViewById(R.id.date);
-        primphysician = (TextView) findViewById(R.id.prim_physician);
-        secphysician = (TextView) findViewById(R.id.sec_physician);
+        roomNum = (TextView) findViewById(R.id.room);
+     //   date = (TextView) findViewById(R.id.date);
+      //  primphysician = (TextView) findViewById(R.id.prim_physician);
+       // secphysician = (TextView) findViewById(R.id.sec_physician);
         patient = (TextView) findViewById(R.id.patientName);
         hospital = (TextView) findViewById(R.id.hospitial_name);
 
@@ -32,9 +33,9 @@ public class ReminderListItemLayout extends FrameLayout implements WearableListV
     @Override
     public void onCenterPosition(boolean b) {
         dayName.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
-        date.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
-        primphysician.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
-        secphysician.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
+    //    date.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
+    //    primphysician.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
+        roomNum.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
         patient.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
         hospital.animate().scaleX(1f).scaleY(1.2f).alpha(0.6f).setDuration(200);
 
@@ -44,10 +45,10 @@ public class ReminderListItemLayout extends FrameLayout implements WearableListV
     @Override
     public void onNonCenterPosition(boolean b) {
         dayName.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
-        date.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
-        primphysician.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
+     //   date.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
+     //   primphysician.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
         patient.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
-        secphysician.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
+        roomNum.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
         hospital.animate().scaleX(1f).scaleY(1f).alpha(0.6f).setDuration(200);
 
     }
@@ -76,5 +77,7 @@ public class ReminderListItemLayout extends FrameLayout implements WearableListV
         return hospital;
     }
 
-
+    public TextView getRoomNum() {
+        return roomNum;
+    }
 }
