@@ -5,11 +5,13 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.Toolbar;
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.android.meddata.Adapters.HandOffAdapter;
@@ -78,8 +80,13 @@ public class HandOffSearchListFragment extends Fragment {
         listItems.add("Search By Location");
         listItems.add("Search By Date");
 
+        Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
+        ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
+        back_img.setVisibility(View.VISIBLE);
+
         ImageButton back_float = (ImageButton)view.findViewById(R.id.fab_back);
-        back_float.setOnClickListener(new View.OnClickListener() {
+        back_float.setVisibility(View.GONE);
+        back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();

@@ -115,10 +115,11 @@ public class MyHandoffPatientFragment extends Fragment implements View.OnClickLi
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            if(mParam1.equalsIgnoreCase("handoff")){
+                isHandOff = true;
+            }
         }
-        if(mParam1.equalsIgnoreCase("handoff")){
-            isHandOff = true;
-        }
+
         IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
         MessageReceiver messageReceiver = new MessageReceiver();
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(messageReceiver, messageFilter);
@@ -147,12 +148,12 @@ public class MyHandoffPatientFragment extends Fragment implements View.OnClickLi
 
         back_float = (ImageButton)view.findViewById(R.id.fab_back);
         back_float.setVisibility(View.GONE);
-        back_float.setOnClickListener(new View.OnClickListener() {
+        back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(mContainerId, new DashBoardWearableListFragment()).addToBackStack(null).commit();
+                fragmentTransaction.replace(mContainerId, new HandOffListFragment()).addToBackStack(null).commit();
             }
         });
         Button search = (Button)view.findViewById(R.id.search_handoff);
@@ -497,7 +498,7 @@ if(isFromSelected) {
     public void postForSearchResults(){
         JSONObject handOffSearchJSON = prepareHandsOffSearchJSON();
         if(handOffSearchJSON!=null){
-            Log.d("TAG", "Account Details Update JSON:::" + handOffSearchJSON);
+            Log.d("TAG", "handOffSearchJSON:::" + handOffSearchJSON);
             MobileApplication.getInstance().setHandOffSearchJSON(""+handOffSearchJSON);
             MessageService.getInstance().startMessageService(getActivity(), "handoffSearch");
         }
@@ -530,7 +531,11 @@ if(isFromSelected) {
             updateJSON.put("MedicalRecordNo", "");
             updateJSON.put("Key",key);
             updateJSON.put("Login_Id", MedDataConstants.LOGIN_ID);
-            updateJSON.put("TransactionType", "R");
+            if(isHandOff){
+                updateJSON.put("TransactionType", "T");
+            }else {
+                updateJSON.put("TransactionType", "R");
+            }
             updateJSON.put("FirstName", "");
             updateJSON.put("LocationId", selctedLocation);
             updateJSON.put("AdmissionNo", "");

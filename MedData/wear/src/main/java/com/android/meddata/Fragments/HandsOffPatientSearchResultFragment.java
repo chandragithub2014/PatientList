@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.Toolbar;
 import android.support.wearable.view.WearableListView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -96,11 +97,17 @@ public class HandsOffPatientSearchResultFragment extends Fragment {
         handOffPatientListView =  inflater.inflate(R.layout.fragment_hands_off_patient_search_result, container, false);
         WearableListView handoffListView = (WearableListView) handOffPatientListView.findViewById(R.id.handoff_search_result_List);
         mContainerId = container.getId();
+
+        Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
+        ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
+        back_img.setVisibility(View.VISIBLE);
+
         if(!TextUtils.isEmpty(mParam1) && mParam1.equalsIgnoreCase("revert")){
            isRevert = true;
        }
         ImageButton back_float = (ImageButton)handOffPatientListView.findViewById(R.id.fab_back);
-        back_float.setOnClickListener(new View.OnClickListener() {
+        back_float.setVisibility(View.GONE);
+        back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
@@ -129,10 +136,10 @@ public class HandsOffPatientSearchResultFragment extends Fragment {
             new WearableListView.ClickListener() {
                 @Override
                 public void onClick(WearableListView.ViewHolder viewHolder) {
-                    Toast.makeText(getActivity(),
+                   /* Toast.makeText(getActivity(),
                             String.format("You selected item #%s",
                                     viewHolder.getLayoutPosition() + 1),
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();*/
                     HandOffSearchListItemLayout listViewRowView = (HandOffSearchListItemLayout) viewHolder.itemView;
                  /*   ImageView detail_img = (ImageView)listViewRowView.findViewById(R.id.detail);
                     detail_img.setOnClickListener(new View.OnClickListener() {

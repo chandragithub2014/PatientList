@@ -45,11 +45,11 @@ public class HandOffListFragment extends Fragment {
         TextView toolbarTitle = (TextView)mToolBar.findViewById(R.id.title);
         toolbarTitle.setText("Handsoff");
         ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
-        back_img.setVisibility(View.INVISIBLE);
+        back_img.setVisibility(View.VISIBLE);
         RelativeLayout listHeader = (RelativeLayout)view.findViewById(R.id.handoff_list_header);
         listHeader.setVisibility(View.GONE);
         ImageButton back_float = (ImageButton)view.findViewById(R.id.fab_back);
-        back_float.setOnClickListener(new View.OnClickListener() {
+        back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getFragmentManager();
@@ -57,6 +57,7 @@ public class HandOffListFragment extends Fragment {
                 fragmentTransaction.replace(mContainerId, new DashBoardWearableListFragment()).addToBackStack(null).commit();
             }
         });
+        back_float.setVisibility(View.GONE);
         List<String> listItems = new ArrayList<String>();
         listItems.add("Hand off current patients");
         listItems.add("Find my handed off patients");
