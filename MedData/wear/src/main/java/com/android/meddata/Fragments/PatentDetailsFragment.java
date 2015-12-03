@@ -2,7 +2,14 @@ package com.android.meddata.Fragments;
 
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,7 +29,13 @@ import com.android.meddata.JSONParser.JSONParser;
 import com.android.meddata.MedDataDTO.LocationDTO;
 import com.android.meddata.MedDataDTO.PhysicianDTO;
 import com.android.meddata.MedDataDTO.WorkListDTO;
+import com.android.meddata.MedDataUtils.MedDataConstants;
+import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
+import com.android.meddata.custom.CustomToast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,8 +97,60 @@ public class PatentDetailsFragment extends Fragment {
             encounterID = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        IntentFilter messageFilter = new IntentFilter(Intent.ACTION_SEND);
+        MessageReceiver messageReceiver = new MessageReceiver();
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(messageReceiver, messageFilter);
     }
 
+
+    public class MessageReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //  String message = intent.getStringExtra("message");
+            //Log.v("myTag", "Main activity received message: " + message);
+
+            try {
+                //
+                if (intent.hasExtra("notes")) {
+                    String result_data = intent.getStringExtra("notes");
+                    if (result_data.equalsIgnoreCase("patientNotes")) {
+                        Log.d("TAG", "Notes Response::::" + MobileApplication.getInstance().getPatientNotes());
+
+
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(mContainerId, new PatientNotesListFragment()).addToBackStack(null).commit();
+                       /*
+
+                       [{
+	"EncounterID": 0,
+	"Encounters": 0,
+	"EntityID": 0,
+	"Flag": null,
+	"Key": null,
+	"LocationId": null,
+	"Login_Id": null,
+	"Month": null,
+	"Notes": "cosign note",
+	"NotesType": "Cosign Order",
+	"PatientsList": null,
+	"Physician": "Phy442",
+	"UpdatedDate": "Dec 01, 2015",
+	"Year": 0
+}]
+                        */
+
+                       // new CustomToast(getActivity(),getActivity()).displayToast(MobileApplication.getInstance().getAccount_update_response());
+                        //    Toast.makeText(getActivity(), MobileApplication.getInstance().getAccount_update_response(), Toast.LENGTH_SHORT).show();
+                        //      Toast.makeText(getActivity(),MobileApplication.getInstance().getBulkUpdateResponse(),Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,7 +183,15 @@ public class PatentDetailsFragment extends Fragment {
         notesView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Log.d("TAG", "Clicked Notes::::");
+
+                JSONObject patientNotesJSON = preparePatientNotesJSON();
+                if(patientNotesJSON!=null){
+                    Log.d("TAG", "patientNotesJSON:::" + patientNotesJSON);
+                    MobileApplication.getInstance().setPatientNotes("" + patientNotesJSON);
+                    MessageService.getInstance().startMessageService(getActivity(), "notes");
+                }
             }
         });
       /*  TextView rightToolbarTitle = (TextView)mToolBar.findViewById(R.id.right_text);
@@ -314,7 +387,36 @@ private void initAndPopulateLabels(View v ){
     }
 }
 
+    private JSONObject preparePatientNotesJSON(){
 
+        //{"request":{"Login_Id":"test1","Key":"ABFC2R;h","EncounterID":"102"}}
+        String globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+        String key = "";
+        try {
+            JSONObject jsonObject = new JSONObject(globalJSON);
+            key = jsonObject.getString("Key");
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+        JSONObject updateJSON = null;
+        JSONObject    requestJsonObject = null;
+        try {
+            updateJSON = new JSONObject();
+            updateJSON.put("Login_Id", MedDataConstants.LOGIN_ID);
+            updateJSON.put("Key",key);
+            updateJSON.put("EncounterID",encounterID);
+
+            requestJsonObject = new JSONObject();
+            requestJsonObject.put("request", updateJSON);
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+
+        return requestJsonObject;
+    }
 
     private void initAndDisableUnwantedViews(View v ){
         patientName = (TextView)v.findViewById(R.id.patientName);

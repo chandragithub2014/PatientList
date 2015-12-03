@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,7 @@ import com.android.meddata.MedDataDTO.PhysicianDTO;
 import com.android.meddata.MedDataUtils.MedDataConstants;
 import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
+import com.android.meddata.custom.CustomToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -69,16 +72,27 @@ public class HandOffIndividualPatientFragment extends Fragment {
         // Inflate the layout for this fragment
         v  =  inflater.inflate(R.layout.fragment_hand_off_individual_patient, container, false);
 
+
+        Toolbar mToolBar = (Toolbar)getActivity().findViewById(R.id.toolbar);
+        ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
+        back_img.setVisibility(View.VISIBLE);
+        TextView save = (TextView)mToolBar.findViewById(R.id.notes);
+        save.setVisibility(View.VISIBLE);
+        save.setText("Save");
+        patientName = (TextView)v.findViewById(R.id.patientName);
+        prPhySpinner = (Spinner)v.findViewById(R.id.physician_spinner);
+        post_save_btn = (Button)v.findViewById(R.id.post_handOff);
          if(getArguments().getInt("PATIENT_ID")!=-1){
              pid  = getArguments().getInt("PATIENT_ID");
          }
         if(getArguments().getInt("ENCOUNTER_ID")!=-1){
             eid = getArguments().getInt("ENCOUNTER_ID");
         }
+        if(!TextUtils.isEmpty(getArguments().getString("PATIENT_NAME"))){
+            patientName.setText(getArguments().getString("PATIENT_NAME"));
+        }
 
-        patientName = (TextView)v.findViewById(R.id.patientName);
-        prPhySpinner = (Spinner)v.findViewById(R.id.physician_spinner);
-        post_save_btn = (Button)v.findViewById(R.id.post_handOff);
+
 
         if (!TextUtils.isEmpty(MobileApplication.getInstance().getPhysicianList())) {
             List<PhysicianDTO> prPhyList = JSONParser.getInstance().getPhysicianList(MobileApplication.getInstance().getPhysicianList());
@@ -113,7 +127,7 @@ public class HandOffIndividualPatientFragment extends Fragment {
         });
 
 
-        post_save_btn.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 postHandedOffPatient();
@@ -215,8 +229,8 @@ JSONObject handOffJSON = prepareHandsOffPatientJSON();
                     String result_data = intent.getStringExtra("result");
                     if (result_data.equalsIgnoreCase("handoffpatient")) {
                         Log.d("TAG", "handoffpatient Response::::" + MobileApplication.getInstance().getPatientHandOffResponse());
-                        Toast.makeText(getActivity(), MobileApplication.getInstance().getPatientHandOffResponse(), Toast.LENGTH_SHORT).show();
-
+                      //  Toast.makeText(getActivity(), MobileApplication.getInstance().getPatientHandOffResponse(), Toast.LENGTH_SHORT).show();
+                        new CustomToast(getActivity(),getActivity()).displayToast(MobileApplication.getInstance().getPatientHandOffResponse());
                         //Toast.makeText(getActivity(), MobileApplication.getInstance().getHandsOffSearchResponse(), Toast.LENGTH_SHORT).show();
                         //      Toast.makeText(getActivity(),MobileApplication.getInstance().getBulkUpdateResponse(),Toast.LENGTH_LONG).show();
 

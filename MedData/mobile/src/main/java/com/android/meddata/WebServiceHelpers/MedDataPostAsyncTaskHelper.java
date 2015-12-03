@@ -197,6 +197,9 @@ Context ctx;
             else if( !TextUtils.isEmpty(type) && type.equalsIgnoreCase("worklistCount")){
                 MobileApplication.getInstance().setPatientList(response);
                 flag = "worklistCount";
+            }else if( !TextUtils.isEmpty(type) && type.equalsIgnoreCase("notes")){
+                MobileApplication.getInstance().setPatientNotes(response);
+                flag = "notes";
             }
             else {
                 JSONObject responseJsonObject = new JSONObject(response);

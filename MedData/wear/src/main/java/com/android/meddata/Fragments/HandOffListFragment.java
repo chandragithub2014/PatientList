@@ -46,6 +46,9 @@ public class HandOffListFragment extends Fragment {
         toolbarTitle.setText("Handsoff");
         ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
         back_img.setVisibility(View.VISIBLE);
+        TextView notesView = (TextView)mToolBar.findViewById(R.id.notes);
+        notesView.setText("Search");
+        notesView.setVisibility(View.GONE);
         RelativeLayout listHeader = (RelativeLayout)view.findViewById(R.id.handoff_list_header);
         listHeader.setVisibility(View.GONE);
         ImageButton back_float = (ImageButton)view.findViewById(R.id.fab_back);

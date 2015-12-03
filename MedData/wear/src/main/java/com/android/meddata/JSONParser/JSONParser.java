@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.android.meddata.Application.MobileApplication;
 import com.android.meddata.MedDataDTO.LocationDTO;
+import com.android.meddata.MedDataDTO.NotesDTO;
 import com.android.meddata.MedDataDTO.PhysicianDTO;
 import com.android.meddata.MedDataDTO.RemindersDTO;
 import com.android.meddata.MedDataDTO.WorkListDTO;
@@ -96,7 +97,33 @@ Context ctx;
         return workList;
     }
 
-/*
+
+
+    public List<NotesDTO> getNotesList(String jsonArray){
+        List<NotesDTO> notesList = new ArrayList<NotesDTO>();
+        try{
+            JSONArray jsonArray1 = new JSONArray(jsonArray);
+            for(int i=0;i<jsonArray1.length();i++){
+                JSONObject jsonObject = jsonArray1.getJSONObject(i);
+                NotesDTO temp = new NotesDTO();
+                temp.setPatientNotes(jsonObject.getString("Notes"));
+                temp.setNotesType(jsonObject.getString("NotesType"));
+                temp.setPhysician(jsonObject.getString("Physician"));
+                temp.setUpdatedDate(jsonObject.getString("UpdatedDate"));
+
+
+                notesList.add(temp);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return notesList;
+    }
+
+
+    /*
 "DispositionId" : "Signed Off",
       "Login_Id" : "test1",
       "PrimaryPhysician" : "Phy444",

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.meddata.Adapters.HandOffSearchListItemLayout;
@@ -28,6 +29,7 @@ import com.android.meddata.MedDataDTO.HandOffResultDTO;
 import com.android.meddata.MedDataUtils.MedDataConstants;
 import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
+import com.android.meddata.custom.CustomToast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -102,8 +104,11 @@ public class HandsOffPatientSearchResultFragment extends Fragment {
         ImageView back_img = (ImageView)mToolBar.findViewById(R.id.back);
         back_img.setVisibility(View.VISIBLE);
 
+        TextView save = (TextView)mToolBar.findViewById(R.id.notes);
+
         if(!TextUtils.isEmpty(mParam1) && mParam1.equalsIgnoreCase("revert")){
            isRevert = true;
+            save.setVisibility(View.INVISIBLE);
        }
         ImageButton back_float = (ImageButton)handOffPatientListView.findViewById(R.id.fab_back);
         back_float.setVisibility(View.GONE);
@@ -115,7 +120,7 @@ public class HandsOffPatientSearchResultFragment extends Fragment {
                 if(isRevert) {
                     fragmentTransaction.replace(mContainerId, new MyHandoffPatientFragment()).addToBackStack(null).commit();
                 }else{
-                    fragmentTransaction.replace(mContainerId, new HandOffSearchListFragment()).addToBackStack(null).commit();
+                    fragmentTransaction.replace(mContainerId, new MyHandoffPatientFragment()).addToBackStack(null).commit();
                 }
             }
         });
@@ -153,11 +158,12 @@ public class HandsOffPatientSearchResultFragment extends Fragment {
                             String.format("You selected item #%s",
                                     viewHolder.getLayoutPosition()+1) +"TAG Clicked"+tag_clicked,
                             Toast.LENGTH_SHORT).show();*/
-                //    TextView pateintId = (TextView)listViewRowView.findViewById( R.id.patient_id);
-                    HandOffResultDTO temp = (HandOffResultDTO) listViewRowView.getTag();
-                    int  patientID  = temp.getPatientId();
-                  //  TextView encounter_Id = (TextView)listViewRowView.findViewById(R.id.encounter_id);
-                    int  encounterId = temp.getEncounterId();
+                    TextView pateintId = (TextView)listViewRowView.findViewById(R.id.patient_name);
+                  //  HandOffResultDTO temp = (HandOffResultDTO) listViewRowView.getTag();
+                    int  patientID  = (int) pateintId.getTag();
+                   TextView encounter_Id = (TextView)listViewRowView.findViewById(R.id.doctor_name);
+                    int  encounterId = (int) encounter_Id.getTag();
+                    Log.d("TAG","Patient Id::: && EncounterID:::"+patientID+":::::"+encounterId);
                     if(!isRevert) {
                         Fragment fr = new HandOffIndividualPatientFragment();
                         FragmentManager fm = getFragmentManager();
@@ -165,6 +171,7 @@ public class HandsOffPatientSearchResultFragment extends Fragment {
                         Bundle args = new Bundle();
                         args.putInt("PATIENT_ID", patientID);
                         args.putInt("ENCOUNTER_ID", encounterId);
+                        args.putString("PATIENT_NAME",pateintId.getText().toString());
                         fr.setArguments(args);
                         ft.replace(R.id.framelayout, fr);
                         ft.addToBackStack(null);
@@ -281,8 +288,8 @@ public class HandsOffPatientSearchResultFragment extends Fragment {
                     String result_data = intent.getStringExtra("result");
                     if (result_data.equalsIgnoreCase("revertpatient")) {
                         Log.d("TAG", "revertpatient Response::::" + MobileApplication.getInstance().getPatientRevertResponse());
-                        Toast.makeText(getActivity(), MobileApplication.getInstance().getPatientRevertResponse(), Toast.LENGTH_SHORT).show();
-
+                      // Toast.makeText(getActivity(), MobileApplication.getInstance().getPatientRevertResponse(), Toast.LENGTH_SHORT).show();
+                        new CustomToast(getActivity(),getActivity()).displayToast(MobileApplication.getInstance().getPatientRevertResponse());
                         //Toast.makeText(getActivity(), MobileApplication.getInstance().getHandsOffSearchResponse(), Toast.LENGTH_SHORT).show();
                         //      Toast.makeText(getActivity(),MobileApplication.getInstance().getBulkUpdateResponse(),Toast.LENGTH_LONG).show();
 

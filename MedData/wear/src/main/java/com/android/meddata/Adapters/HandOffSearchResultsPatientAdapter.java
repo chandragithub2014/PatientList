@@ -45,11 +45,16 @@ public class HandOffSearchResultsPatientAdapter extends WearableListView.Adapter
         listViewRowView.getLoca_name().setText(handOffResultDTOList.get(position).getHospitalLocation());
    //     Log.d("TAG", "Encounter Date Adapter::::" + handOffResultDTOList.get(position).getEncounterDate());
 
+        listViewRowView.getPatient_Name().setTag(handOffResultDTOList.get(position).getPatientId());
+        listViewRowView.getPhy_name().setTag(handOffResultDTOList.get(position).getEncounterId());
+        String encounterDate = handOffResultDTOList.get(position).getEncounterDate();
+        listViewRowView.getEncounterDate().setText(encounterDate);
+      if(!TextUtils.isEmpty(encounterDate)) {
+      //\/Date(1448788245320-0800)\/
+          Log.d("TAG", "Julian Date::::" + encounterDate);
 
-        String results = handOffResultDTOList.get(position).getEncounterDate();
-        listViewRowView.getEncounterDate().setText(results);
-      if(!TextUtils.isEmpty(results)) /*{
-          Log.d("TAG", "Julian Date::::" + results);
+          String results = encounterDate.replaceAll("^/Date\\(", "");
+
           results = results.substring(0, 13);
           long time = Long.parseLong(results);
 
@@ -59,8 +64,12 @@ public class HandOffSearchResultsPatientAdapter extends WearableListView.Adapter
           //  textView.setText(sdf.format(date));
           System.out.println("Time after converiosn::" + sdf.format(date));
           listViewRowView.getEncounterDate().setText(sdf.format(date));
-      }*/
-        listViewRowView.setTag(handOffResultDTOList.get(position));
+      }
+
+
+        //   int  patientID  = temp.getPatientId();
+        Log.d("TAG","Tagged  Patient Id::"+listViewRowView.getPatient_Name().getTag());
+
 
     }
 

@@ -35,6 +35,7 @@ import com.android.meddata.MedDataDTO.LocationDTO;
 import com.android.meddata.MedDataUtils.MedDataConstants;
 import com.android.meddata.MessageAPI.MessageService;
 import com.android.meddata.R;
+import com.android.meddata.custom.CustomToast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -246,7 +247,7 @@ private void parseJSONForAccountDetails(){
             }else{
                 updateJSON.put("EmailID",null);
             }
-            updateJSON.put("Specialization","Physician");
+            updateJSON.put("Specialization","33");
 
             if(!TextUtils.isEmpty(userName)){
                 updateJSON.put("UserName",userName);
@@ -289,7 +290,8 @@ private void parseJSONForAccountDetails(){
                 String result_data = intent.getStringExtra("result");
                 if (result_data.equalsIgnoreCase("accountUpdate")) {
                     Log.d("TAG", "AccountUpdateResponse::::" + MobileApplication.getInstance().getAccount_update_response());
-                    Toast.makeText(getActivity(), MobileApplication.getInstance().getAccount_update_response(), Toast.LENGTH_SHORT).show();
+                    new CustomToast(getActivity(),getActivity()).displayToast(MobileApplication.getInstance().getAccount_update_response());
+                //    Toast.makeText(getActivity(), MobileApplication.getInstance().getAccount_update_response(), Toast.LENGTH_SHORT).show();
                     //      Toast.makeText(getActivity(),MobileApplication.getInstance().getBulkUpdateResponse(),Toast.LENGTH_LONG).show();
                 }
 

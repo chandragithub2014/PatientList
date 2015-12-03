@@ -16,6 +16,7 @@
          android:layout_marginTop="5dp"
         android:background="@drawable/ripple"
         android:stateListAnimator="@anim/fab_anim"
+         android:visibility="gone"
 
         />
     <TextView
@@ -39,5 +40,6 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorPrimary"
         android:id="@+id/post_handOff"
-        android:text="Save"/>
+        android:text="Save"
+        android:visibility="gone"/>
 </LinearLayout>

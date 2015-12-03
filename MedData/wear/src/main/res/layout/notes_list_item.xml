@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/patientnotes"
+            android:textSize="10dp"
+            android:layout_alignParentLeft="true"
+            android:text="PatientNotes"
+            android:textColor="#FF0000"
+            android:alpha="0.6"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="10dp"
+            android:textSize="10dp"
+            android:text="Dec 3,2015"
+            android:paddingRight="10dp"
+            android:id="@+id/updated_date"
+            android:textColor="#000000"
+            android:alpha="0.6"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+             android:layout_below="@+id/patientnotes"
+            android:id="@+id/phy_name"
+            android:textSize="10dp"
+            android:text="PHY44"
+            android:textColor="#000000"
+            android:alpha="0.6"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/phy_name"
+        android:id="@+id/patientnotesType"
+        android:textSize="10dp"
+        android:text="Notes Type"
+        android:textColor="#000000"
+        android:alpha="0.6"/>
+    </RelativeLayout>
+
+<!--
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:gravity="center_vertical"
+android:paddingStart="10dp"
+android:paddingEnd="10dp"
+android:orientation="horizontal">
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/hospitial_name"
+                android:textSize="10dp"
+                android:text=""
+                android:textColor="#FF0000"
+                android:alpha="0.6"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date"
+                android:visibility="gone"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="10dp"
+                android:alpha="0.6"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:id="@+id/physician"
+                android:visibility="gone"
+                android:text=""
+                android:textColor="#000000"
+                android:alpha="0.6"/>
+
+        </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textSize="10dp"
+        android:text=""
+    android:paddingRight="10dp"
+        android:id="@+id/room"
+        android:textColor="#000000"
+        android:alpha="0.6"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/patientName"
+                android:textSize="10dp"
+              android:text=""
+                android:textColor="#000000"
+                android:alpha="0.6"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:id="@+id/billing"
+                android:visibility="gone"
+                android:text=""
+                android:textColor="#000000"
+                android:alpha="0.6"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:id="@+id/day"
+                android:text=""
+                android:textColor="#FF0000"
+                android:visibility="gone"
+                android:alpha="0.6"/>
+
+        </LinearLayout>
+        </RelativeLayout>
+    -->
