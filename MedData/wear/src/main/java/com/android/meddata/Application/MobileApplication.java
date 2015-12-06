@@ -3,6 +3,10 @@ package com.android.meddata.Application;
 import android.app.Activity;
 import android.app.Application;
 
+import com.android.meddata.MedDataDTO.WorkListDTO;
+
+import java.util.HashMap;
+
 /**
  * Created by 245742 on 9/8/2015.
  */
@@ -32,6 +36,8 @@ public class MobileApplication extends Application {
     private String patientRevertJSON;
     private String patientRevertResponse;
     private String patientNotes;
+    HashMap<String,WorkListDTO> workListDTOHashMap = new HashMap<String,WorkListDTO>();
+    private String updatePatientDetails;
 
     @Override
     public void onCreate() {
@@ -231,5 +237,21 @@ public class MobileApplication extends Application {
 
     public void setPatientNotes(String patientNotes) {
         this.patientNotes = patientNotes;
+    }
+
+    public HashMap<String, WorkListDTO> getWorkListDTOHashMap() {
+        return workListDTOHashMap;
+    }
+
+    public void setWorkListDTOHashMap(HashMap<String, WorkListDTO> workListDTOHashMap) {
+        this.workListDTOHashMap = workListDTOHashMap;
+    }
+
+    public String getUpdatePatientDetails() {
+        return updatePatientDetails;
+    }
+
+    public void setUpdatePatientDetails(String updatePatientDetails) {
+        this.updatePatientDetails = updatePatientDetails;
     }
 }

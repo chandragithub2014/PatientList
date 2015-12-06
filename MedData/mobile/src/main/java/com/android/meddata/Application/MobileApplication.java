@@ -35,6 +35,7 @@ public class MobileApplication extends Application {
     private int reminderCount;
     private int workListCount;
     private String patientNotes;
+    private String updatePatientDetails;
 
     @Override
     public void onCreate() {
@@ -259,5 +260,13 @@ public class MobileApplication extends Application {
 
     public void setPatientNotes(String patientNotes) {
         this.patientNotes = patientNotes;
+    }
+
+    public String getUpdatePatientDetails() {
+        return updatePatientDetails;
+    }
+
+    public void setUpdatePatientDetails(String updatePatientDetails) {
+        this.updatePatientDetails = updatePatientDetails;
     }
 }

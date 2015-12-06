@@ -142,6 +142,12 @@ public class ListenerService extends WearableListenerService {
                 messageIntent.setAction(Intent.ACTION_SEND);
                 messageIntent.putExtra("notes", "patientNotes");
                 LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
+            }else if(message.contains("updatePatient")){
+                 String patientDetails =  message.substring(message.lastIndexOf("$") + 1);
+                Intent messageIntent = new Intent();
+                messageIntent.setAction(Intent.ACTION_SEND);
+                messageIntent.putExtra("patientUpdate", patientDetails);
+                LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
             }
             else{
                 MobileApplication.getInstance().setPropertiesJSON(message);

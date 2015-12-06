@@ -21,6 +21,12 @@ public class WorkListDTO {
     private String secPhysician;
     private String financialNum;
     private String adminNum;
+    private String unFormattedEncDate;
+    private String recNotesDate;
+    private String firstName;
+    private String lastName;
+    private String middleName;
+    private String dispostionID;
 
     public String getDay() {
         return day;
@@ -157,5 +163,54 @@ public class WorkListDTO {
 
     public void setAdminNum(String adminNum) {
         this.adminNum = adminNum;
+    }
+
+
+    public String getUnFormattedEncDate() {
+        return unFormattedEncDate;
+    }
+
+    public void setUnFormattedEncDate(String unFormattedEncDate) {
+        this.unFormattedEncDate = unFormattedEncDate;
+    }
+
+    public String getRecNotesDate() {
+        return recNotesDate;
+    }
+
+    public void setRecNotesDate(String recNotesDate) {
+        this.recNotesDate = recNotesDate;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getDispostionID() {
+        return dispostionID;
+    }
+
+    public void setDispostionID(String dispostionID) {
+        this.dispostionID = dispostionID;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 }

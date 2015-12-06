@@ -47,6 +47,9 @@
     }else if(getIntent().getStringExtra("NOTES_PATIENT")!=null){
         intentExtra = getIntent().getStringExtra("NOTES_PATIENT");
         Log.d("TAG","Extra Message :::notes Patient"+intentExtra);
+    }else if(getIntent().getStringExtra("UPDATE_PATIENT")!=null){
+        intentExtra = getIntent().getStringExtra("UPDATE_PATIENT");
+        Log.d("TAG","Extra Message :::notes Patient"+intentExtra);
     }
     }
             FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -129,6 +132,19 @@
                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, notesJSON, "notes").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/GetOldNotes");
                 }else {
                     new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, notesJSON, "notes").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/GetOldNotes");
+                }
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
+        }else if(intentExtra.equalsIgnoreCase("updatePatient")){
+            try{
+                JSONObject updateJSON = new JSONObject(MobileApplication.getInstance().getUpdatePatientDetails());
+                Log.d("TAG","updatePatientJSON::::::::"+""+updateJSON);
+                if(MedDataConstants.USE_TEST_SERVICE){
+                    new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, updateJSON, "updatePatient").execute("https://test-patientlists.meddata.com/PatientDetailsService.svc/AddNewPatient");
+                }else {
+                    new MedDataPostAsyncTaskHelper(MainActivity.this, MainActivity.this, updateJSON, "updatePatient").execute("https://dev-patientlists.meddata.com/PatientDetailsService.svc/AddNewPatient");
                 }
             }catch (JSONException e){
                 e.printStackTrace();
@@ -465,6 +481,8 @@
                  MessageService.getInstance().startMessageService(MainActivity.this,"revertpatient");
              }else if(result.equalsIgnoreCase("notes")){
                  MessageService.getInstance().startMessageService(MainActivity.this,"notes");
+             }else if(result.equalsIgnoreCase("updatePatient")){
+                 MessageService.getInstance().startMessageService(MainActivity.this,"updatePatient");
              }
             //revertpatient
         }

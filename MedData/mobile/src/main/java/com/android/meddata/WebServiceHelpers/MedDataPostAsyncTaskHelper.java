@@ -200,6 +200,18 @@ Context ctx;
             }else if( !TextUtils.isEmpty(type) && type.equalsIgnoreCase("notes")){
                 MobileApplication.getInstance().setPatientNotes(response);
                 flag = "notes";
+            }else if( !TextUtils.isEmpty(type) && type.equalsIgnoreCase("updatePatient")){
+                JSONObject responseJsonObject = new JSONObject(response);
+                flag = responseJsonObject.getString("Flag");
+                if(flag.equalsIgnoreCase("S")){
+                    MobileApplication.getInstance().setPatientRevertResponse("Patient Updated");
+                }else if(flag.equalsIgnoreCase("A")){
+                    MobileApplication.getInstance().setPatientRevertResponse("Encounter Already Exists");
+                }
+                else{
+                    MobileApplication.getInstance().setPatientRevertResponse("Error");
+                }
+                flag="updatePatient";
             }
             else {
                 JSONObject responseJsonObject = new JSONObject(response);

@@ -86,7 +86,16 @@ public class ListenerService extends WearableListenerService  implements OMSRece
               i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
               startActivity(i);
 
-          }else if(message.contains("reminderCount")){
+          }else if(message.contains("patientUpdate")){
+             String patientDetailUpdateJSON =  message.substring(message.lastIndexOf("$") + 1);
+              MobileApplication.getInstance().setUpdatePatientDetails(patientDetailUpdateJSON);
+              Log.d("PatientUpdate","patientDetailUpdateJSON"+patientDetailUpdateJSON);
+              Intent i = new Intent(this, MainActivity.class);
+              i.putExtra("UPDATE_PATIENT", "updatePatient");
+              i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              startActivity(i);
+          }
+           else if (message.contains("reminderCount")){
               makeWebServiceCalls();
           }
 

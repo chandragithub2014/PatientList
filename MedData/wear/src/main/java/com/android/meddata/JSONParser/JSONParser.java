@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,8 +28,8 @@ import java.util.List;
 public class JSONParser {
 
 
-private static JSONParser instance;
-Context ctx;
+    private static JSONParser instance;
+    Context ctx;
 
     private JSONParser(){
 
@@ -43,6 +44,7 @@ Context ctx;
 
     public List<WorkListDTO> getWorkList(String jsonArray){
         List<WorkListDTO> workList = new ArrayList<WorkListDTO>();
+        HashMap<String,WorkListDTO> workListHash = new HashMap<String,WorkListDTO>();
         try{
             JSONArray jsonArray1 = new JSONArray(jsonArray);
             for(int i=0;i<jsonArray1.length();i++){
@@ -60,8 +62,8 @@ Context ctx;
                 try {
                     Date oneWayTripDate = input.parse(encounterDate);                 // parse input
                     String readableDate = (output.format(oneWayTripDate));
-					temp.setDate(readableDate);
-                    } catch (ParseException e) {
+                    temp.setDate(readableDate);
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 temp.setEncounterId(jsonObject.getString("EncounterId"));
@@ -69,13 +71,13 @@ Context ctx;
                 temp.setAge(jsonObject.getString("Age"));
                 temp.setBillingType(jsonObject.getString("BillingType"));
                 if(jsonObject.has("gender") && jsonObject.getString("gender")!=null){
-                 temp.setGender(jsonObject.getString("gender"));
+                    temp.setGender(jsonObject.getString("gender"));
                 }
                 if(jsonObject.getString("DOB")!=null){
                     temp.setDob(jsonObject.getString("DOB"));
                 }
                 if(!TextUtils.isEmpty(jsonObject.getString("NotesType"))){
-                      temp.setNotesType(jsonObject.getString("NotesType"));
+                    temp.setNotesType(jsonObject.getString("NotesType"));
                 }
                 if(!TextUtils.isEmpty(jsonObject.getString("SecondaryPhysician"))){
                     temp.setSecPhysician(jsonObject.getString("SecondaryPhysician"));
@@ -86,6 +88,47 @@ Context ctx;
                 if(!TextUtils.isEmpty(jsonObject.getString("AdmissionNo"))){
                     temp.setAdminNum(jsonObject.getString("AdmissionNo"));
                 }
+                if(!TextUtils.isEmpty(jsonObject.getString("MiddleName"))){
+                    temp.setMiddleName(jsonObject.getString("MiddleName"));
+                }
+
+                if(!TextUtils.isEmpty(jsonObject.getString("LastName"))){
+                  temp.setLastName(jsonObject.getString("LastName"));
+                }
+/*
+
+                private String unFormattedEncDate;
+                private String recNotesDate;
+                private String firstName;
+                private String dispostionID;
+*/
+                if(!TextUtils.isEmpty(jsonObject.getString("Encounter_Date"))){
+                    temp.setUnFormattedEncDate(jsonObject.getString("Encounter_Date"));
+                }
+
+                if(!TextUtils.isEmpty(jsonObject.getString("RecNotesDate"))){
+                    temp.setRecNotesDate(jsonObject.getString("RecNotesDate"));
+                }
+
+                if(!TextUtils.isEmpty(jsonObject.getString("FirstName"))){
+                    temp.setFirstName(jsonObject.getString("FirstName"));
+                }
+
+                if(!TextUtils.isEmpty(jsonObject.getString("DispositionId"))){
+                    temp.setDispostionID(jsonObject.getString("DispositionId"));
+                }
+                if(!TextUtils.isEmpty(jsonObject.getString("EncounterId"))){
+                    workListHash.put(jsonObject.getString("EncounterId"), temp);
+                }
+                if(MobileApplication.getInstance().getWorkListDTOHashMap()!=null && MobileApplication.getInstance().getWorkListDTOHashMap().size()>0){
+               //     MobileApplication.getInstance().getWorkListDTOHashMap().clear();
+                    HashMap<String,WorkListDTO> tempHash = MobileApplication.getInstance().getWorkListDTOHashMap();
+                    tempHash.put(jsonObject.getString("EncounterId"), temp);
+                    MobileApplication.getInstance().setWorkListDTOHashMap(tempHash);
+                }else{
+                    MobileApplication.getInstance().setWorkListDTOHashMap(workListHash);
+                }
+
 
                 workList.add(temp);
             }
@@ -139,7 +182,7 @@ Context ctx;
         String key = "";
         try {
             JSONObject jsonObject = new JSONObject(globalJSON);
-             key = jsonObject.getString("Key");
+            key = jsonObject.getString("Key");
         }
         catch (JSONException e){
             e.printStackTrace();
@@ -153,16 +196,16 @@ Context ctx;
 
                 updatedJSON.put("DispositionId",depositionId);
                 updatedJSON.put("Login_Id", MedDataConstants.LOGIN_ID);
-                updatedJSON.put("PrimaryPhysician",jsonObject.getString("PrimaryPhysician"));
-                updatedJSON.put("EncounterId",jsonObject.getString("EncounterId"));
-                updatedJSON.put("Key",key);
-                updatedJSON.put("TransactionType" , "WA");
+                updatedJSON.put("PrimaryPhysician", jsonObject.getString("PrimaryPhysician"));
+                updatedJSON.put("EncounterId", jsonObject.getString("EncounterId"));
+                updatedJSON.put("Key", key);
+                updatedJSON.put("TransactionType", "WA");
 
                 updatedJSONArray.put(updatedJSON);
 
 
             }
-             requestJsonObject = new JSONObject();
+            requestJsonObject = new JSONObject();
             requestJsonObject.put("request", updatedJSONArray);
 
         }
@@ -201,7 +244,7 @@ Context ctx;
                 }
             }
         }
-       catch(JSONException e){
+        catch(JSONException e){
             e.printStackTrace();
         }
 
@@ -210,55 +253,55 @@ Context ctx;
     public List<RemindersDTO> getRemindersList(String jsonArray){
         List<RemindersDTO> reminderList = new ArrayList<RemindersDTO>();
 
-            try{
-                JSONArray jsonArray1 = new JSONArray(jsonArray);
-                for(int i=0;i<jsonArray1.length();i++){
-                    JSONObject jsonObject = jsonArray1.getJSONObject(i);
-                    RemindersDTO temp = new RemindersDTO();
-                    temp.setDay(jsonObject.getString("EncWeekDay"));
-                    String encounterDate = jsonObject.getString("FormattedEncDate");
-                    SimpleDateFormat input = new SimpleDateFormat("yy/MM/dd");
-                    SimpleDateFormat output = new SimpleDateFormat("MMM dd, yyyy");
-                    try {
-                        Date oneWayTripDate = input.parse(encounterDate);                 // parse input
-                        String readableDate = (output.format(oneWayTripDate));
-                        temp.setDateOfDay(readableDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    temp.setPatientName(jsonObject.getString("Patientname"));
-                    temp.setPrimaryPhysician("Pr." + jsonObject.getString("PrimaryPhysician"));
-                    temp.setSecPhysician("Sec." + jsonObject.getString("SecondaryPhysician"));
-                    temp.setHospitalName(jsonObject.getString("LocationId"));
-
-
-                    temp.setEncounterId(jsonObject.getString("EncounterId"));
-                    temp.setMrn(jsonObject.getString("MedicalRecordNo"));
-                    temp.setAge(jsonObject.getString("Age"));
-                    temp.setBillingType(jsonObject.getString("BillingType"));
-                    if(jsonObject.has("gender") && jsonObject.getString("gender")!=null){
-                        temp.setGender(jsonObject.getString("gender"));
-                    }
-                    if(jsonObject.getString("DOB")!=null){
-                        temp.setDob(jsonObject.getString("DOB"));
-                    }
-                    if(!TextUtils.isEmpty(jsonObject.getString("NotesType"))){
-                        temp.setNotesType(jsonObject.getString("NotesType"));
-                    }
-                    if(!TextUtils.isEmpty(jsonObject.getString("SecondaryPhysician"))){
-                        temp.setSecPhysician("Sec."+jsonObject.getString("SecondaryPhysician"));
-                    }
-                    if(!TextUtils.isEmpty(jsonObject.getString("FinancialNo"))){
-                        temp.setFinancialNum(jsonObject.getString("FinancialNo"));
-                    }
-                    if(!TextUtils.isEmpty(jsonObject.getString("AdmissionNo"))){
-                        temp.setAdminNum(jsonObject.getString("AdmissionNo"));
-                    }
-                    if(!TextUtils.isEmpty(jsonObject.getString("RoomNumber"))) {
-                        temp.setRoomNum(jsonObject.getString("RoomNumber"));
-                    }
-                    reminderList.add(temp);
+        try{
+            JSONArray jsonArray1 = new JSONArray(jsonArray);
+            for(int i=0;i<jsonArray1.length();i++){
+                JSONObject jsonObject = jsonArray1.getJSONObject(i);
+                RemindersDTO temp = new RemindersDTO();
+                temp.setDay(jsonObject.getString("EncWeekDay"));
+                String encounterDate = jsonObject.getString("FormattedEncDate");
+                SimpleDateFormat input = new SimpleDateFormat("yy/MM/dd");
+                SimpleDateFormat output = new SimpleDateFormat("MMM dd, yyyy");
+                try {
+                    Date oneWayTripDate = input.parse(encounterDate);                 // parse input
+                    String readableDate = (output.format(oneWayTripDate));
+                    temp.setDateOfDay(readableDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
+                temp.setPatientName(jsonObject.getString("Patientname"));
+                temp.setPrimaryPhysician("Pr." + jsonObject.getString("PrimaryPhysician"));
+                temp.setSecPhysician("Sec." + jsonObject.getString("SecondaryPhysician"));
+                temp.setHospitalName(jsonObject.getString("LocationId"));
+
+
+                temp.setEncounterId(jsonObject.getString("EncounterId"));
+                temp.setMrn(jsonObject.getString("MedicalRecordNo"));
+                temp.setAge(jsonObject.getString("Age"));
+                temp.setBillingType(jsonObject.getString("BillingType"));
+                if(jsonObject.has("gender") && jsonObject.getString("gender")!=null){
+                    temp.setGender(jsonObject.getString("gender"));
+                }
+                if(jsonObject.getString("DOB")!=null){
+                    temp.setDob(jsonObject.getString("DOB"));
+                }
+                if(!TextUtils.isEmpty(jsonObject.getString("NotesType"))){
+                    temp.setNotesType(jsonObject.getString("NotesType"));
+                }
+                if(!TextUtils.isEmpty(jsonObject.getString("SecondaryPhysician"))){
+                    temp.setSecPhysician("Sec."+jsonObject.getString("SecondaryPhysician"));
+                }
+                if(!TextUtils.isEmpty(jsonObject.getString("FinancialNo"))){
+                    temp.setFinancialNum(jsonObject.getString("FinancialNo"));
+                }
+                if(!TextUtils.isEmpty(jsonObject.getString("AdmissionNo"))){
+                    temp.setAdminNum(jsonObject.getString("AdmissionNo"));
+                }
+                if(!TextUtils.isEmpty(jsonObject.getString("RoomNumber"))) {
+                    temp.setRoomNum(jsonObject.getString("RoomNumber"));
+                }
+                reminderList.add(temp);
+            }
         }
         catch(JSONException e){
             e.printStackTrace();
@@ -271,27 +314,27 @@ Context ctx;
     }
 
 
-  public List<LocationDTO> getLocationList(String jsonArray){
-      List<LocationDTO> locationList = new ArrayList<LocationDTO>();
-      try{
-          JSONArray jsonArray1 = new JSONArray(jsonArray);
-          for(int i=0;i<jsonArray1.length();i++){
-              JSONObject jsonObject = jsonArray1.getJSONObject(i);
-              LocationDTO temp = new LocationDTO();
-              temp.setCategory(jsonObject.getString("Category"));
-              temp.setListDesc(jsonObject.getString("ListDesc"));
-              temp.setListId(jsonObject.getString("ListId"));
-              temp.setLocId(jsonObject.getString("LocID"));
-              locationList.add(temp);
-          }
-      } catch(JSONException e){
-          e.printStackTrace();
-      }
-      catch(Exception e){
-          e.printStackTrace();
-      }
-      return locationList;
-  }
+    public List<LocationDTO> getLocationList(String jsonArray){
+        List<LocationDTO> locationList = new ArrayList<LocationDTO>();
+        try{
+            JSONArray jsonArray1 = new JSONArray(jsonArray);
+            for(int i=0;i<jsonArray1.length();i++){
+                JSONObject jsonObject = jsonArray1.getJSONObject(i);
+                LocationDTO temp = new LocationDTO();
+                temp.setCategory(jsonObject.getString("Category"));
+                temp.setListDesc(jsonObject.getString("ListDesc"));
+                temp.setListId(jsonObject.getString("ListId"));
+                temp.setLocId(jsonObject.getString("LocID"));
+                locationList.add(temp);
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return locationList;
+    }
 
     public List<PhysicianDTO> getPhysicianList(String jsonArray){
         List<PhysicianDTO> physicianList = new ArrayList<PhysicianDTO>();
@@ -315,7 +358,95 @@ Context ctx;
         return physicianList;
     }
 
+    public JSONObject getPatientUpdateJSON(String encounterId,String billingType,String location,String primaryPhysician){
+        JSONObject  requestJsonObject = null;
+        JSONObject updatedJSON = new JSONObject();
+        if(MobileApplication.getInstance().getWorkListDTOHashMap()!=null && MobileApplication.getInstance().getWorkListDTOHashMap().size()>0) {
+            HashMap<String, WorkListDTO> workListHash = MobileApplication.getInstance().getWorkListDTOHashMap();
+            WorkListDTO temp = workListHash.get(encounterId);
 
 
+          try {
+              updatedJSON.put("Login_Id",MedDataConstants.LOGIN_ID);
+              String globalJSON = MobileApplication.getInstance().getPropertiesJSON();
+              String key = "";
+              try {
+                  JSONObject jsonObject = new JSONObject(globalJSON);
+                  key = jsonObject.getString("Key");
+              }
+              catch (JSONException e){
+                  e.printStackTrace();
+              }
+              updatedJSON.put("Key",key);
+              updatedJSON.put("EncounterId",encounterId);
+              updatedJSON.put("EncWeekDay", temp.getDay());
+              updatedJSON.put("RecNotesDate", temp.getRecNotesDate());
+              updatedJSON.put("MissedEncounters","0");
+              /*
+
+                SimpleDateFormat input = new SimpleDateFormat("yy/MM/dd");
+                SimpleDateFormat output = new SimpleDateFormat("MMM dd, yyyy");
+                try {
+                    Date oneWayTripDate = input.parse(encounterDate);                 // parse input
+                    String readableDate = (output.format(oneWayTripDate));
+                    temp.setDate(readableDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+               */
+              updatedJSON.put("PatientId","0");
+              updatedJSON.put("EntityID","-1");
+              updatedJSON.put("IsContinuing","0");
+              updatedJSON.put("transferredDoc","");
+              updatedJSON.put("ImageID","");
+              String formattedDate = temp.getDate();
+              SimpleDateFormat output = new SimpleDateFormat("yyyy/MM/dd");
+              SimpleDateFormat input  = new SimpleDateFormat("MMM dd, yyyy");
+              try {
+                  Date oneWayTripDate = input.parse(formattedDate);                 // parse input
+                  String readableDate = (output.format(oneWayTripDate));
+                //  readableDate = readableDate.replace("/", "\"\"/"/");
+                  updatedJSON.put("FormattedEncDate",readableDate);
+              } catch (ParseException e) {
+                  e.printStackTrace();
+              }
+              updatedJSON.put("Encounter_Date",temp.getUnFormattedEncDate());
+              updatedJSON.put("MissedEncounters","0");
+              updatedJSON.put("Patientname",temp.getPatientName());
+              updatedJSON.put("LocationId",location);
+              updatedJSON.put("FirstName",temp.getFirstName());
+              updatedJSON.put("MiddleName",temp.getMiddleName());
+              updatedJSON.put("LastName",temp.getLastName());
+              updatedJSON.put("MedicalRecordNo",temp.getMrn());
+              updatedJSON.put("SecondaryPhysician",temp.getSecPhysician());
+              updatedJSON.put("PrimaryPhysician",primaryPhysician);
+              updatedJSON.put("AdmissionNo",temp.getAdminNum());
+              updatedJSON.put("FinancialNo",temp.getFinancialNum());
+              updatedJSON.put("Notes","");
+              updatedJSON.put("DispositionId",temp.getDispostionID());
+              updatedJSON.put("TransactionType","WU");
+              updatedJSON.put( "ImageRef1","");
+              updatedJSON.put( "ImageRef2","");
+              updatedJSON.put( "ImageRef3","");
+              updatedJSON.put("NotesType",temp.getNotesType());
+              updatedJSON.put("BillingType",billingType);
+              updatedJSON.put("RoomNumber",temp.getRoomNum());
+              updatedJSON.put("Age",temp.getAge());
+              updatedJSON.put("Gender",temp.getGender());
+              updatedJSON.put("NotesType",temp.getNotesType());
+
+
+                requestJsonObject = new JSONObject();
+              requestJsonObject.put("request", updatedJSON);
+
+
+          }catch (JSONException e){
+              e.printStackTrace();
+          }
+        }
+        return  requestJsonObject;
+
+
+    }
 
 }

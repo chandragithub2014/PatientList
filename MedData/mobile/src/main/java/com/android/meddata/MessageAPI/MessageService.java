@@ -98,6 +98,9 @@ public class MessageService implements  GoogleApiClient.ConnectionCallbacks,
                         }else if(type.equalsIgnoreCase("notes")){
                             Log.d("TAG","Send message when Notes");
                             result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("notes"+"$"+ MobileApplication.getInstance().getPatientNotes()).getBytes()).await();
+                        } else if(type.equalsIgnoreCase("updatePatient")){
+                            Log.d("TAG","Send message when updatePatient");
+                            result = Wearable.MessageApi.sendMessage(mGoogleApiClient, node.getId(), "/message_path", ("updatePatient"+"$"+ MobileApplication.getInstance().getPatientRevertResponse()).getBytes()).await();
                         }
 
                         else {
