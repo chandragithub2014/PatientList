@@ -144,6 +144,7 @@ public class ListenerService extends WearableListenerService {
                 LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
             }else if(message.contains("updatePatient")){
                  String patientDetails =  message.substring(message.lastIndexOf("$") + 1);
+                Log.d("Add/Update Patient:::","Add/Update"+patientDetails);
                 Intent messageIntent = new Intent();
                 messageIntent.setAction(Intent.ACTION_SEND);
                 messageIntent.putExtra("patientUpdate", patientDetails);

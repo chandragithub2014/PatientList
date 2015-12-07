@@ -41,12 +41,16 @@ public class DashBoardWearableListFragment extends Fragment {
         mIcons.add(R.drawable.ic_action_reminder);
         mIcons.add(R.drawable.ic_action_star);
         mIcons.add(R.drawable.ic_action_myaccount);
+        mIcons.add(R.drawable.ic_action_myaccount);
+
 
         dashBoardTitles = new ArrayList<String>();
         dashBoardTitles.add("Work List");
         dashBoardTitles.add("Reminders");
         dashBoardTitles.add("Hands Off");
         dashBoardTitles.add("My Account");
+        dashBoardTitles.add("Add Patient");
+
 
         // This is our list header
         mHeader = (TextView)view. findViewById(R.id.header);
@@ -94,6 +98,10 @@ public class DashBoardWearableListFragment extends Fragment {
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.framelayout, new HandOffListFragment()).addToBackStack(null)
                                 .commit();
+                    }else if( viewHolder.getLayoutPosition()+1 == 5){
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.framelayout, new AddPatientFragment()).addToBackStack(null)
+                                .commit();
                     }
                 }
 
@@ -113,9 +121,9 @@ public class DashBoardWearableListFragment extends Fragment {
                 public void onAbsoluteScrollChange(int i) {
                     // Only scroll the title up from its original base position
                     // and not down.
-                    if (i > 0) {
+                   /* if (i > 0) {
                         mHeader.setY(-i);
-                    }
+                    }*/
                 }
 
                 @Override
