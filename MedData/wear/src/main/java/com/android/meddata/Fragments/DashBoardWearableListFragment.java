@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.android.meddata.Adapters.DashBoardAdapter;
 import com.android.meddata.R;
+import com.android.meddata.reportsfragment.BarChartFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,8 @@ public class DashBoardWearableListFragment extends Fragment {
         mIcons.add(R.drawable.ic_action_star);
         mIcons.add(R.drawable.ic_action_myaccount);
         mIcons.add(R.drawable.ic_action_myaccount);
+        mIcons.add(R.drawable.ic_action_myaccount);
+
 
 
         dashBoardTitles = new ArrayList<String>();
@@ -50,6 +53,7 @@ public class DashBoardWearableListFragment extends Fragment {
         dashBoardTitles.add("Hands Off");
         dashBoardTitles.add("My Account");
         dashBoardTitles.add("Add Patient");
+        dashBoardTitles.add("Encounters");
 
 
         // This is our list header
@@ -102,7 +106,16 @@ public class DashBoardWearableListFragment extends Fragment {
                         getFragmentManager().beginTransaction()
                                 .replace(R.id.framelayout, new AddPatientFragment()).addToBackStack(null)
                                 .commit();
+                    }else if( viewHolder.getLayoutPosition()+1 == 6){
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.framelayout, new EncountersFragment()).addToBackStack(null)
+                                .commit();
                     }
+                   /* else if( viewHolder.getLayoutPosition()+1 == 7){
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.framelayout, new BarChartFragment()).addToBackStack(null)
+                                .commit();
+                    }*/
                 }
 
                 @Override
