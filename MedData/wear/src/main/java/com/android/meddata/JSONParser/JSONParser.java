@@ -449,4 +449,47 @@ public class JSONParser {
 
     }
 
+
+
+    public HashMap<String,HashMap<String,Integer>> fetchEncounterYearlyResponse(String jsonResponse){
+        HashMap<String,HashMap<String,Integer>>  encouterYearlyHash = new HashMap<String,HashMap<String,Integer>>();
+        HashMap<String,Integer> initialMonthlyHash = null;
+        try{
+            if(!TextUtils.isEmpty(jsonResponse)){
+                JSONArray encounterJSONArray = new JSONArray(jsonResponse);
+                for(int i = 0; i<encounterJSONArray.length();i++){
+                    JSONObject encounterObject = encounterJSONArray.getJSONObject(i);
+                    String year = encounterObject.getString("Year");
+                    String month  = encounterObject.getString("Month");
+                    int encounterCount = encounterObject.getInt("Encounters");
+                    String tempYear="";
+                    if(encouterYearlyHash.get(year)!= null){
+                        initialMonthlyHash.put(month,encounterCount);
+                        tempYear = year;
+                    }else{
+                        if(encouterYearlyHash.containsKey(tempYear)){
+                            encouterYearlyHash.put(tempYear,initialMonthlyHash);
+                        }else {
+                            initialMonthlyHash = new HashMap<String, Integer>();
+                            initialMonthlyHash.put(month, encounterCount);
+                            encouterYearlyHash.put(year,initialMonthlyHash);
+                        }
+                    /* HashMap<String,Integer> monthlyHash = new HashMap<String,Integer>();
+                     monthlyHash.put(month,encounterCount);
+                     encouterYearlyHash.put(year,monthlyHash);*/
+                    }
+
+
+                }
+            }
+        }
+
+
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return encouterYearlyHash;
+    }
+
 }
